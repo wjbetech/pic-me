@@ -1,10 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0b1020"
+    />
+    <script>
+      // Initialize daisyUI theme early to avoid flash-of-unstyled-theme
+      (function () {
+        try {
+          var key = "picme.theme";
+          var t = null;
+          try {
+            t = localStorage.getItem(key);
+          } catch (e) {
+            /* ignore */
+          }
+          if (!t) {
+            if (
+              window.matchMedia &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+            ) {
+              t = "dracula";
+            } else {
+              t = "cmyk";
+            }
+          }
+          // Map token to DaisyUI theme name
+          var themeName = t === "dracula" ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", themeName);
+          if (themeName === "dark")
+            document.documentElement.classList.add("dark");
+          else document.documentElement.classList.remove("dark");
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pic-me</title>
+    <title>PicMe</title>
   </head>
   <body>
     <div id="root"></div>
