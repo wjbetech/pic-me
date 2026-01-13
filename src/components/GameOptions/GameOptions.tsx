@@ -30,10 +30,10 @@ export default function GameOptions({
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
       <div className="max-w-lg w-full">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
           Choose a game mode
         </h2>
-        <p className="mb-6 opacity-80">
+        <p className="mb-6 opacity-80 text-center">
           Pick one of the modes below to start playing.
         </p>
 
@@ -42,14 +42,18 @@ export default function GameOptions({
             <label
               key={o.id}
               className={`card cursor-pointer border transition-colors ${
-                selected === o.id ? "border-2 border-primary" : "border-transparent"
+                selected === o.id
+                  ? "border-2 border-primary bg-base-100 shadow-lg"
+                  : "border-transparent bg-transparent"
               }`}
             >
               <div className="card-body flex-row items-center gap-4 p-4">
                 <input
                   type="radio"
                   name="game-mode"
-                  className="radio"
+                  className={`radio ${
+                    selected === o.id ? "radio-success" : ""
+                  }`}
                   checked={selected === o.id}
                   onChange={() => setSelected(o.id)}
                 />
