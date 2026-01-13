@@ -1,6 +1,6 @@
 import { FaGamepad, FaVolumeUp, FaGraduationCap } from "react-icons/fa";
 
-export default function Main() {
+export default function Main({ onStart }: { onStart?: () => void }) {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center bg-base-300 text-center p-4 overflow-y-auto">
       <div className="hero-content text-center flex-col max-w-md w-full">
@@ -59,7 +59,10 @@ export default function Main() {
           </div>
         </div>
 
-        <button className="btn btn-primary btn-wide text-lg shadow-lg">
+        <button
+          className="btn btn-primary btn-wide text-lg shadow-lg"
+          onClick={() => onStart && onStart()}
+        >
           Start Playing
         </button>
       </div>
