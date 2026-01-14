@@ -1,13 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import GameOptions from "./components/GameOptions/GameOptions";
+import MultiChoice from "./components/MultiChoice/MultiChoice";
 
 type Route = "home" | "options" | "play";
 
+interface GameSettings {
+  blur: number;
+  showDescription: boolean;
+}
+
+const STORAGE_KEYS = {
+  route: "pic-me:route",
+  mode: "pic-me:mode",
+  settings: "pic-me:settings",
+};
+
 function App() {
-  const [route, setRoute] = useState<Route>("home");
-  const [mode, setMode] = useState<string | null>(null);
+  const [route, setRoute] = useState<Route>(() => {
+    const savedRoute = localStorage.getItem(STORAGE_KEYS.route);
+    return (savedRoute as Route) || "home";
+  });
+
+  const [mode, setMode] = useState<string | null>(() => {
+    return localStorage.getItem(STORAGE_KEYS.mode);
+  });
+
+  const [gameSettings, setGameSettings] = useState<GameSettings>(() => {
+    const saved = localStorage.getItem(STORAGE_KEYS.settings);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return { blur: 0, showDescription: false };
+      }
+    }
+    return { blur: 0, showDescription: false };
+  });
+
+  // Persist route to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.route, route);
+  }, [route]);
+
+  // Persist mode to localStorage
+  useEffect(() => {
+    if (mode) {
+      localStorage.setItem(STORAGE_KEYS.mode, mode);
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.mode);
+    }
+  }, [mode]);
+
+  // Persist settings to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(gameSettings));
+  }, [gameSettings]);
 
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden bg-base-300 text-base-content">
@@ -17,14 +66,24 @@ function App() {
         {route === "options" && (
           <GameOptions
             onBack={() => setRoute("home")}
-            onConfirm={(selected) => {
+            onConfirm={(selected, settings) => {
               setMode(selected);
+              if (settings) {
+                setGameSettings(settings);
+              }
               setRoute("play");
             }}
           />
         )}
 
-        {route === "play" && (
+        {route === "play" && mode === "multiple-choice" && (
+          <MultiChoice
+            onBack={() => setRoute("options")}
+            settings={gameSettings}
+          />
+        )}
+
+        {route === "play" && mode !== "multiple-choice" && (
           <div className="h-full w-full flex items-center justify-center p-4">
             <div className="text-center max-w-md">
               <h2 className="text-2xl font-bold mb-2">Ready to play</h2>
