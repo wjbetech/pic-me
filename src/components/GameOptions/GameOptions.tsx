@@ -134,9 +134,9 @@ export default function GameOptions({
             className="btn btn-primary ml-auto"
             onClick={() => {
               if (selected === "multiple-choice") {
-                onConfirm && onConfirm(selected, { blur, showDescription });
+                onConfirm?.(selected, { blur, showDescription });
               } else {
-                onConfirm && onConfirm(selected);
+                onConfirm?.(selected);
               }
             }}
           >

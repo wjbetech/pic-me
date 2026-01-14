@@ -32,10 +32,6 @@ export default function MultiChoice({
   const [isSwipingIn, setIsSwipingIn] = useState(true);
   const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    loadNewAnimal();
-  }, []);
-
   const loadNewAnimal = () => {
     // Reset animation state
     setIsSwipingIn(false);
@@ -101,6 +97,11 @@ export default function MultiChoice({
     }, 300);
   };
 
+  useEffect(() => {
+    loadNewAnimal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleAnswerClick = (answer: string) => {
     if (isAnswered) return;
 
@@ -118,10 +119,10 @@ export default function MultiChoice({
   };
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full flex flex-col max-h-full">
+    <div className="h-full w-full flex items-center justify-center p-4 overflow-hidden">
+      <div className="max-w-4xl w-full flex flex-col max-h-full overflow-hidden">
         {/* Header */}
-        <div className="mb-4 text-center flex-shrink-0">
+        <div className="mb-4 text-center shrink-0">
           <h2 className="text-2xl md:text-3xl font-bold mb-1">
             Multiple Choice
           </h2>
@@ -131,7 +132,7 @@ export default function MultiChoice({
         {/* Content Container */}
         <div className="flex-1 overflow-y-auto flex flex-col min-h-0">
           {/* Animal Image or Description Container with Swipe Animation */}
-          <div className="flex-shrink-0 mb-6">
+          <div className="shrink-0 mb-6">
             <div
               className={`swipe-container ${
                 isSwipingIn ? "swipe-in" : "swipe-out"
@@ -190,14 +191,14 @@ export default function MultiChoice({
                   key={index}
                   onClick={() => handleAnswerClick(option)}
                   disabled={isAnswered}
-                  className={`btn justify-center text-center px-4 py-3 ${
+                  className={`btn justify-center text-center px-4 py-3 border-2 bg-white text-base-content ${
                     selectedAnswer === option
                       ? option === correctAnswer
-                        ? "btn-success"
-                        : "btn-error"
+                        ? "btn-success border-success"
+                        : "btn-error border-error"
                       : isAnswered && option === correctAnswer
-                      ? "btn-success"
-                      : "btn-outline"
+                      ? "btn-success border-success"
+                      : "border-base-300 hover:border-base-400"
                   } ${isAnswered ? "opacity-60" : ""}`}
                 >
                   <span className="line-clamp-2">{option}</span>
@@ -216,7 +217,7 @@ export default function MultiChoice({
         </div>
 
         {/* Back Button */}
-        <div className="flex justify-center mt-6 flex-shrink-0">
+        <div className="flex justify-center mt-6 shrink-0">
           <button className="btn btn-ghost" onClick={() => onBack && onBack()}>
             Back to Menu
           </button>
