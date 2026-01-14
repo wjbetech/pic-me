@@ -1,0 +1,21 @@
+[
+  {
+    "id": "f-1",
+    "commonName": "Arctic Fox",
+    "latinName": "Vulpes lagopus",
+    "description": [
+      "The Arctic fox is a small mammal adapted to living in cold environments, known for its thick fur and ability to change color with the seasons."
+    ],
+    "habitat": ["Tundra", "Coastal areas"],
+    "difficulty": "Hard",
+    "food": ["Lemmings", "Birds", "Fish", "Invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1484312152213-d713e8b7c053?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661854852397-5d7925e23485?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  }
+]

@@ -5,18 +5,37 @@
     "latinName": "Cervidae",
     "description": [
       "These animals are hoofed, ruminant mammals forming the family Cervidae.",
-      "This animal species is known for its antlers, which mostly the males grow.",
-      
+      "This animal species is known for its antlers, which mostly the males grow."
     ],
     "habitat": ["Grasslands", "Plains", "River Valleys"],
     "difficulty": "Medium",
     "food": ["Grass", "Plants", "Lichen", "Leaves"],
     "images": [
       {
-        "url": "https://plus.unsplash.com/premium_photo-1669048780181-2edd0310afc1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGFtZXJpY2FuJTIwYmlzb258ZW58MHx8MHx8fDA%3D"
+        "url": "https://plus.unsplash.com/premium_photo-1661819541230-034d07819c9b?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
-        "url": "https://images.unsplash.com/photo-1690122172311-204bc3e044e5?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW1lcmljYW4lMjBiaXNvbnxlbnwwfHwwfHx8MA%3D%3D"
+        "url": "https://plus.unsplash.com/premium_photo-1661952173679-07609e20a380?q=80&w=1207&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "d-2",
+    "commonName": "Bottlenose Dolphin",
+    "latinName": "Tursiops truncatus",
+    "description": [
+      "Dolphins are highly intelligent marine mammals known for their playful behavior and complex social structures.",
+      "They are part of the family Delphinidae and are closely related to whales and porpoises."
+    ],
+    "habitat": ["Oceans", "Coastal Waters", "Rivers"],
+    "difficulty": "Hard",
+    "food": ["Fish", "Squid", "Crustaceans"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1523670982602-6bb44fd1586e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1495368008737-9d436e094dd5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   }

@@ -19,23 +19,5 @@
         "url": "https://images.unsplash.com/photo-1690122172311-204bc3e044e5?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW1lcmljYW4lMjBiaXNvbnxlbnwwfHwwfHx8MA%3D%3D"
       }
     ]
-  },
-  {
-    "id": "b-2",
-    "commonName": "Blue Whale",
-    "latinName": "Balaenoptera musculus",
-    "description": [
-      "This is the largest animal known to have ever existed, reaching lengths of up to 100 feet and a weight of up to 200 tons.",
-      "These marine mammals are found in oceans worldwide and primarily feed on tiny shrimp-like animals called krill.",
-      "Despite their massive size, these animals are known for their gentle nature and are often observed breaching and tail-slapping."
-    ],
-    "habitat": ["Oceans", "Seas"],
-    "difficulty": "Easy",
-    "food": ["Krill", "Small Fish", "Plankton"],
-    "images": [
-      "https://images.unsplash.com/photo-1454991727061-be514eae86f7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://plus.unsplash.com/premium_photo-1661847901977-0e17e3671711?q=80&w=1488&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "https://plus.unsplash.com/premium_photo-1733306474431-812ecf195865?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    ]
   }
 ]
