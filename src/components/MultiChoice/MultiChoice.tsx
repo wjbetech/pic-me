@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Animal } from "../../types/Animal";
-import animalsA from "../../data/animalsA.json";
-import animalsB from "../../data/animalsB.json";
-import animalsC from "../../data/animalsC.json";
 import "./MultiChoice.css";
-
-const ALL_ANIMALS: Animal[] = [
-  ...(animalsA as Animal[]),
-  ...(animalsB as Animal[]),
-  ...(animalsC as Animal[]),
-];
 
 interface GameSettings {
   blur: number;
@@ -24,6 +15,7 @@ export default function MultiChoice({
   settings?: GameSettings;
 }) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
+  const [allAnimals, setAllAnimals] = useState<Animal[]>([]);
   const [currentImage, setCurrentImage] = useState<string>("");
   const [answerOptions, setAnswerOptions] = useState<string[]>([]);
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
@@ -32,7 +24,17 @@ export default function MultiChoice({
   const [isSwipingIn, setIsSwipingIn] = useState(true);
   const [score, setScore] = useState(0);
 
-  const loadNewAnimal = () => {
+  const loadNewAnimal = (animalsParam?: Animal[]) => {
+    const animals = animalsParam ?? allAnimals;
+    if (!animals || animals.length === 0) {
+      if (animalsParam) {
+        console.warn("No animals available in provided dataset.");
+        return;
+      }
+      // Dataset not ready yet — retry shortly
+      setTimeout(() => loadNewAnimal(), 200);
+      return;
+    }
     // Reset animation state
     setIsSwipingIn(false);
     setSelectedAnswer(null);
@@ -41,8 +43,7 @@ export default function MultiChoice({
     // Simulate swipe animation delay
     setTimeout(() => {
       // Pick a random animal from all available animals
-      const randomAnimal =
-        ALL_ANIMALS[Math.floor(Math.random() * ALL_ANIMALS.length)];
+      const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
 
       // Ensure animal has images
       if (
@@ -73,24 +74,41 @@ export default function MultiChoice({
       setCurrentImage(imageUrl);
       setCorrectAnswer(randomAnimal.commonName);
 
-      // Generate 3 random different animal names (not the current one)
-      const otherAnimals = ALL_ANIMALS.filter((a) => a.id !== randomAnimal.id);
+      // Generate up to 3 random different animal names (not the current one)
+      const otherAnimals = animals.filter((a) => a.id !== randomAnimal.id);
 
-      const randomWrongAnswers: string[] = [];
-      for (let i = 0; i < 3; i++) {
-        const randomWrongAnimal =
-          otherAnimals[Math.floor(Math.random() * otherAnimals.length)];
-        randomWrongAnswers.push(randomWrongAnimal.commonName);
-        // Remove this animal from available pool to avoid duplicates
-        const index = otherAnimals.indexOf(randomWrongAnimal);
-        if (index > -1) {
-          otherAnimals.splice(index, 1);
+      // Use a set to ensure uniqueness and to be robust when the dataset is small
+      const optionSet = new Set<string>();
+      optionSet.add(randomAnimal.commonName);
+
+      // Shuffle a copy of the other animals and take unique names
+      const pool = [...otherAnimals];
+      while (optionSet.size < 4 && pool.length > 0) {
+        const idx = Math.floor(Math.random() * pool.length);
+        const picked = pool.splice(idx, 1)[0];
+        if (picked && picked.commonName) {
+          optionSet.add(picked.commonName);
         }
       }
 
-      // Combine and shuffle the options
-      const allOptions = [...randomWrongAnswers, randomAnimal.commonName];
-      const shuffledOptions = allOptions.sort(() => Math.random() - 0.5);
+      // Fallback: if still not enough options, sample from ALL_ANIMALS (excluding current)
+      const fallback = animals.filter(
+        (a) => a.id !== randomAnimal.id && !optionSet.has(a.commonName)
+      );
+      while (optionSet.size < 4 && fallback.length > 0) {
+        const idx = Math.floor(Math.random() * fallback.length);
+        const picked = fallback.splice(idx, 1)[0];
+        if (picked && picked.commonName) optionSet.add(picked.commonName);
+      }
+
+      // As a last resort, duplicate entries so UI has four options
+      const finalOptions = Array.from(optionSet);
+      while (finalOptions.length < 4) {
+        finalOptions.push(finalOptions[0] ?? "Unknown");
+      }
+
+      // Shuffle final options
+      const shuffledOptions = finalOptions.sort(() => Math.random() - 0.5);
 
       setAnswerOptions(shuffledOptions);
       setIsSwipingIn(true);
@@ -98,7 +116,31 @@ export default function MultiChoice({
   };
 
   useEffect(() => {
-    loadNewAnimal();
+    const loadAllData = async () => {
+      // Dynamically import all JSON files in src/data (Vite)
+      // @ts-ignore - import.meta.glob types may not be declared in the project
+      const modules = import.meta.glob("../../data/*.json", { as: "json" });
+      const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
+      try {
+        const results = await Promise.all(loaders.map((fn) => fn()));
+        // Some bundlers return a module object with a `default` property.
+        const combined: Animal[] = results.flatMap((r) => {
+          if (Array.isArray(r)) return r as Animal[];
+          if (r && typeof r === "object" && Array.isArray((r as any).default))
+            return (r as any).default as Animal[];
+          console.warn("Unexpected data module format:", r);
+          return [] as Animal[];
+        });
+        setAllAnimals(combined);
+        console.log(`Loaded ${combined.length} animals from data/*.json`);
+        // Immediately load the first animal from the combined dataset
+        loadNewAnimal(combined);
+      } catch (err) {
+        console.error("Failed to load animal data:", err);
+      }
+    };
+
+    loadAllData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
