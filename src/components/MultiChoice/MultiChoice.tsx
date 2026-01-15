@@ -219,7 +219,7 @@ export default function MultiChoice({
         </div>
 
         {/* Content Container */}
-        <div className="flex-1 overflow-y-auto flex flex-col min-h-0">
+        <div className="flex-1 overflow-y-scroll flex flex-col min-h-0">
           {/* Animal Image or Description Container with Swipe Animation */}
           <div className="shrink-0 mb-6">
             <div
@@ -282,14 +282,14 @@ export default function MultiChoice({
           </div>
 
           {/* Answer Buttons Grid */}
-          <div className="flex-1 flex flex-col min-h-0">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="flex-1 flex flex-col min-h-0 w-full overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
               {answerOptions.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => handleAnswerClick(option)}
                   disabled={isAnswered}
-                  className={`btn justify-center text-center px-4 py-3 border-2 bg-white text-base-content ${
+                  className={`btn justify-center text-center px-4 py-3 border-2 bg-white text-base-content w-full overflow-hidden ${
                     selectedAnswer === option
                       ? option === correctAnswer
                         ? "btn-success border-success"
