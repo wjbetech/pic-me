@@ -9,6 +9,9 @@ type Route = "home" | "options" | "play";
 interface GameSettings {
   blur: number;
   showDescription: boolean;
+  hintsEnabled?: boolean;
+  hintType?: string;
+  rounds?: number | "all";
 }
 
 const STORAGE_KEYS = {

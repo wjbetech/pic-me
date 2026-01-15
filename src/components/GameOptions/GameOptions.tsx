@@ -25,12 +25,21 @@ export default function GameOptions({
   onBack?: () => void;
   onConfirm?: (
     mode: string,
-    settings?: { blur: number; showDescription: boolean }
+    settings?: {
+      blur: number;
+      showDescription: boolean;
+      hintsEnabled?: boolean;
+      hintType?: string;
+      rounds?: number | "all";
+    }
   ) => void;
 }) {
   const [selected, setSelected] = useState<string>(OPTIONS[0].id);
   const [blur, setBlur] = useState<number>(0);
   const [showDescription, setShowDescription] = useState<boolean>(false);
+  const [hintsEnabled, setHintsEnabled] = useState<boolean>(false);
+  const [hintType, setHintType] = useState<string>("habitat");
+  const [rounds, setRounds] = useState<string>("10");
 
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
@@ -73,6 +82,55 @@ export default function GameOptions({
               {selected === "multiple-choice" && o.id === "multiple-choice" && (
                 <div className="mt-3 p-4 bg-base-200 rounded-lg border border-base-300">
                   <h3 className="font-semibold mb-4 text-sm">Game Settings</h3>
+
+                  {/* Hints Toggle */}
+                  <div className="mb-4">
+                    <div className="flex items-center gap-3">
+                      <input
+                        id="hints-enabled"
+                        type="checkbox"
+                        checked={hintsEnabled}
+                        onChange={(e) => setHintsEnabled(e.target.checked)}
+                        className="checkbox checkbox-sm"
+                      />
+                      <label
+                        htmlFor="hints-enabled"
+                        className="text-sm font-medium cursor-pointer"
+                      >
+                        Enable hints
+                      </label>
+                    </div>
+
+                    {hintsEnabled && (
+                      <div className="mt-3">
+                        <label className="text-sm font-medium">Hint type</label>
+                        <select
+                          value={hintType}
+                          onChange={(e) => setHintType(e.target.value)}
+                          className="select select-sm w-full mt-2"
+                        >
+                          <option value="habitat">Habitat</option>
+                          <option value="diet">Diet</option>
+                          <option value="description">Description</option>
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Rounds Dropdown */}
+                    <div className="mt-4">
+                      <label className="text-sm font-medium">Rounds</label>
+                      <select
+                        value={rounds}
+                        onChange={(e) => setRounds(e.target.value)}
+                        className="select select-sm w-full mt-2"
+                      >
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="all">All</option>
+                      </select>
+                    </div>
+                  </div>
 
                   {/* Blur Slider */}
                   <div className="mb-5">
@@ -134,7 +192,14 @@ export default function GameOptions({
             className="btn btn-primary ml-auto"
             onClick={() => {
               if (selected === "multiple-choice") {
-                onConfirm?.(selected, { blur, showDescription });
+                const roundsValue = rounds === "all" ? "all" : Number(rounds);
+                onConfirm?.(selected, {
+                  blur,
+                  showDescription,
+                  hintsEnabled,
+                  hintType: hintsEnabled ? hintType : undefined,
+                  rounds: roundsValue,
+                });
               } else {
                 onConfirm?.(selected);
               }

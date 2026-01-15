@@ -8,7 +8,7 @@
       "They are found in various habitats across Africa and parts of Asia."
     ],
     "habitat": ["Savannas", "Grasslands", "Woodlands"],
-    "difficulty": "Easy",
+    "difficulty": "Medium",
     "food": ["Grasses", "Leaves", "Shoots"],
     "images": [
       {
@@ -16,6 +16,120 @@
       },
       {
         "url": "https://images.unsplash.com/photo-1702285225339-5b262b15a951?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "a-2",
+    "commonName": "Aardvark",
+    "latinName": "Orycteropus afer",
+    "description": [
+      "The aardvark is a nocturnal mammal native to Africa, known for its long snout and strong digging claws.",
+      "It primarily feeds on ants and termites, which it captures with a long, sticky tongue."
+    ],
+    "habitat": ["Savannas", "Grasslands", "Woodlands"],
+    "difficulty": "Hard",
+    "food": ["Ants", "Termites", "Insects"],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Orycteropus_afer_175359469.jpg/1280px-Orycteropus_afer_175359469.jpg"
+      }
+    ]
+  },
+  {
+    "id": "a-3",
+    "commonName": "Albatross",
+    "latinName": "Diomedeidae",
+    "description": [
+      "Albatrosses are large seabirds with long wingspans adapted for dynamic soaring over the open ocean.",
+      "They feed on fish and squid and spend much of their life far from land."
+    ],
+    "habitat": ["Open ocean", "Coastal waters"],
+    "difficulty": "Hard",
+    "food": ["Fish", "Squid", "Crustaceans"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1552243558-f5ed0b13f04d?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1716844632527-7d3ec98b3469?q=80&w=1234&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "a-4",
+    "commonName": "Alligator",
+    "latinName": "Alligator mississippiensis",
+    "description": [
+      "Alligators are large semiaquatic reptiles found in freshwater wetlands and rivers in the southeastern United States.",
+      "They are opportunistic predators that eat fish, birds, and small mammals."
+    ],
+    "habitat": ["Freshwater wetlands", "Swamps", "Rivers"],
+    "difficulty": "Easy",
+    "food": ["Fish", "Birds", "Mammals"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1605649461784-7d5e4df56c97?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1595548187646-2a9d5d73076c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "a-5",
+    "commonName": "Anaconda",
+    "latinName": "Eunectes murinus",
+    "description": [
+      "The green anaconda is one of the largest snakes in the world and is native to South American wetlands.",
+      "It is a powerful constrictor that preys on fish, mammals, and birds."
+    ],
+    "habitat": ["Swamps", "Marshes", "Slow-moving rivers"],
+    "difficulty": "Easy",
+    "food": ["Fish", "Mammals", "Birds"],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Eunectes_murinus2.jpg"
+      }
+    ]
+  },
+  {
+    "id": "a-6",
+    "commonName": "Armadillo",
+    "latinName": "Dasypodidae",
+    "description": [
+      "Armadillos are small to medium-sized mammals known for their bony armor shell and digging behavior.",
+      "They feed mostly on insects, larvae, and other small invertebrates."
+    ],
+    "habitat": ["Grasslands", "Forests", "Scrublands"],
+    "difficulty": "Medium",
+    "food": ["Insects", "Larvae", "Small invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1698782244531-7a5acc778b21?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1685042854774-97584230f824?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "a-7",
+    "commonName": "Axolotl",
+    "latinName": "Ambystoma mexicanum",
+    "description": [
+      "The axolotl is a neotenic salamander endemic to lakes and canals in Mexico, famous for retaining larval features into adulthood.",
+      "It is carnivorous and feeds on small prey like worms and crustaceans."
+    ],
+    "habitat": ["Freshwater lakes", "Canals"],
+    "difficulty": "Hard",
+    "food": ["Worms", "Small fish", "Crustaceans"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1682428999927-5be191db3882?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1656039592551-3e767f689272?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   }

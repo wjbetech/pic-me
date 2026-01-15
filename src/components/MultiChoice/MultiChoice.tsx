@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { Animal } from "../../types/Animal";
 import "./MultiChoice.css";
+import { createRotation } from "../../utils/rotation";
 
 interface GameSettings {
   blur: number;
   showDescription: boolean;
+  rounds?: number | "all";
 }
 
 export default function MultiChoice({
@@ -17,6 +19,9 @@ export default function MultiChoice({
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
   const [allAnimals, setAllAnimals] = useState<Animal[]>([]);
   const [currentImage, setCurrentImage] = useState<string>("");
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
+  const [animalQueue, setAnimalQueue] = useState<Animal[]>([]);
+  const queueIndexRef = useRef(0);
   const [answerOptions, setAnswerOptions] = useState<string[]>([]);
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -42,8 +47,17 @@ export default function MultiChoice({
 
     // Simulate swipe animation delay
     setTimeout(() => {
-      // Pick a random animal from all available animals
-      const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+      // Pick next animal from rotation queue (avoids repeats until exhausted)
+      let nextAnimal: Animal | undefined;
+      if (animalQueue && animalQueue.length > 0) {
+        const idx = queueIndexRef.current ?? 0;
+        nextAnimal = animalQueue[idx];
+        // advance index
+        queueIndexRef.current = (idx + 1) % animalQueue.length;
+      } else {
+        nextAnimal = animals[Math.floor(Math.random() * animals.length)];
+      }
+      const randomAnimal = nextAnimal;
 
       // Ensure animal has images
       if (
@@ -70,9 +84,28 @@ export default function MultiChoice({
         return;
       }
 
-      setCurrentAnimal(randomAnimal);
-      setCurrentImage(imageUrl);
-      setCorrectAnswer(randomAnimal.commonName);
+      // Preload the image to avoid rendering lag and show a spinner
+      setIsImageLoading(true);
+      const img = new Image();
+      img.src = imageUrl;
+      img.onload = () => {
+        setCurrentAnimal(randomAnimal);
+        setCurrentImage(imageUrl);
+        setCorrectAnswer(randomAnimal.commonName);
+        setIsImageLoading(false);
+      };
+      img.onerror = () => {
+        console.warn("Failed to load image, picking another.", imageUrl);
+        setIsImageLoading(false);
+        // If image fails, try next in queue (if any)
+        // remove the failing animal from queue to avoid infinite loop
+        if (animalQueue && animalQueue.length > 0) {
+          const filtered = animalQueue.filter((a) => a.id !== randomAnimal.id);
+          setAnimalQueue(filtered);
+        }
+        loadNewAnimal();
+        return;
+      };
 
       // Generate up to 3 random different animal names (not the current one)
       const otherAnimals = animals.filter((a) => a.id !== randomAnimal.id);
@@ -115,6 +148,13 @@ export default function MultiChoice({
     }, 300);
   };
 
+  // Build rotation queue based on settings.rounds or default to 'all'
+  const buildQueue = (animals: Animal[], roundsSetting?: number | "all") => {
+    const q = createRotation(animals, roundsSetting ?? "all");
+    queueIndexRef.current = 0;
+    setAnimalQueue(q);
+  };
+
   useEffect(() => {
     const loadAllData = async () => {
       // Dynamically import all JSON files in src/data (Vite)
@@ -133,7 +173,14 @@ export default function MultiChoice({
         });
         setAllAnimals(combined);
         console.log(`Loaded ${combined.length} animals from data/*.json`);
-        // Immediately load the first animal from the combined dataset
+        // Build queue using provided settings.rounds if available
+        // @ts-ignore - settings may contain extra props persisted from App
+        const roundsSetting = (settings as any)?.rounds as
+          | number
+          | "all"
+          | undefined;
+        buildQueue(combined, roundsSetting);
+        // Immediately load the first animal from the queue
         loadNewAnimal(combined);
       } catch (err) {
         console.error("Failed to load animal data:", err);
@@ -181,7 +228,6 @@ export default function MultiChoice({
               }`}
             >
               {settings.showDescription ? (
-                // Show Description
                 <div className="w-full h-64 md:h-80 bg-base-200 rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col justify-center">
                   {currentAnimal && (
                     <div className="space-y-3">
@@ -200,20 +246,30 @@ export default function MultiChoice({
                   )}
                 </div>
               ) : (
-                // Show Image with optional blur
-                currentImage && (
-                  <img
-                    src={currentImage}
-                    alt={currentAnimal?.commonName || "Animal"}
-                    className="w-full h-64 md:h-80 object-cover rounded-lg shadow-lg"
-                    style={{
-                      filter:
-                        settings.blur > 0
-                          ? `blur(${settings.blur * 2}px)`
-                          : "none",
-                    }}
-                  />
-                )
+                <div className="relative w-full h-64 md:h-80">
+                  {isImageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-base-200 rounded-lg">
+                      <div className="mc-spinner" aria-hidden />
+                    </div>
+                  )}
+
+                  {currentImage && (
+                    <img
+                      src={currentImage}
+                      alt={currentAnimal?.commonName || "Animal"}
+                      className={`w-full h-64 md:h-80 object-cover rounded-lg shadow-lg ${
+                        isImageLoading ? "opacity-0" : "opacity-100"
+                      }`}
+                      style={{
+                        filter:
+                          settings.blur > 0
+                            ? `blur(${settings.blur * 2}px)`
+                            : "none",
+                        transition: "opacity 200ms ease-in-out",
+                      }}
+                    />
+                  )}
+                </div>
               )}
             </div>
 
