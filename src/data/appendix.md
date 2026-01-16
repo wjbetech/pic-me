@@ -8,3 +8,7 @@
 #### C
 
 - Horseshoe Crab
+
+#### I
+
+- Impala

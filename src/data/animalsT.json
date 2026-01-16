@@ -1,0 +1,67 @@
+[
+  {
+    "id": "t-1",
+    "commonName": "Tiger",
+    "latinName": "Panthera tigris",
+    "description": [
+      "The tiger is a large striped big cat native to Asia and is an apex predator in its range.",
+      "They hunt ungulates and are solitary hunters with large territories."
+    ],
+    "habitat": ["Forests", "Grasslands"],
+    "difficulty": "Hard",
+    "food": ["Ungulates", "Large mammals"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "t-2",
+    "commonName": "Turtle",
+    "latinName": "Testudines",
+    "description": [
+      "Turtles are reptiles with a bony or cartilaginous shell, occupying marine, freshwater and terrestrial habitats.",
+      "Their diets vary from herbivorous to carnivorous depending on species."
+    ],
+    "habitat": ["Oceans", "Rivers", "Terrestrial"],
+    "difficulty": "Medium",
+    "food": ["Plants", "Invertebrates", "Fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "t-3",
+    "commonName": "Toucan",
+    "latinName": "Ramphastidae",
+    "description": [
+      "Toucans are colourful birds with large bills native to the Neotropics, feeding primarily on fruit.",
+      "They inhabit tropical forests and are important seed dispersers."
+    ],
+    "habitat": ["Tropical forests"],
+    "difficulty": "Medium",
+    "food": ["Fruit", "Insects"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "t-4",
+    "commonName": "Tapir",
+    "latinName": "Tapirus",
+    "description": [
+      "Tapirs are large browsing mammals with a short prehensile snout, found in Central/South America and Southeast Asia.",
+      "They feed on leaves, shoots, and fruit in forested habitats."
+    ],
+    "habitat": ["Forests", "Wetlands"],
+    "difficulty": "Medium",
+    "food": ["Leaves", "Fruit"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "t-5",
+    "commonName": "Trout",
+    "latinName": "Salmonidae",
+    "description": [
+      "Trout are freshwater fish in the salmon family important to ecosystems and fisheries, often found in cool, clear streams and lakes.",
+      "They feed on invertebrates and small fish."
+    ],
+    "habitat": ["Rivers", "Lakes"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small fish"],
+    "images": [{ "url": "" }]
+  }
+]

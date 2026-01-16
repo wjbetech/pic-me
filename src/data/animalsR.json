@@ -1,0 +1,67 @@
+[
+  {
+    "id": "r-1",
+    "commonName": "Rhinoceros",
+    "latinName": "Rhinocerotidae",
+    "description": [
+      "Rhinoceroses are large herbivorous mammals with one or two horns on their snouts, native to Africa and Asia.",
+      "They graze or browse depending on species and are threatened by poaching."
+    ],
+    "habitat": ["Savannas", "Grasslands", "Forests"],
+    "difficulty": "Hard",
+    "food": ["Grasses", "Leaves"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "r-2",
+    "commonName": "Rabbit",
+    "latinName": "Oryctolagus cuniculus",
+    "description": [
+      "Rabbits are small herbivorous mammals with long ears and strong hind legs, prolific breeders in many regions.",
+      "They feed on grasses, herbs and vegetables."
+    ],
+    "habitat": ["Meadows", "Woodland edges"],
+    "difficulty": "Easy",
+    "food": ["Grasses", "Herbs"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "r-3",
+    "commonName": "Raccoon",
+    "latinName": "Procyon lotor",
+    "description": [
+      "Raccoons are adaptable omnivorous mammals with dexterous forepaws and masked facial markings, common in urban and wild areas.",
+      "They eat a varied diet including fruits, invertebrates and human food waste."
+    ],
+    "habitat": ["Forests", "Urban areas"],
+    "difficulty": "Medium",
+    "food": ["Fruits", "Invertebrates", "Human scraps"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "r-4",
+    "commonName": "Redstart",
+    "latinName": "Phoenicurus",
+    "description": [
+      "Redstarts are small passerine birds with colourful tails often found in woodlands and gardens.",
+      "They feed on invertebrates and sometimes small fruits."
+    ],
+    "habitat": ["Woodlands", "Gardens"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Berries"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "r-5",
+    "commonName": "Raven",
+    "latinName": "Corvus corax",
+    "description": [
+      "Ravens are large intelligent corvids known for adaptability, problem solving and vocal complexity.",
+      "They are omnivorous and occupy diverse habitats from coasts to mountains."
+    ],
+    "habitat": ["Forests", "Mountains", "Coasts"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small vertebrates", "Carrion"],
+    "images": [{ "url": "" }]
+  }
+]

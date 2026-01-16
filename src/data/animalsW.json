@@ -1,6 +1,73 @@
 [
   {
     "id": "w-1",
+    "commonName": "Whale",
+    "latinName": "Cetacea",
+    "description": [
+      "Whales are large marine mammals occupying diverse niches from baleen filter feeders to toothed predators.",
+      "They undertake long migrations and feed on krill, fish or other marine animals depending on species."
+    ],
+    "habitat": ["Open ocean"],
+    "difficulty": "Hard",
+    "food": ["Krill", "Fish", "Squid"],
+    "images": [ { "url": "" } ]
+  },
+  {
+    "id": "w-2",
+    "commonName": "Wolf",
+    "latinName": "Canis lupus",
+    "description": [
+      "Wolves are social canids that hunt cooperatively in packs and are key predators in many ecosystems.",
+      "They prey on ungulates and smaller mammals."
+    ],
+    "habitat": ["Forests", "Tundra", "Grasslands"],
+    "difficulty": "Hard",
+    "food": ["Ungulates", "Small mammals"],
+    "images": [ { "url": "" } ]
+  },
+  {
+    "id": "w-3",
+    "commonName": "Walrus",
+    "latinName": "Odobenus rosmarus",
+    "description": [
+      "Walruses are large pinnipeds with tusks and whiskers that inhabit Arctic seas, feeding on benthic invertebrates.",
+      "They haul out on ice or beaches to rest and breed."
+    ],
+    "habitat": ["Arctic seas", "Coastal ice"],
+    "difficulty": "Hard",
+    "food": ["Bivalves", "Invertebrates"],
+    "images": [ { "url": "" } ]
+  },
+  {
+    "id": "w-4",
+    "commonName": "Wombat",
+    "latinName": "Vombatidae",
+    "description": [
+      "Wombats are burrowing marsupials native to Australia with stocky bodies and strong claws for digging.",
+      "They feed on grasses and roots and are mainly nocturnal."
+    ],
+    "habitat": ["Grasslands", "Eucalyptus forests"],
+    "difficulty": "Easy",
+    "food": ["Grasses", "Roots"],
+    "images": [ { "url": "" } ]
+  },
+  {
+    "id": "w-5",
+    "commonName": "Weasel",
+    "latinName": "Mustela",
+    "description": [
+      "Weasels are small carnivorous mammals with elongated bodies and short legs, adept at hunting small vertebrates.",
+      "They inhabit diverse habitats including woodlands and grasslands."
+    ],
+    "habitat": ["Woodlands", "Grasslands"],
+    "difficulty": "Medium",
+    "food": ["Small mammals", "Birds", "Invertebrates"],
+    "images": [ { "url": "" } ]
+  }
+]
+[
+  {
+    "id": "w-1",
     "commonName": "Blue Whale",
     "latinName": "Balaenoptera musculus",
     "description": [

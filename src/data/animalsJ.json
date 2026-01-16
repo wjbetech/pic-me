@@ -1,0 +1,83 @@
+[
+  {
+    "id": "j-1",
+    "commonName": "Jaguar",
+    "latinName": "Panthera onca",
+    "description": [
+      "This is a big cat native to the Americas, known for its powerful bite and spotted coat."
+    ],
+    "habitat": ["Rainforests", "Wetlands"],
+    "difficulty": "Medium",
+    "food": ["Mammals", "Reptiles", "Birds"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1664304400278-8152cba3da20?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8amFndWFyfGVufDB8fDB8fHww"
+      }
+    ]
+  },
+  {
+    "id": "j-2",
+    "commonName": "Jay",
+    "latinName": "Garrulus glandarius",
+    "description": [
+      "This small bird is known for its striking blue, black, and white feathers."
+    ],
+    "habitat": ["Woodlands", "Parks"],
+    "difficulty": "Medium",
+    "food": ["Seeds", "Nuts", "Invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1667417468327-ec3209d57041?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8amF5JTIwYmlyZHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "j-3",
+    "commonName": "Jerboa",
+    "latinName": "Dipodidae",
+    "description": [
+      "This small, hopping desert rodents with long hind legs is adapted for rapid movement."
+    ],
+    "habitat": ["Deserts", "Arid regions"],
+    "difficulty": "Hard",
+    "food": ["Seeds", "Plant material"],
+    "images": [
+      {
+        "url": "https://www.joelsartore.com/wp-content/uploads/stock/ANI084/ANI084-00198-1024x682.jpg"
+      }
+    ]
+  },
+  {
+    "id": "j-4",
+    "commonName": "Jackal",
+    "latinName": "Canis aureus",
+    "description": [
+      "This medium-sized canid is found in Africa and Eurasia, and will eat almost anything",
+      "They scavenge and hunt small mammals and birds."
+    ],
+    "habitat": ["Grasslands", "Scrublands"],
+    "difficulty": "Medium",
+    "food": ["Small mammals", "Birds", "Carrion"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1714500001429-bbed6b86b9fb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8amFja2FsfGVufDB8fDB8fHww"
+      }
+    ]
+  },
+  {
+    "id": "j-5",
+    "commonName": "Jellyfish",
+    "latinName": "Scyphozoa",
+    "description": [
+      "These animals are gelatinous marine animals with tentacles and stinging cells for capturing prey."
+    ],
+    "habitat": ["Open ocean", "Coastal waters"],
+    "difficulty": "Easy",
+    "food": ["Plankton", "Small fish"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1508311603478-ce574376c3cf?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8amVsbHlmaXNofGVufDB8fDB8fHww"
+      }
+    ]
+  }
+]

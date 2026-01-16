@@ -1,0 +1,67 @@
+[
+  {
+    "id": "p-1",
+    "commonName": "Penguin",
+    "latinName": "Spheniscidae",
+    "description": [
+      "Penguins are flightless seabirds adapted to cold marine environments with specialised flippers for swimming.",
+      "They feed primarily on fish, squid and krill and breed in colonies."
+    ],
+    "habitat": ["Coastal waters", "Islands"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Squid", "Krill"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "p-2",
+    "commonName": "Panther",
+    "latinName": "Panthera pardus",
+    "description": [
+      "Panther is a common name often used for large melanistic (or non-melanistic) big cats such as leopards or jaguars.",
+      "They are adaptable predators occupying forests and grasslands."
+    ],
+    "habitat": ["Forests", "Grasslands"],
+    "difficulty": "Hard",
+    "food": ["Mammals", "Birds"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "p-3",
+    "commonName": "Porcupine",
+    "latinName": "Erethizontidae",
+    "description": [
+      "Porcupines are rodents with a coat of sharp quills used for defence and are primarily herbivorous.",
+      "They inhabit forests and grasslands and feed on vegetation."
+    ],
+    "habitat": ["Forests", "Woodlands"],
+    "difficulty": "Easy",
+    "food": ["Bark", "Leaves", "Fruit"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "p-4",
+    "commonName": "Puffin",
+    "latinName": "Fratercula arctica",
+    "description": [
+      "Puffins are small seabirds with colourful bills that dive for fish and nest on coastal cliff ledges and islands.",
+      "They feed primarily on small fish and often carry multiple fish crosswise in their bills."
+    ],
+    "habitat": ["Coastal cliffs", "Islands"],
+    "difficulty": "Medium",
+    "food": ["Small fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "p-5",
+    "commonName": "Python",
+    "latinName": "Pythonidae",
+    "description": [
+      "Pythons are non-venomous constrictor snakes found in Africa, Asia and Australia that feed on mammals and birds.",
+      "They are ambush predators that swallow prey whole."
+    ],
+    "habitat": ["Forests", "Grasslands", "Wetlands"],
+    "difficulty": "Hard",
+    "food": ["Mammals", "Birds"],
+    "images": [{ "url": "" }]
+  }
+]

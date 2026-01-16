@@ -1,0 +1,67 @@
+[
+  {
+    "id": "o-1",
+    "commonName": "Octopus",
+    "latinName": "Octopoda",
+    "description": [
+      "Octopuses are intelligent cephalopods with eight arms, known for problem-solving and camouflage abilities.",
+      "They feed on crustaceans, molluscs and fish and inhabit diverse marine habitats."
+    ],
+    "habitat": ["Reefs", "Coastal waters"],
+    "difficulty": "Hard",
+    "food": ["Crustaceans", "Molluscs", "Fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "o-2",
+    "commonName": "Ocelot",
+    "latinName": "Leopardus pardalis",
+    "description": [
+      "The ocelot is a medium-sized wild cat from the Americas with a distinctive spotted coat and nocturnal habits.",
+      "They hunt small mammals, birds and reptiles in forested habitats."
+    ],
+    "habitat": ["Tropical forests", "Shrublands"],
+    "difficulty": "Hard",
+    "food": ["Small mammals", "Birds", "Reptiles"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "o-3",
+    "commonName": "Orangutan",
+    "latinName": "Pongo pygmaeus",
+    "description": [
+      "Orangutans are great apes native to Borneo and Sumatra, primarily arboreal and frugivorous with high intelligence.",
+      "They live in tropical forests and have long lifespans and complex social behaviours."
+    ],
+    "habitat": ["Tropical forests"],
+    "difficulty": "Hard",
+    "food": ["Fruit", "Leaves", "Insects"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "o-4",
+    "commonName": "Osprey",
+    "latinName": "Pandion haliaetus",
+    "description": [
+      "The osprey is a fish-eating raptor found near water bodies worldwide, noted for its hovering and plunge-diving hunting style.",
+      "They nest near coasts, rivers and lakes and feed almost exclusively on fish."
+    ],
+    "habitat": ["Coastal areas", "Rivers", "Lakes"],
+    "difficulty": "Medium",
+    "food": ["Fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "o-5",
+    "commonName": "Ostrich",
+    "latinName": "Struthio camelus",
+    "description": [
+      "The ostrich is the world's largest bird, flightless and adapted for running with powerful legs and large eyes.",
+      "They inhabit open plains and feed on plants and small animals."
+    ],
+    "habitat": ["Savannas", "Deserts"],
+    "difficulty": "Easy",
+    "food": ["Plants", "Seeds", "Invertebrates"],
+    "images": [{ "url": "" }]
+  }
+]

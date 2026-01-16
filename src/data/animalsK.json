@@ -1,0 +1,83 @@
+[
+  {
+    "id": "k-1",
+    "commonName": "Kangaroo",
+    "latinName": "Macropus",
+    "description": [
+      "These large marsupials from Australia are known for hopping on powerful hind legs and carrying young in a pouch."
+    ],
+    "habitat": ["Grasslands", "Woodlands"],
+    "difficulty": "Easy",
+    "food": ["Grasses", "Leaves"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1575699914911-0027c7b95fb6?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2FuZ2Fyb298ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  },
+  {
+    "id": "k-2",
+    "commonName": "Koala",
+    "latinName": "Phascolarctos cinereus",
+    "description": [
+      "These marsupials, native to Australia, feed predominantly on eucalyptus leaves.",
+      "These cute marsupials have specialised diets and spend much of their time resting in trees."
+    ],
+    "habitat": ["Eucalyptus forests"],
+    "difficulty": "Easy",
+    "food": ["Eucalyptus leaves"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1664302956815-2a270ad7a9b1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8S29hbGF8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  },
+  {
+    "id": "k-3",
+    "commonName": "Kudu",
+    "latinName": "Tragelaphus strepsiceros",
+    "description": [
+      "This four-legged mammal has impressive spiral horns and is native to African woodlands and savannas."
+    ],
+    "habitat": ["Woodlands", "Savanna"],
+    "difficulty": "Medium",
+    "food": ["Leaves", "Shoots"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1527644702050-c947a80cdf38?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8a3VkdXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "k-4",
+    "commonName": "Kingfisher",
+    "latinName": "Alcedinidae",
+    "description": [
+      "These small, colourful birds are often associated with water, diving to catch fish with their sharp bills."
+    ],
+    "habitat": ["Rivers", "Lakes", "Coastal areas"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2luZ2Zpc2hlcnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "k-5",
+    "commonName": "Kestrel",
+    "latinName": "Falco tinnunculus",
+    "description": [
+      "These birds are small falcons noted for hovering while hunting small mammals and insects in open country."
+    ],
+    "habitat": ["Grasslands", "Open country"],
+    "difficulty": "Medium",
+    "food": ["Small mammals", "Insects"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1509641402296-b7f020ccf694?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2VzdHJlbHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  }
+]

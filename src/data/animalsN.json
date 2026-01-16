@@ -1,0 +1,67 @@
+[
+  {
+    "id": "n-1",
+    "commonName": "Narwhal",
+    "latinName": "Monodon monoceros",
+    "description": [
+      "The narwhal is a medium-sized toothed whale noted for the long spiral tusk found in males, inhabiting Arctic waters.",
+      "They feed on fish, squid and shrimp and are adapted to cold marine environments."
+    ],
+    "habitat": ["Arctic waters"],
+    "difficulty": "Hard",
+    "food": ["Fish", "Squid", "Shrimp"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "n-2",
+    "commonName": "Newt",
+    "latinName": "Salamandridae",
+    "description": [
+      "Newts are small amphibians in the salamander family with aquatic larvae and varying terrestrial or aquatic adult phases.",
+      "They feed on small invertebrates in ponds and damp habitats."
+    ],
+    "habitat": ["Ponds", "Wetlands", "Woodlands"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "n-3",
+    "commonName": "Numbat",
+    "latinName": "Myrmecobius fasciatus",
+    "description": [
+      "The numbat is an Australian marsupial that feeds almost exclusively on termites and has distinctive banding on its body.",
+      "It is diurnal and forages on the ground using a long sticky tongue."
+    ],
+    "habitat": ["Woodlands", "Eucalypt forests"],
+    "difficulty": "Hard",
+    "food": ["Termites"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "n-4",
+    "commonName": "Nightingale",
+    "latinName": "Luscinia megarhynchos",
+    "description": [
+      "The nightingale is a small passerine bird known for its powerful and beautiful song, most often heard at dusk and night.",
+      "They inhabit woodlands and scrub and feed on invertebrates and berries."
+    ],
+    "habitat": ["Woodlands", "Scrub"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Berries"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "n-5",
+    "commonName": "Nutria",
+    "latinName": "Myocastor coypus",
+    "description": [
+      "Nutria (coypu) are large semiaquatic rodents introduced in many regions, feeding on aquatic plants and burrowing in banks.",
+      "They can impact wetland vegetation and agriculture."
+    ],
+    "habitat": ["Wetlands", "Marshes"],
+    "difficulty": "Easy",
+    "food": ["Aquatic plants"],
+    "images": [{ "url": "" }]
+  }
+]

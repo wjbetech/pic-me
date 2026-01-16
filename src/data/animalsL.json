@@ -1,0 +1,74 @@
+[
+  {
+    "id": "l-1",
+    "commonName": "Lion",
+    "latinName": "Panthera leo",
+    "description": [
+      "The lion is a large social cat living in groups called prides, native to Africa and parts of Asia.",
+      "They are apex predators feeding on large ungulates."
+    ],
+    "habitat": ["Savannas", "Grasslands"],
+    "difficulty": "Hard",
+    "food": ["Large mammals"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGlvbnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "l-2",
+    "commonName": "Lemur",
+    "latinName": "Lemuridae",
+    "description": [
+      "These small primates live in Madagascar, with diverse forms, diets and social systems."
+    ],
+    "habitat": ["Tropical forests"],
+    "difficulty": "Hard",
+    "food": ["Fruit", "Leaves", "Insects"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1541890633-a92e223f2200?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGVtdXJ8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  },
+  {
+    "id": "l-3",
+    "commonName": "Llama",
+    "latinName": "Lama glama",
+    "description": [
+      "Llamas are domesticated camelids from South America used as pack animals and for wool.",
+      "They graze on grasses and are adapted to high-altitude environments."
+    ],
+    "habitat": ["Highlands", "Grasslands"],
+    "difficulty": "Easy",
+    "food": ["Grasses", "Hay"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "l-4",
+    "commonName": "Lobster",
+    "latinName": "Nephropidae",
+    "description": [
+      "Lobsters are large marine crustaceans prized as seafood and known for their strong claws and long lifespan.",
+      "They live on the seafloor and feed on a variety of organisms."
+    ],
+    "habitat": ["Seafloor", "Coastal waters"],
+    "difficulty": "Medium",
+    "food": ["Molluscs", "Crustaceans", "Detritus"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "l-5",
+    "commonName": "Lynx",
+    "latinName": "Lynx lynx",
+    "description": [
+      "Lynx are medium-sized wild cats with tufted ears and powerful limbs, adapted to forested habitats.",
+      "They prey on small to medium mammals and birds."
+    ],
+    "habitat": ["Forests", "Taiga"],
+    "difficulty": "Hard",
+    "food": ["Small mammals", "Birds"],
+    "images": [{ "url": "" }]
+  }
+]

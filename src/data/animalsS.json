@@ -1,0 +1,67 @@
+[
+  {
+    "id": "s-1",
+    "commonName": "Salmon",
+    "latinName": "Salmonidae",
+    "description": [
+      "Salmon are anadromous fish that migrate from the ocean to freshwater to spawn, important ecologically and commercially.",
+      "They feed on invertebrates and smaller fish during different life stages."
+    ],
+    "habitat": ["Rivers", "Coastal waters"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "s-2",
+    "commonName": "Shark",
+    "latinName": "Selachimorpha",
+    "description": [
+      "Sharks are cartilaginous fish with diverse forms, occupying many marine ecological niches as predators and scavengers.",
+      "They feed on fish, marine mammals, invertebrates and carrion depending on species."
+    ],
+    "habitat": ["Open ocean", "Coastal waters"],
+    "difficulty": "Hard",
+    "food": ["Fish", "Marine mammals", "Invertebrates"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "s-3",
+    "commonName": "Swan",
+    "latinName": "Cygnus",
+    "description": [
+      "Swans are large waterfowl with long necks and graceful appearance, often found on lakes and rivers.",
+      "They feed on aquatic vegetation and small aquatic organisms."
+    ],
+    "habitat": ["Lakes", "Rivers", "Wetlands"],
+    "difficulty": "Easy",
+    "food": ["Aquatic plants", "Small invertebrates"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "s-4",
+    "commonName": "Seal",
+    "latinName": "Pinnipedia",
+    "description": [
+      "Seals are marine mammals adapted to aquatic life with flippers and insulating blubber, feeding on fish and invertebrates.",
+      "They haul out on shores or ice to rest and breed."
+    ],
+    "habitat": ["Coastal waters", "Ice floes"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Squid"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "s-5",
+    "commonName": "Squirrel",
+    "latinName": "Sciuridae",
+    "description": [
+      "Squirrels are small to medium-sized rodents with bushy tails, many species are arboreal and feed on nuts and seeds.",
+      "They are important seed dispersers in many ecosystems."
+    ],
+    "habitat": ["Forests", "Parks"],
+    "difficulty": "Easy",
+    "food": ["Nuts", "Seeds", "Fruit"],
+    "images": [{ "url": "" }]
+  }
+]

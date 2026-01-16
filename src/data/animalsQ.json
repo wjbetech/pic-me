@@ -1,0 +1,67 @@
+[
+  {
+    "id": "q-1",
+    "commonName": "Quail",
+    "latinName": "Coturnix",
+    "description": [
+      "Quails are small ground-dwelling birds often found in grasslands and agricultural areas, feeding on seeds and insects.",
+      "They are commonly hunted and also kept as poultry in some regions."
+    ],
+    "habitat": ["Grasslands", "Farmlands"],
+    "difficulty": "Easy",
+    "food": ["Seeds", "Insects"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "q-2",
+    "commonName": "Quokka",
+    "latinName": "Setonix brachyurus",
+    "description": [
+      "The quokka is a small marsupial from Western Australia known for its friendly appearance and rounded face.",
+      "It forages on vegetation and is mostly nocturnal."
+    ],
+    "habitat": ["Shrublands", "Coastal areas"],
+    "difficulty": "Easy",
+    "food": ["Leaves", "Vegetation"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "q-3",
+    "commonName": "Quetzal",
+    "latinName": "Pharomachrus mocinno",
+    "description": [
+      "The resplendent quetzal is a colorful bird of Central American cloud forests, prized for its vibrant plumage.",
+      "They feed on fruit and small animals and are culturally significant in the region."
+    ],
+    "habitat": ["Cloud forests"],
+    "difficulty": "Hard",
+    "food": ["Fruit", "Small animals"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "q-4",
+    "commonName": "Quagga",
+    "latinName": "Equus quagga quagga",
+    "description": [
+      "The quagga was a subspecies of plains zebra with distinct striping only on the front of the body; it is now extinct.",
+      "Historical records and preserved skins inform its appearance and biology."
+    ],
+    "habitat": ["Grasslands"],
+    "difficulty": "Historical",
+    "food": ["Grasses"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "q-5",
+    "commonName": "Quoll",
+    "latinName": "Dasyurus",
+    "description": [
+      "Quolls are carnivorous marsupials native to Australia and New Guinea, feeding on small vertebrates and invertebrates.",
+      "They occupy a range of habitats including forests and grasslands."
+    ],
+    "habitat": ["Forests", "Woodlands"],
+    "difficulty": "Medium",
+    "food": ["Small vertebrates", "Invertebrates"],
+    "images": [{ "url": "" }]
+  }
+]

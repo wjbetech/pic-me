@@ -1,0 +1,67 @@
+[
+  {
+    "id": "x-1",
+    "commonName": "Xenops",
+    "latinName": "Xenops",
+    "description": [
+      "Xenops are small woodcreeper-like birds found in Neotropical forests, adapted to foraging on bark and branches.",
+      "They feed on insects and arthropods found on tree surfaces."
+    ],
+    "habitat": ["Tropical forests"],
+    "difficulty": "Medium",
+    "food": ["Insects", "Arthropods"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "x-2",
+    "commonName": "Xerus",
+    "latinName": "Xerus",
+    "description": [
+      "Xerus are African ground squirrels that inhabit savannas and open habitats, living in burrows and foraging on seeds and plants.",
+      "They are social and live in colonies."
+    ],
+    "habitat": ["Savannas", "Grasslands"],
+    "difficulty": "Medium",
+    "food": ["Seeds", "Plants"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "x-3",
+    "commonName": "Xenopus",
+    "latinName": "Xenopus laevis",
+    "description": [
+      "Xenopus (African clawed frog) are aquatic frogs used in research and found in freshwater habitats across Africa.",
+      "They feed on small aquatic invertebrates and are capable swimmers."
+    ],
+    "habitat": ["Freshwater ponds", "Lakes"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "x-4",
+    "commonName": "Xoloitzcuintli",
+    "latinName": "Canis lupus familiaris",
+    "description": [
+      "The Xoloitzcuintli (Xolo) is a Mexican hairless dog breed with ancient cultural significance and variable sizes.",
+      "They are companion animals today, historically also used for ritual purposes."
+    ],
+    "habitat": ["Domestic"],
+    "difficulty": "Easy",
+    "food": ["Dog food"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "x-5",
+    "commonName": "Xantus's Murrelet",
+    "latinName": "Synthliboramphus hypoleucus",
+    "description": [
+      "Xantus's murrelet is a small seabird named after the naturalist Xantus, found in the eastern Pacific and nesting on islands.",
+      "They feed on small fish and forage at sea."
+    ],
+    "habitat": ["Coastal waters", "Islands"],
+    "difficulty": "Hard",
+    "food": ["Small fish"],
+    "images": [{ "url": "" }]
+  }
+]

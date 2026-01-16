@@ -1,0 +1,67 @@
+[
+  {
+    "id": "z-1",
+    "commonName": "Zebra",
+    "latinName": "Equus quagga",
+    "description": [
+      "Zebras are African equids known for distinctive black-and-white striping, living in herds and grazing on grasses.",
+      "They use stripes for social signalling and potentially predator confusion."
+    ],
+    "habitat": ["Savannas", "Grasslands"],
+    "difficulty": "Easy",
+    "food": ["Grasses"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "z-2",
+    "commonName": "Zebu",
+    "latinName": "Bos indicus",
+    "description": [
+      "Zebu are domesticated cattle breeds with a characteristic hump, adapted to tropical climates and used widely in agriculture.",
+      "They are important livestock across South Asia and other regions."
+    ],
+    "habitat": ["Farmlands", "Tropical regions"],
+    "difficulty": "Easy",
+    "food": ["Grasses", "Hay"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "z-3",
+    "commonName": "Zorilla",
+    "latinName": "Ictonyx striatus",
+    "description": [
+      "The zorilla (striped polecat) is a skunk-like mustelid from Africa capable of spraying a strong-smelling secretion for defence.",
+      "They are nocturnal and feed on small vertebrates and invertebrates."
+    ],
+    "habitat": ["Savannas", "Woodlands"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small vertebrates"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "z-4",
+    "commonName": "Zander",
+    "latinName": "Sander lucioperca",
+    "description": [
+      "Zander is a freshwater predatory fish in Eurasia, prized in fisheries and similar in ecology to pike-perch.",
+      "They feed on smaller fish and inhabit lakes and rivers."
+    ],
+    "habitat": ["Lakes", "Rivers"],
+    "difficulty": "Medium",
+    "food": ["Small fish"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "z-5",
+    "commonName": "Zokor",
+    "latinName": "Myospalacinae",
+    "description": [
+      "Zokors are burrowing rodents native to Asia, similar in habit to moles and adapted to life underground.",
+      "They feed on roots and tubers and create extensive burrow systems."
+    ],
+    "habitat": ["Grasslands", "Steppe"],
+    "difficulty": "Medium",
+    "food": ["Roots", "Tubers"],
+    "images": [{ "url": "" }]
+  }
+]

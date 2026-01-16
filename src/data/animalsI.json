@@ -1,0 +1,68 @@
+[
+  {
+    "id": "i-1",
+    "commonName": "Iguana",
+    "latinName": "Iguana iguana",
+    "description": [
+      "These large, colorful herbivorous lizards are found in tropical areas of Central and South America."
+    ],
+    "habitat": ["Tropical forests"],
+    "difficulty": "Medium",
+    "food": ["Leaves", "Flowers", "Fruit"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1590418270220-243198c900cc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aWd1YW5hfGVufDB8fDB8fHww"
+      }
+    ]
+  },
+  {
+    "id": "i-2",
+    "commonName": "Ibis",
+    "latinName": "Threskiornithidae",
+    "description": [
+      "This long-legged wading bird has a down-curved bill used for probing mud and shallow water for smaller animals."
+    ],
+    "habitat": ["Wetlands", "Marshes"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small fish"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1725400821251-8b64c2f00605?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aWJpc3xlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "i-3",
+    "commonName": "Impala",
+    "latinName": "Aepyceros melampus",
+    "description": [
+      "The impala is a medium-sized African antelope known for its leaping ability and social herds.",
+      "They graze and browse in savannas and woodlands and are prey for large carnivores."
+    ],
+    "habitat": ["Savannas", "Woodlands"],
+    "difficulty": "Medium",
+    "food": ["Grasses", "Leaves"],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Impala_%28Aepyceros_melampus%29_male_Kruger.jpg/960px-Impala_%28Aepyceros_melampus%29_male_Kruger.jpg"
+      }
+    ]
+  },
+  {
+    "id": "i-4",
+    "commonName": "Indri",
+    "latinName": "Indri indri",
+    "description": [
+      "The indri is a large lemur from Madagascar, known for its loud calls and arboreal lifestyle.",
+      "They feed on leaves, fruits and seeds in forest canopies."
+    ],
+    "habitat": ["Tropical forests"],
+    "difficulty": "Hard",
+    "food": ["Leaves", "Fruit", "Seeds"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1591824579767-0d4f02b45a36?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kcml8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  }
+]

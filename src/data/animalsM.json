@@ -1,0 +1,67 @@
+[
+  {
+    "id": "m-1",
+    "commonName": "Macaw",
+    "latinName": "Ara spp.",
+    "description": [
+      "Macaws are large, brightly coloured parrots from Central and South America, known for loud calls and strong beaks.",
+      "They feed on fruit, nuts and seeds and often form flocks."
+    ],
+    "habitat": ["Tropical forests", "Woodlands"],
+    "difficulty": "Medium",
+    "food": ["Fruit", "Nuts", "Seeds"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "m-2",
+    "commonName": "Meerkat",
+    "latinName": "Suricata suricatta",
+    "description": [
+      "Meerkats are small social mongooses from southern Africa that forage in groups and live in burrows.",
+      "They feed on insects, small vertebrates and plants."
+    ],
+    "habitat": ["Deserts", "Arid regions"],
+    "difficulty": "Easy",
+    "food": ["Insects", "Small vertebrates"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "m-3",
+    "commonName": "Mole",
+    "latinName": "Talpidae",
+    "description": [
+      "Moles are small, fossorial mammals adapted to digging and living underground, feeding on invertebrates.",
+      "They play roles in soil aeration and ecosystem engineering."
+    ],
+    "habitat": ["Grasslands", "Woodlands"],
+    "difficulty": "Easy",
+    "food": ["Earthworms", "Invertebrates"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "m-4",
+    "commonName": "Manatee",
+    "latinName": "Trichechus",
+    "description": [
+      "Manatees are large, slow-moving herbivorous marine mammals found in warm coastal waters and rivers.",
+      "They graze on aquatic vegetation and are gentle, long-lived animals."
+    ],
+    "habitat": ["Coastal waters", "Rivers"],
+    "difficulty": "Medium",
+    "food": ["Aquatic plants"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "m-5",
+    "commonName": "Mongoose",
+    "latinName": "Herpestidae",
+    "description": [
+      "Mongooses are small carnivorous mammals known for agility and, in some species, ability to confront venomous snakes.",
+      "They are found in Africa, Asia and southern Europe and feed on small animals and eggs."
+    ],
+    "habitat": ["Grasslands", "Woodlands"],
+    "difficulty": "Medium",
+    "food": ["Invertebrates", "Small vertebrates", "Eggs"],
+    "images": [{ "url": "" }]
+  }
+]
