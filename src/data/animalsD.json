@@ -24,8 +24,8 @@
     "commonName": "Bottlenose Dolphin",
     "latinName": "Tursiops truncatus",
     "description": [
-      "Dolphins are highly intelligent marine mammals known for their playful behavior and complex social structures.",
-      "They are part of the family Delphinidae and are closely related to whales and porpoises."
+      "This animal is a highly intelligent marine mammal known for its playful behavior and complex social structures.",
+      "They large marine mammal feeds on fish and squid, using echolocation to hunt in various aquatic environments."
     ],
     "habitat": ["Oceans", "Coastal Waters", "Rivers"],
     "difficulty": "Hard",
@@ -36,6 +36,80 @@
       },
       {
         "url": "https://images.unsplash.com/photo-1495368008737-9d436e094dd5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "d-3",
+    "commonName": "Dingo",
+    "latinName": "Canis lupus dingo",
+    "description": [
+      "This is a wild canid native to Australia, typically sandy-colored and adaptable to varied habitats.",
+      "This medium-large sized canid is an opportunistic predator and scavenger, often hunting small mammals and birds."
+    ],
+    "habitat": ["Grasslands", "Woodlands", "Deserts"],
+    "difficulty": "Medium",
+    "food": ["Rodents", "Birds", "Carrion"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1623479134174-b4f1a6ef0251?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1564360748210-61754c7684d7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "d-4",
+    "commonName": "Donkey",
+    "latinName": "Equus africanus asinus",
+    "description": [
+      "This animal is a domesticated member of the horse family often used as working animals for carrying loads.",
+      "This animal is a hardy, horse-like herbivore and can thrive in arid and semi-arid environments."
+    ],
+    "habitat": ["Farmland", "Grasslands", "Semi-arid regions"],
+    "difficulty": "Easy",
+    "food": ["Grass", "Hay", "Shrubs"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1568495732369-3a3f5b5290dd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1569506474518-ba135df90c6d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "d-5",
+    "commonName": "Duck",
+    "latinName": "Marmaronetta angustirostris",
+    "description": [
+      "This animal is a small to medium sized water-based bird found in wetlands across parts of Europe, Africa, and Asia.",
+      "This bird feeds on aquatic plants and invertebrates and prefers shallow, vegetated waters."
+    ],
+    "habitat": ["Marshes", "Lagoons", "Shallow wetlands"],
+    "difficulty": "Easy",
+    "food": ["Aquatic plants", "Seeds", "Invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1459682687441-7761439a709d?q=80&w=1240&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "d-6",
+    "commonName": "Dhole",
+    "latinName": "Cuon alpinus",
+    "description": [
+      "This animal is an Asiatic wild dog known for its social packs and cooperative hunting of medium-sized ungulates.",
+      "This Asiatic canid inhabits forests and grasslands across South and Southeast Asia."
+    ],
+    "habitat": ["Forests", "Grasslands", "Mountain foothills"],
+    "difficulty": "Hard",
+    "food": ["Deer", "Wild boar", "Small mammals"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1664693297207-5c3c4f57fe1b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   }

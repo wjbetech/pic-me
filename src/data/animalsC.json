@@ -19,5 +19,105 @@
         "url": "https://images.unsplash.com/photo-1604890532411-cb935dc9133c?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
+  },
+  {
+    "id": "c-2",
+    "commonName": "Caiman Crocodile",
+    "latinName": "Caiman crocodilus",
+    "description": [
+      "This animal is a small to medium-sized crocodilian found in Central and South American freshwater habitats.",
+      "This animal is an opportunistic predator that feeds on fish, amphibians, and occasionally small mammals and birds."
+    ],
+    "habitat": ["Rivers", "Swamps", "Wetlands"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Amphibians", "Small mammals"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1698245605074-f7634ddbdae6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1721928978075-c2c683946322?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "c-3",
+    "commonName": "Cheetah",
+    "latinName": "Acinonyx jubatus",
+    "description": [
+      "The cheetah is the fastest land animal, built for short bursts of high-speed pursuit across open terrain.",
+      "It primarily hunts small to medium-sized ungulates using eyesight and explosive acceleration."
+    ],
+    "habitat": ["Savannas", "Grasslands", "Open plains"],
+    "difficulty": "Easy",
+    "food": ["Large mammals", "Deer", "Antelope"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?q=80&w=1215&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1526246708488-d433888791b7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "c-4",
+    "commonName": "Crane",
+    "latinName": "Gruidae",
+    "description": [
+      "This animal is a large, long-legged and long-necked bird often associated with wetlands and grasslands.",
+      "Many of these animals perform courtship dances to attract a suitable mate."
+    ],
+    "habitat": ["Wetlands", "Marshes", "Grasslands"],
+    "difficulty": "Medium",
+    "food": ["Plants", "Invertebrates", "Small vertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1712097897384-515c8eb2c779?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "c-5",
+    "commonName": "Coyote",
+    "latinName": "Canis latrans",
+    "description": [
+      "The animal is a highly adaptable canid native to North America, thriving in a wide range of habitats including urban areas.",
+      "They are opportunistic omnivores that hunt small mammals and scavenge when necessary."
+    ],
+    "habitat": [
+      "Forests",
+      "Grasslands",
+      "Urban areas",
+      "Deserts",
+      "Great Plains"
+    ],
+    "difficulty": "Medium",
+    "food": ["Rodents", "Birds", "Fruits"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661954689066-3d39e5054084?q=80&w=1232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1493911324503-e5c8bf9df181?q=80&w=2144&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "c-6",
+    "commonName": "Horseshoe Crab",
+    "latinName": "Tachypleus gigas",
+    "description": [
+      "This animal is a a decapod crustacean with a compact body, a short projecting tail, and strong claws for feeding and defense.",
+      "This animal is farmed for its blue blood, which contains a substance used to detect bacterial toxins in medicine."
+    ],
+    "habitat": ["Tropical oceans", "Seagrass meadows", "Muddy shores"],
+    "difficulty": "Medium",
+    "food": ["Worms", "Clams", "Snails", "Fish"],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Tachypleus_gigas.JPG/960px-Tachypleus_gigas.JPG"
+      }
+    ]
   }
 ]

@@ -69,7 +69,7 @@
       "They hunt smaller fish and are often found in warm coastal waters and coral reefs."
     ],
     "habitat": ["Coastal waters", "Reefs", "Open ocean"],
-    "difficulty": "Hard",
+    "difficulty": "Medium",
     "food": ["Fish", "Cephalopods"],
     "images": [
       {
@@ -89,7 +89,7 @@
       "Some species are insectivorous while others feed on fruit, nectar, or even blood."
     ],
     "habitat": ["Caves", "Forests", "Urban areas"],
-    "difficulty": "Medium",
+    "difficulty": "Easy",
     "food": ["Insects", "Fruit", "Nectar"],
     "images": [
       {
@@ -111,71 +111,13 @@
     "habitat": ["Rivers", "Streams", "Wetlands"],
     "difficulty": "Easy",
     "food": ["Bark", "Aquatic plants", "Leaves"],
-    "images": []
-  },
-  {
-    "id": "b-7",
-    "commonName": "Bighorn Sheep",
-    "latinName": "Ovis canadensis",
-    "description": [
-      "Bighorn sheep are mountain-dwelling ungulates renowned for their curved horns and agility on steep terrain.",
-      "They live in social groups and males often engage in head-butting contests during mating season."
-    ],
-    "habitat": ["Mountains", "Cliffs", "Alpine meadows"],
-    "difficulty": "Hard",
-    "food": ["Grasses", "Shrubs", "Lichens"],
-    "images": []
-  },
-  {
-    "id": "b-8",
-    "commonName": "Bald Eagle",
-    "latinName": "Haliaeetus leucocephalus",
-    "description": [
-      "The bald eagle is a large bird of prey native to North America, recognized by its white head and tail.",
-      "It primarily feeds on fish which it captures with powerful talons."
-    ],
-    "habitat": ["Coastal areas", "Rivers", "Lakes"],
-    "difficulty": "Medium",
-    "food": ["Fish", "Birds", "Carrion"],
-    "images": []
-  },
-  {
-    "id": "b-9",
-    "commonName": "Barn Owl",
-    "latinName": "Tyto alba",
-    "description": [
-      "Barn owls are nocturnal raptors with a distinctive heart-shaped face and silent flight.",
-      "They hunt small mammals such as rodents in open habitats."
-    ],
-    "habitat": ["Farmland", "Grasslands", "Barns"],
-    "difficulty": "Medium",
-    "food": ["Rodents", "Small mammals"],
-    "images": []
-  },
-  {
-    "id": "b-10",
-    "commonName": "Bullfrog",
-    "latinName": "Lithobates catesbeianus",
-    "description": [
-      "Bullfrogs are large, acoustically loud amphibians common in ponds and wetlands.",
-      "They are opportunistic predators, feeding on insects, fish, and small vertebrates."
-    ],
-    "habitat": ["Ponds", "Marshes", "Wetlands"],
-    "difficulty": "Easy",
-    "food": ["Insects", "Small fish", "Other amphibians"],
-    "images": []
-  },
-  {
-    "id": "b-11",
-    "commonName": "Blue Whale",
-    "latinName": "Balaenoptera musculus",
-    "description": [
-      "The blue whale is the largest animal known to have ever existed, an enormous filter-feeding marine mammal.",
-      "They consume vast quantities of krill and undertake long oceanic migrations."
-    ],
-    "habitat": ["Open ocean", "Pelagic waters"],
-    "difficulty": "Hard",
-    "food": ["Krill", "Small crustaceans"],
-    "images": []
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1675716926653-8f4529595012?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1609377419340-9dd8aabe3825?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   }
 ]

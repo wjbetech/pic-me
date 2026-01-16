@@ -17,5 +17,110 @@
         "url": "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
+  },
+  {
+    "id": "e-2",
+    "commonName": "Bald Eagle",
+    "latinName": "Haliaeetus leucocephalus",
+    "description": [
+      "This large bird of prey is native to and symbolic of North America, recognized by its white head and tail.",
+      "This large bird of prey primarily feeds on fish which it captures with powerful talons."
+    ],
+    "habitat": ["Coastal areas", "Rivers", "Lakes"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Birds", "Carrion"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1557401620-67270b61ea82?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "e-3",
+    "commonName": "Moray Eel",
+    "latinName": "Muraenidae",
+    "description": [
+      "Moray eels are a family of elongated marine eels often found in crevices on reefs and rocky substrates.",
+      "They are primarily nocturnal predators feeding on fish and crustaceans."
+    ],
+    "habitat": ["Reefs", "Rocky crevices", "Coastal waters"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Crustaceans"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1559897202-7fc939ce9db2?q=80&w=1095&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1540253236931-2a77e060b434?q=80&w=1132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "e-4",
+    "commonName": "Emu",
+    "latinName": "Dromaius novaehollandiae",
+    "description": [
+      "The emu is a large, flightless bird native to Australia, with long legs adapted for running.",
+      "It feeds on plants and insects and is a nomadic forager across open country."
+    ],
+    "habitat": ["Grasslands", "Savannah", "Open woodlands"],
+    "difficulty": "Easy",
+    "food": ["Seeds", "Fruits", "Insects"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1568540354748-376bef465a9d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "e-5",
+    "commonName": "Common Eland",
+    "latinName": "Taurotragus oryx",
+    "description": [
+      "The common eland is one of the largest African antelopes, known for its spiral horns and grazing habits.",
+      "They inhabit savannas and open woodlands and often form herds."
+    ],
+    "habitat": ["Savannas", "Woodlands", "Grasslands"],
+    "difficulty": "Medium",
+    "food": ["Grasses", "Leaves", "Shrubs"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1730545093403-f0ced636f4fe?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "e-6",
+    "commonName": "Elk",
+    "latinName": "Cervus canadensis",
+    "description": [
+      "Elk (also called wapiti) are large cervids found in North America and eastern Asia, noted for their seasonal rutting calls.",
+      "They graze on grasses and browse shrubs in forests and meadows."
+    ],
+    "habitat": ["Forests", "Meadows", "Mountains"],
+    "difficulty": "Medium",
+    "food": ["Grasses", "Shrubs", "Leaves"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1557283380-6571c78f5be9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "e-7",
+    "commonName": "Great Egret",
+    "latinName": "Ardea alba",
+    "description": [
+      "The great egret is a large heron-like bird with a long neck and legs, often seen wading in shallow water hunting fish.",
+      "It feeds mainly on fish, frogs, and small aquatic animals."
+    ],
+    "habitat": ["Wetlands", "Shorelines", "Marshes"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Amphibians", "Invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1614522444971-3111254e71b9?q=80&w=1233&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   }
 ]

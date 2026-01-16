@@ -17,5 +17,112 @@
         "url": "https://plus.unsplash.com/premium_photo-1661854852397-5d7925e23485?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
+  },
+  {
+    "id": "f-2",
+    "commonName": "Bullfrog",
+    "latinName": "Lithobates catesbeianus",
+    "description": [
+      "This animal is a large, acoustically loud amphibians common in ponds and wetlands.",
+      "This large amphibian is an opportunistic predator, feeding on insects, fish, and small vertebrates."
+    ],
+    "habitat": ["Ponds", "Marshes", "Wetlands"],
+    "difficulty": "Medium",
+    "food": ["Insects", "Small fish", "Other amphibians"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1685331010370-56f1a0791079?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "f-3",
+    "commonName": "Flamingo",
+    "latinName": "Phoenicopteridae",
+    "description": [
+      "This tall, pink wading bird is known for its bright pink plumage and long legs.",
+      "This tall bird feeds by filtering small organisms from shallow water and often form large social flocks."
+    ],
+    "habitat": ["Lagoons", "Shallow lakes", "Coastal wetlands"],
+    "difficulty": "Medium",
+    "food": ["Algae", "Small crustaceans", "Plankton"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661812972252-e41bfc3eb000?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "f-4",
+    "commonName": "Peregrine Falcon",
+    "latinName": "Falco peregrinus",
+    "description": [
+      "This bird of prey is famous for its incredible diving speed when hunting.",
+      "This speedy bird of prey occupies a wide range of habitats and primarily preys on other birds."
+    ],
+    "habitat": ["Cliffs", "Open country", "Urban areas"],
+    "difficulty": "Hard",
+    "food": ["Birds", "Small mammals"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661909235962-12afdb447d3b?q=80&w=1234&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "f-5",
+    "commonName": "Fossa",
+    "latinName": "Cryptoprocta ferox",
+    "description": [
+      "The fossa is a cat-like carnivore endemic to Madagascar, an agile predator in forest habitats.",
+      "It preys on lemurs and other small to medium-sized animals."
+    ],
+    "habitat": ["Forests", "Rainforests"],
+    "difficulty": "Hard",
+    "food": ["Lemurs", "Rodents", "Birds"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1700044463524-9cb893abc83e?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "f-6",
+    "commonName": "Frigatebird",
+    "latinName": "Fregata magnificens",
+    "description": [
+      "Frigatebirds are large seabirds with long wings and forked tails, excellent at soaring above the ocean.",
+      "They often snatch prey from the water surface or steal from other birds."
+    ],
+    "habitat": ["Coastal areas", "Sea cliffs", "Islands"],
+    "difficulty": "Medium",
+    "food": ["Fish", "Squid", "Seabirds"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "f-7",
+    "commonName": "Flounder",
+    "latinName": "Paralichthys spp.",
+    "description": [
+      "Flounders are flatfish that live on the sea bottom and are adapted for camouflage with both eyes on one side of the head.",
+      "They are ambush predators feeding on fish and crustaceans."
+    ],
+    "habitat": ["Sandy bottoms", "Coastal waters", "Estuaries"],
+    "difficulty": "Medium",
+    "food": ["Small fish", "Crustaceans"],
+    "images": [{ "url": "" }]
+  },
+  {
+    "id": "f-8",
+    "commonName": "Firefly",
+    "latinName": "Lampyridae",
+    "description": [
+      "Fireflies are bioluminescent beetles known for their flashing light signals used in mating displays.",
+      "They inhabit moist environments and often feed on smaller invertebrates or decaying plant material."
+    ],
+    "habitat": ["Woodlands", "Meadows", "Wet areas"],
+    "difficulty": "Easy",
+    "food": ["Invertebrates", "Larvae", "Plant matter"],
+    "images": [{ "url": "" }]
   }
 ]
