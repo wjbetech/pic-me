@@ -1,0 +1,105 @@
+[
+  {
+    "id": "g-1",
+    "commonName": "Giraffe",
+    "latinName": "Giraffa camelopardalis",
+    "description": [
+      "This animal is the tallest living animal, known for its long neck and legs as well as distinctive pattern.",
+      "This tall animal browse trees in savannas and woodlands, feeding on acacia leaves."
+    ],
+    "habitat": ["Savannas", "Woodlands", "Grasslands"],
+    "difficulty": "Easy",
+    "food": ["Leaves", "Twigs", "Fruits"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661813434310-98cca4c9135e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2lyYWZmZXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "g-2",
+    "commonName": "Gorilla",
+    "latinName": "Gorilla gorilla",
+    "description": [
+      "This large mammal is native to central African forests, eating leaves."
+    ],
+    "habitat": ["Tropical forest"],
+    "difficulty": "Hard",
+    "food": ["Leaves", "Fruit", "Shoots"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1546146020-c84c6bf355bf?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29yaWxsYXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "g-3",
+    "commonName": "Gazelle",
+    "latinName": "Gazella spp.",
+    "description": [
+      "This four-legged mammal is known for its speed and agility, able to run away from predators.",
+      "This four-legged mammal is prey for large predators in the savannas and grasslands."
+    ],
+    "habitat": ["Savannas", "Grasslands", "Semi-deserts"],
+    "difficulty": "Medium",
+    "food": ["Grasses", "Leaves", "Shoots"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1650419259707-8e9790b88509?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2F6ZWxsZXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "g-4",
+    "commonName": "Grouse",
+    "latinName": "Tetraoninae",
+    "description": [
+      "This medium-sized game bird is often found in colder places with lots of plants and shrubs."
+    ],
+    "habitat": ["Woodlands", "Heaths", "Moors"],
+    "difficulty": "Medium",
+    "food": ["Seeds", "Berries", "Invertebrates"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661861746667-55d4c29aedb1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3JvdXNlfGVufDB8fDB8fHww"
+      }
+    ]
+  },
+  {
+    "id": "g-5",
+    "commonName": "Groundhog",
+    "latinName": "Marmota monax",
+    "description": [
+      "This animal is a burrowing rodent from North America, known for hibernation and digging extensive burrows.",
+      "This rodent shares its name with a popular tradition of predicting the arrival of spring."
+    ],
+    "habitat": ["Fields", "Woodland edges", "Meadows"],
+    "difficulty": "Easy",
+    "food": ["Grasses", "Herbs", "Vegetation"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1667504888877-3cf46ba26ecc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JvdW5kaG9nfGVufDB8fDB8fHww"
+      }
+    ]
+  },
+  {
+    "id": "g-6",
+    "commonName": "Gecko",
+    "latinName": "Gekkota",
+    "description": [
+      "This small to medium-sized lizard is known for its sticky toe pads and nocturnal habits",
+      "This small to medium-sized lizard feeds mainly on insects and other small invertebrates."
+    ],
+    "habitat": ["Tropical forests", "Deserts", "Urban areas"],
+    "difficulty": "Medium",
+    "food": ["Insects", "Spiders"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1664303201259-e1cd43e0eb85?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z2Vja298ZW58MHx8MHx8fDA%3D"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1661481072791-1df445889e4b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2Vja298ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  }
+]

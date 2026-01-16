@@ -1,0 +1,102 @@
+[
+  {
+    "id": "h-1",
+    "commonName": "European Hedgehog",
+    "latinName": "Erinaceus europaeus",
+    "description": [
+      "The small insectivorous mammal is covered in spines, common in gardens and woodlands.",
+      "It feeds on insects, snails, and other invertebrates and is mostly nocturnal."
+    ],
+    "habitat": ["Gardens", "Woodlands", "Hedgerows"],
+    "difficulty": "Easy",
+    "food": ["Insects", "Snails", "Worms"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1605369179729-4036b4d829cb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVkZ2Vob2d8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  },
+  {
+    "id": "h-2",
+    "commonName": "Arctic Hare",
+    "latinName": "Lepus arcticus",
+    "description": [
+      "This cute, cold-adapted animal has thick fur that goes through seasonal color changes.",
+      "They forage on woody plants, mosses, and lichens and are adapted to extreme cold."
+    ],
+    "habitat": ["Tundra", "Arctic plains"],
+    "difficulty": "Medium",
+    "food": ["Woody plants", "Mosses", "Lichens"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1613239324203-ac111d5cbadc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXJjdGljJTIwaGFyZXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "h-3",
+    "commonName": "Hummingbird",
+    "latinName": "Archilochus colubris",
+    "description": [
+      "A small, noisy bird found in eastern North America, noted for its rapid wingbeat and hovering flight."
+    ],
+    "habitat": ["Woodlands", "Gardens", "Shrublands"],
+    "difficulty": "Medium",
+    "food": ["Nectar", "Small insects"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1520638023360-6def43369781?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aHVtbWluZ2JpcmR8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  },
+  {
+    "id": "h-4",
+    "commonName": "Atlantic Herring",
+    "latinName": "Clupea harengus",
+    "description": [
+      "Atlantic herring is a schooling fish found in the North Atlantic, important for marine food webs and fisheries.",
+      "They feed on plankton and are prey for many larger predators."
+    ],
+    "habitat": ["Coastal waters", "Open ocean"],
+    "difficulty": "Medium",
+    "food": ["Plankton", "Small crustaceans"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1622391075054-518eafc230f8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
+  },
+  {
+    "id": "h-5",
+    "commonName": "Great Hornbill",
+    "latinName": "Buceros bicornis",
+    "description": [
+      "The large, colourful forest bird with a prominent casque on its bill, found in South and Southeast Asia.",
+      "They feed on fruit, small animals, and are important seed dispersers."
+    ],
+    "habitat": ["Tropical forests", "Woodlands"],
+    "difficulty": "Hard",
+    "food": ["Fruit", "Small vertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1689198362614-58de4e1b976f?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aG9ybmJpbGx8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
+  },
+  {
+    "id": "h-6",
+    "commonName": "Harrier",
+    "latinName": "Circus pygargus",
+    "description": [
+      "This slim, long-winged bird lives in open landscapes across Europe and Asia and migrates to Africa for winter."
+    ],
+    "habitat": ["Farmland", "Grasslands", "Open country"],
+    "difficulty": "Hard",
+    "food": ["Small mammals", "Birds", "Insects"],
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1696257975463-3b956749d029?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGFycmllcnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
+  }
+]
