@@ -3,6 +3,9 @@ import type { Animal } from "../../types/Animal";
 import "./MultiChoice.css";
 import { createRotation } from "../../utils/rotation";
 
+// Toggle debug logging for selection tracing
+const DEBUG_SELECTION = true; // temporarily enabled to trace repeated A selection
+
 interface GameSettings {
   blur: number;
   showDescription: boolean;
@@ -22,12 +25,24 @@ export default function MultiChoice({
   const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
   const [animalQueue, setAnimalQueue] = useState<Animal[]>([]);
   const queueIndexRef = useRef(0);
+  // A numeric id that increments with each load request; used to ignore stale loads
+  const loadRequestIdRef = useRef(0);
+  // Store the timeout id so in-flight timeouts can be cancelled when a new load is requested
+  const loadTimeoutRef = useRef<number | null>(null);
+
   const [answerOptions, setAnswerOptions] = useState<string[]>([]);
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isSwipingIn, setIsSwipingIn] = useState(true);
   const [score, setScore] = useState(0);
+
+  // rounds controls how many rounds to play: 'all' for a fixed shuffled queue, or a number
+  // for a limited number of rounds where each round is sampled randomly from the full dataset.
+  const [roundsTotal, setRoundsTotal] = useState<number | "all" | undefined>(
+    undefined
+  );
+  const [roundsPlayed, setRoundsPlayed] = useState<number>(0);
 
   const loadNewAnimal = (animalsParam?: Animal[]) => {
     const animals = animalsParam ?? allAnimals;
@@ -45,67 +60,141 @@ export default function MultiChoice({
     setSelectedAnswer(null);
     setIsAnswered(false);
 
-    // Simulate swipe animation delay
-    setTimeout(() => {
-      // Pick next animal from rotation queue (avoids repeats until exhausted)
-      let nextAnimal: Animal | undefined;
-      if (animalQueue && animalQueue.length > 0) {
-        const idx = queueIndexRef.current ?? 0;
-        nextAnimal = animalQueue[idx];
-        // advance index
-        queueIndexRef.current = (idx + 1) % animalQueue.length;
-      } else {
-        nextAnimal = animals[Math.floor(Math.random() * animals.length)];
+    // If rounds is a number and we've already completed the requested rounds, stop here
+    if (
+      roundsTotal !== "all" &&
+      typeof roundsTotal === "number" &&
+      roundsPlayed >= roundsTotal
+    ) {
+      console.log("All rounds completed.");
+      return;
+    }
+
+    // Increment the load request id and schedule the actual pick after the swipe delay.
+    loadRequestIdRef.current += 1;
+    const requestId = loadRequestIdRef.current;
+
+    // Cancel any pending timeout for prior requests
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+
+    // Schedule the pick
+    loadTimeoutRef.current = window.setTimeout(() => {
+      // clear stored timeout id
+      loadTimeoutRef.current = null;
+
+      // If this callback is stale (a newer request was started), ignore it
+      if (requestId !== loadRequestIdRef.current) {
+        if (DEBUG_SELECTION) {
+          console.info(
+            `Ignoring stale load callback (id ${requestId}), current id ${loadRequestIdRef.current}`
+          );
+        }
+        return;
       }
+
+      // Pick next animal from the shuffled rotation queue (no repeats until exhausted)
+      let nextAnimal: Animal | undefined;
+      const idx = queueIndexRef.current ?? 0;
+      nextAnimal = animalQueue[idx];
+      // advance index, wrapping around when we reach the end
+      queueIndexRef.current = (idx + 1) % animalQueue.length;
+
       const randomAnimal = nextAnimal;
 
-      // Ensure animal has images
+      if (DEBUG_SELECTION) {
+        console.info(
+          `Selecting (request ${requestId}): ${randomAnimal?.id || "none"} - ${
+            randomAnimal?.commonName || ""
+          } | queue index: ${idx} / ${
+            animalQueue.length
+          } | roundsPlayed: ${roundsPlayed} / ${roundsTotal}`
+        );
+      }
+
+      // Pick a random image from that animal if available
+      let imageUrl = "";
       if (
-        !randomAnimal ||
-        !randomAnimal.images ||
-        randomAnimal.images.length === 0
+        randomAnimal &&
+        randomAnimal.images &&
+        randomAnimal.images.length > 0
       ) {
-        console.warn("Animal has no images:", randomAnimal);
-        loadNewAnimal();
-        return;
+        const randomImageObj =
+          randomAnimal.images[
+            Math.floor(Math.random() * randomAnimal.images.length)
+          ];
+        imageUrl = randomImageObj?.url || "";
       }
 
-      // Pick a random image from that animal
-      const randomImageObj =
-        randomAnimal.images[
-          Math.floor(Math.random() * randomAnimal.images.length)
-        ];
-
-      const imageUrl = randomImageObj?.url || "";
-
-      if (!imageUrl) {
-        console.warn("No image URL found for animal:", randomAnimal);
-        loadNewAnimal();
-        return;
-      }
-
-      // Preload the image to avoid rendering lag and show a spinner
-      setIsImageLoading(true);
-      const img = new Image();
-      img.src = imageUrl;
-      img.onload = () => {
+      if (imageUrl) {
+        // Preload the image to avoid rendering lag and show a spinner
+        setIsImageLoading(true);
+        const img = new Image();
+        img.src = imageUrl;
+        img.onload = () => {
+          // Ensure the request is still current before applying
+          if (requestId !== loadRequestIdRef.current) {
+            if (DEBUG_SELECTION)
+              console.info(
+                `Ignoring image onload for stale request ${requestId}`
+              );
+            return;
+          }
+          setCurrentAnimal(randomAnimal);
+          setCurrentImage(imageUrl);
+          setCorrectAnswer(randomAnimal.commonName);
+          setIsImageLoading(false);
+          // Count this loaded round (for numeric rounds)
+          setRoundsPlayed((p) => p + 1);
+          if (DEBUG_SELECTION)
+            console.info(
+              `Applied animal (request ${requestId}): ${randomAnimal?.id}`
+            );
+        };
+        img.onerror = () => {
+          // Ensure the request is still current before reacting
+          if (requestId !== loadRequestIdRef.current) {
+            if (DEBUG_SELECTION)
+              console.info(
+                `Ignoring image onerror for stale request ${requestId}`
+              );
+            return;
+          }
+          console.warn("Failed to load image, picking another.", imageUrl);
+          setIsImageLoading(false);
+          // If image fails, try next in queue (if any)
+          // remove the failing animal from queue to avoid infinite loop
+          if (animalQueue && animalQueue.length > 0) {
+            const filtered = animalQueue.filter(
+              (a) => a.id !== randomAnimal.id
+            );
+            setAnimalQueue(filtered);
+          }
+          loadNewAnimal();
+          return;
+        };
+      } else {
+        // No image available for this animal: still select it so sampling covers all animals
+        // Ensure request is still current
+        if (requestId !== loadRequestIdRef.current) {
+          if (DEBUG_SELECTION)
+            console.info(
+              `Ignoring no-image apply for stale request ${requestId}`
+            );
+          return;
+        }
         setCurrentAnimal(randomAnimal);
-        setCurrentImage(imageUrl);
+        setCurrentImage("");
         setCorrectAnswer(randomAnimal.commonName);
         setIsImageLoading(false);
-      };
-      img.onerror = () => {
-        console.warn("Failed to load image, picking another.", imageUrl);
-        setIsImageLoading(false);
-        // If image fails, try next in queue (if any)
-        // remove the failing animal from queue to avoid infinite loop
-        if (animalQueue && animalQueue.length > 0) {
-          const filtered = animalQueue.filter((a) => a.id !== randomAnimal.id);
-          setAnimalQueue(filtered);
-        }
-        loadNewAnimal();
-        return;
-      };
+        setRoundsPlayed((p) => p + 1);
+        if (DEBUG_SELECTION)
+          console.info(
+            `Applied (no-image) animal (request ${requestId}): ${randomAnimal?.id}`
+          );
+      }
 
       // Generate up to 3 random different animal names (not the current one)
       const otherAnimals = animals.filter((a) => a.id !== randomAnimal.id);
@@ -148,11 +237,15 @@ export default function MultiChoice({
     }, 300);
   };
 
-  // Build rotation queue based on settings.rounds or default to 'all'
+  // Build rotation queue: always create a shuffled queue with no repeats.
+  // The roundsSetting parameter determines how many rounds to play (or "all" for unlimited).
   const buildQueue = (animals: Animal[], roundsSetting?: number | "all") => {
-    const q = createRotation(animals, roundsSetting ?? "all");
+    // Always shuffle the full dataset to avoid repeats
+    const q = createRotation(animals, "all");
     queueIndexRef.current = 0;
     setAnimalQueue(q);
+    setRoundsTotal(roundsSetting ?? "all");
+    setRoundsPlayed(0);
   };
 
   useEffect(() => {
@@ -171,17 +264,22 @@ export default function MultiChoice({
           console.warn("Unexpected data module format:", r);
           return [] as Animal[];
         });
-        setAllAnimals(combined);
-        console.log(`Loaded ${combined.length} animals from data/*.json`);
+        // Shuffle the combined dataset once to avoid any file-order bias and use
+        // that as our authoritative list for sampling.
+        const shuffledCombined = createRotation(combined, "all");
+        setAllAnimals(shuffledCombined);
+        console.log(
+          `Loaded ${shuffledCombined.length} animals (shuffled) from data/*.json`
+        );
         // Build queue using provided settings.rounds if available
         // @ts-ignore - settings may contain extra props persisted from App
         const roundsSetting = (settings as any)?.rounds as
           | number
           | "all"
           | undefined;
-        buildQueue(combined, roundsSetting);
-        // Immediately load the first animal from the queue
-        loadNewAnimal(combined);
+        buildQueue(shuffledCombined, roundsSetting);
+        // Immediately load the first animal from the shuffled set
+        loadNewAnimal(shuffledCombined);
       } catch (err) {
         console.error("Failed to load animal data:", err);
       }
