@@ -4,64 +4,63 @@
     "commonName": "Quail",
     "latinName": "Coturnix",
     "description": [
-      "Quails are small ground-dwelling birds often found in grasslands and agricultural areas, feeding on seeds and insects.",
-      "They are commonly hunted and also kept as poultry in some regions."
+      "These small ground-dwelling birds are often found in grasslands and agricultural areas, feeding on seeds and insects."
     ],
     "habitat": ["Grasslands", "Farmlands"],
-    "difficulty": "Easy",
+    "difficulty": "Medium",
     "food": ["Seeds", "Insects"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1693621359107-717f6d8ab3e0?q=80&w=1499&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "q-2",
     "commonName": "Quokka",
     "latinName": "Setonix brachyurus",
     "description": [
-      "The quokka is a small marsupial from Western Australia known for its friendly appearance and rounded face.",
-      "It forages on vegetation and is mostly nocturnal."
+      "These small marsupials from Western Australia are known for their friendly appearance and rounded face."
     ],
     "habitat": ["Shrublands", "Coastal areas"],
-    "difficulty": "Easy",
+    "difficulty": "Medium",
     "food": ["Leaves", "Vegetation"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1577021307655-7f9785f40e2d?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cXVva2thfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "q-3",
     "commonName": "Quetzal",
     "latinName": "Pharomachrus mocinno",
     "description": [
-      "The resplendent quetzal is a colorful bird of Central American cloud forests, prized for its vibrant plumage.",
-      "They feed on fruit and small animals and are culturally significant in the region."
+      "This resplendent, colorful bird of Central American cloud forests is prized for its vibrant plumage."
     ],
-    "habitat": ["Cloud forests"],
+    "habitat": ["Forests"],
     "difficulty": "Hard",
     "food": ["Fruit", "Small animals"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "q-4",
-    "commonName": "Quagga",
-    "latinName": "Equus quagga quagga",
-    "description": [
-      "The quagga was a subspecies of plains zebra with distinct striping only on the front of the body; it is now extinct.",
-      "Historical records and preserved skins inform its appearance and biology."
-    ],
-    "habitat": ["Grasslands"],
-    "difficulty": "Historical",
-    "food": ["Grasses"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1677806400083-b786cf0e816e?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cXVldHphbHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "q-5",
     "commonName": "Quoll",
     "latinName": "Dasyurus",
     "description": [
-      "Quolls are carnivorous marsupials native to Australia and New Guinea, feeding on small vertebrates and invertebrates.",
-      "They occupy a range of habitats including forests and grasslands."
+      "These carnivorous marsupials are native to Australia and New Guinea, feeding on small vertebrates and invertebrates."
     ],
     "habitat": ["Forests", "Woodlands"],
     "difficulty": "Medium",
     "food": ["Small vertebrates", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Eastern_quoll_%28Dasyurus_viverrinus%29_fawn_morph_Esk_Valley.jpg/2560px-Eastern_quoll_%28Dasyurus_viverrinus%29_fawn_morph_Esk_Valley.jpg"
+      }
+    ]
   }
 ]

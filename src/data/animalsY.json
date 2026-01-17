@@ -4,64 +4,63 @@
     "commonName": "Yak",
     "latinName": "Bos grunniens",
     "description": [
-      "Yaks are long-haired bovids adapted to high-altitude environments in the Himalayas, used as pack animals and for milk meat.",
-      "They graze on alpine grasses and are well adapted to cold."
+      "These long-haired mammals are adapted to high-altitude environments in the Himalayas, used as pack animals and for milk and meat."
     ],
     "habitat": ["High-altitude grasslands"],
     "difficulty": "Medium",
     "food": ["Grasses", "Herbs"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1599137258505-8871bd07cbbb?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8eWFrfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "y-2",
     "commonName": "Yellowhammer",
     "latinName": "Emberiza citrinella",
     "description": [
-      "The yellowhammer is a small passerine with bright yellow plumage in parts of its range, commonly found in open countryside.",
-      "They feed on seeds and insects and nest in hedgerows and fields."
+      "This small bird has bright yellow plumage and is commonly found in open countryside."
     ],
     "habitat": ["Farmland", "Hedgerows"],
-    "difficulty": "Easy",
+    "difficulty": "Hard",
     "food": ["Seeds", "Insects"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1660421303378-f67285208b1c?q=80&w=1505&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "y-3",
     "commonName": "Yabby",
     "latinName": "Cherax destructor",
     "description": [
-      "Yabbies are freshwater crayfish native to Australia that live in rivers, lakes and wetlands and feed on detritus and small animals.",
-      "They are important in freshwater food webs and are fished locally."
+      "These blue-ish freshwater crayfish are native to Australia, living in rivers, lakes and wetlands"
     ],
     "habitat": ["Rivers", "Lakes", "Wetlands"],
     "difficulty": "Easy",
-    "food": ["Detritus", "Small invertebrates"],
-    "images": [{ "url": "" }]
+    "food": ["Small invertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1520302518758-2c89d092abde?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8eWFiYnl8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   },
   {
     "id": "y-4",
     "commonName": "Yellowthroat",
     "latinName": "Geothlypis trichas",
     "description": [
-      "The common yellowthroat is a small New World warbler with distinctive black mask in males, frequent in marshy and shrubby habitats.",
-      "They feed on insects and spiders."
+      "This small New World warbler has a distinctive black mask in males, frequent in marshy and shrubby habitats."
     ],
     "habitat": ["Marshes", "Scrub"],
     "difficulty": "Medium",
     "food": ["Insects", "Spiders"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "y-5",
-    "commonName": "Yapok",
-    "latinName": "Chironectes minimus",
-    "description": [
-      "The yapok or water opossum is a semiaquatic marsupial from the Americas that forages in freshwater for fish and invertebrates.",
-      "It is adapted to aquatic life with water-repellent fur and webbed hind feet."
-    ],
-    "habitat": ["Rivers", "Wetlands"],
-    "difficulty": "Hard",
-    "food": ["Fish", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1654050029789-8fb0cf674d08?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8eWVsbG93dGhyb2F0fGVufDB8fDB8fHww"
+      }
+    ]
   }
 ]

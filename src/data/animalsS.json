@@ -4,64 +4,79 @@
     "commonName": "Salmon",
     "latinName": "Salmonidae",
     "description": [
-      "Salmon are anadromous fish that migrate from the ocean to freshwater to spawn, important ecologically and commercially.",
-      "They feed on invertebrates and smaller fish during different life stages."
+      "These fish migrate from the ocean to freshwater to spawn by jumping back upstream."
     ],
     "habitat": ["Rivers", "Coastal waters"],
-    "difficulty": "Medium",
+    "difficulty": "Easy",
     "food": ["Invertebrates", "Small fish"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1616459943793-f4fca51b6647?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2FsbW9ufGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "s-2",
-    "commonName": "Shark",
-    "latinName": "Selachimorpha",
+    "commonName": "Great White Shark",
+    "latinName": "Carcharodon carcharias",
     "description": [
-      "Sharks are cartilaginous fish with diverse forms, occupying many marine ecological niches as predators and scavengers.",
-      "They feed on fish, marine mammals, invertebrates and carrion depending on species."
+      "These large fish were popularized by the movie 'Jaws' and are apex predators in coastal surface waters."
     ],
-    "habitat": ["Open ocean", "Coastal waters"],
+    "habitat": ["Oceans", "Coastal waters"],
     "difficulty": "Hard",
     "food": ["Fish", "Marine mammals", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1664300207629-420eef29b015?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Z3JlYXQlMjB3aGl0ZSUyMHNoYXJrfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "s-3",
     "commonName": "Swan",
     "latinName": "Cygnus",
     "description": [
-      "Swans are large waterfowl with long necks and graceful appearance, often found on lakes and rivers.",
-      "They feed on aquatic vegetation and small aquatic organisms."
+      "These large birds have long necks and a graceful appearance, often found on lakes and rivers."
     ],
     "habitat": ["Lakes", "Rivers", "Wetlands"],
     "difficulty": "Easy",
     "food": ["Aquatic plants", "Small invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1625518413254-f16ceb1ffe7d?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3dhbnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "s-4",
     "commonName": "Seal",
     "latinName": "Pinnipedia",
     "description": [
-      "Seals are marine mammals adapted to aquatic life with flippers and insulating blubber, feeding on fish and invertebrates.",
-      "They haul out on shores or ice to rest and breed."
+      "These marine mammals are adapted to aquatic life with flippers and insulating blubber, feeding on fish and invertebrates."
     ],
     "habitat": ["Coastal waters", "Ice floes"],
     "difficulty": "Medium",
     "food": ["Fish", "Squid"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1493579706121-60161eb06eeb?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2VhbHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "s-5",
     "commonName": "Squirrel",
     "latinName": "Sciuridae",
     "description": [
-      "Squirrels are small to medium-sized rodents with bushy tails, many species are arboreal and feed on nuts and seeds.",
-      "They are important seed dispersers in many ecosystems."
+      "These small to medium-sized rodents have bushy tails, many species live in trees and feed on nuts and seeds."
     ],
     "habitat": ["Forests", "Parks"],
     "difficulty": "Easy",
     "food": ["Nuts", "Seeds", "Fruit"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1590079015089-875baa76cc8d?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3F1aXJyZWx8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   }
 ]

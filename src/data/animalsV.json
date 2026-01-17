@@ -2,66 +2,49 @@
   {
     "id": "v-1",
     "commonName": "Vulture",
-    "latinName": "Accipitridae|Cathartidae",
+    "latinName": "Cathartidae",
     "description": [
-      "Vultures are scavenging birds of prey that play vital roles in ecosystems by consuming carrion.",
-      "They are adapted to locate carcasses and often soar using thermals."
+      "These scavenging birds of prey play vital roles in ecosystems by consuming carrion."
     ],
     "habitat": ["Open country", "Mountains", "Deserts"],
     "difficulty": "Medium",
     "food": ["Carrion"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "v-2",
-    "commonName": "Viper",
-    "latinName": "Viperidae",
-    "description": [
-      "Vipers are a family of venomous snakes with long hinged fangs used to inject venom into prey.",
-      "They inhabit a variety of habitats and feed on mammals, birds and other vertebrates."
-    ],
-    "habitat": ["Deserts", "Forests", "Grasslands"],
-    "difficulty": "Hard",
-    "food": ["Mammals", "Birds"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1592820634676-703a6e015802?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "v-3",
     "commonName": "Vicuna",
     "latinName": "Vicugna vicugna",
     "description": [
-      "The vicuna is a wild South American camelid valued for fine wool, found in high-altitude grasslands.",
-      "They graze on highland vegetation and live in family groups."
+      "This wild South American camelid is valued for fine wool, found in high-altitude grasslands."
     ],
     "habitat": ["High-altitude grasslands"],
     "difficulty": "Hard",
     "food": ["Grasses"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "v-4",
-    "commonName": "Vaquita",
-    "latinName": "Phocoena sinus",
-    "description": [
-      "The vaquita is a critically endangered porpoise endemic to the northern Gulf of California.",
-      "It is a small cetacean threatened by bycatch and habitat pressures."
-    ],
-    "habitat": ["Coastal waters"],
-    "difficulty": "Hard",
-    "food": ["Small fish", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1707496964676-8abbf31adb1e?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmljdW5hfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "v-5",
     "commonName": "Vervet",
     "latinName": "Chlorocebus pygerythrus",
     "description": [
-      "Vervet monkeys are medium-sized Old World monkeys common in sub-Saharan Africa, highly social and adaptable.",
-      "They feed on fruit, leaves, seeds and small animals."
+      "These monkeys are medium-sized Old World monkeys common in sub-Saharan Africa, highly social and adaptable."
     ],
     "habitat": ["Woodlands", "Savannas"],
     "difficulty": "Medium",
     "food": ["Fruit", "Leaves", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1649264047566-fda66de0704b?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmVydmV0fGVufDB8fDB8fHww"
+      }
+    ]
   }
 ]

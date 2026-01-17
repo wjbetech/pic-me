@@ -4,64 +4,79 @@
     "commonName": "Rhinoceros",
     "latinName": "Rhinocerotidae",
     "description": [
-      "Rhinoceroses are large herbivorous mammals with one or two horns on their snouts, native to Africa and Asia.",
-      "They graze or browse depending on species and are threatened by poaching."
+      "These large herbivorous mammals with one or two horns on their snouts are native to Africa and Asia."
     ],
     "habitat": ["Savannas", "Grasslands", "Forests"],
-    "difficulty": "Hard",
+    "difficulty": "Easy",
     "food": ["Grasses", "Leaves"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1663957988801-f7a0e150998e?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmhpbm9jZXJvc3xlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "r-2",
     "commonName": "Rabbit",
     "latinName": "Oryctolagus cuniculus",
     "description": [
-      "Rabbits are small herbivorous mammals with long ears and strong hind legs, prolific breeders in many regions.",
-      "They feed on grasses, herbs and vegetables."
+      "These small herbivorous mammals have long ears and strong hind legs, appearing in children's stories and popular as pets."
     ],
-    "habitat": ["Meadows", "Woodland edges"],
+    "habitat": ["Meadows", "Woodland"],
     "difficulty": "Easy",
     "food": ["Grasses", "Herbs"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1480554840075-72cbdabbf689?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cmFiYml0fGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "r-3",
     "commonName": "Raccoon",
     "latinName": "Procyon lotor",
     "description": [
-      "Raccoons are adaptable omnivorous mammals with dexterous forepaws and masked facial markings, common in urban and wild areas.",
-      "They eat a varied diet including fruits, invertebrates and human food waste."
+      "These adaptable mammals with dexterous forepaws and masked facial markings are common in urban and wild areas."
     ],
     "habitat": ["Forests", "Urban areas"],
-    "difficulty": "Medium",
+    "difficulty": "Easy",
     "food": ["Fruits", "Invertebrates", "Human scraps"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1601247387431-7966d811f30b?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cmFjY29vbnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "r-4",
     "commonName": "Redstart",
     "latinName": "Phoenicurus",
     "description": [
-      "Redstarts are small passerine birds with colourful tails often found in woodlands and gardens.",
-      "They feed on invertebrates and sometimes small fruits."
+      "These small birds have colourful red tails and underbellies, and are often found in woodlands and gardens."
     ],
     "habitat": ["Woodlands", "Gardens"],
-    "difficulty": "Medium",
+    "difficulty": "Hard",
     "food": ["Invertebrates", "Berries"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1587504753840-1ef1a94cbfa4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "r-5",
     "commonName": "Raven",
     "latinName": "Corvus corax",
     "description": [
-      "Ravens are large intelligent corvids known for adaptability, problem solving and vocal complexity.",
-      "They are omnivorous and occupy diverse habitats from coasts to mountains."
+      "These large, intelligent birds are known for adaptability, problem solving and vocal complexity."
     ],
     "habitat": ["Forests", "Mountains", "Coasts"],
     "difficulty": "Medium",
-    "food": ["Invertebrates", "Small vertebrates", "Carrion"],
-    "images": [{ "url": "" }]
+    "food": ["Invertebrates", "Small vertebrates"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1433888376991-1297486ba3f5?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cmF2ZW58ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   }
 ]

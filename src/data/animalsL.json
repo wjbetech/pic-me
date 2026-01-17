@@ -37,38 +37,47 @@
     "commonName": "Llama",
     "latinName": "Lama glama",
     "description": [
-      "Llamas are domesticated camelids from South America used as pack animals and for wool.",
-      "They graze on grasses and are adapted to high-altitude environments."
+      "These domesticated camelids from South America are used as pack animals and for wool."
     ],
     "habitat": ["Highlands", "Grasslands"],
     "difficulty": "Easy",
     "food": ["Grasses", "Hay"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1744124521908-fb14c64e2f49?q=80&w=1057&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "l-4",
     "commonName": "Lobster",
     "latinName": "Nephropidae",
     "description": [
-      "Lobsters are large marine crustaceans prized as seafood and known for their strong claws and long lifespan.",
-      "They live on the seafloor and feed on a variety of organisms."
+      "These are large marine crustaceans prized as seafood and known for their strong claws and long lifespan."
     ],
     "habitat": ["Seafloor", "Coastal waters"],
     "difficulty": "Medium",
-    "food": ["Molluscs", "Crustaceans", "Detritus"],
-    "images": [{ "url": "" }]
+    "food": ["Molluscs", "Crustaceans"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1613779584796-99179ac65955?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxvYnN0ZXJ8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   },
   {
     "id": "l-5",
     "commonName": "Lynx",
     "latinName": "Lynx lynx",
     "description": [
-      "Lynx are medium-sized wild cats with tufted ears and powerful limbs, adapted to forested habitats.",
-      "They prey on small to medium mammals and birds."
+      "These medium-sized wild cats have tufted ears and powerful limbs, adapted to forested habitats."
     ],
     "habitat": ["Forests", "Taiga"],
     "difficulty": "Hard",
     "food": ["Small mammals", "Birds"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1612356700845-4b3fd814f44e?q=80&w=1316&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   }
 ]

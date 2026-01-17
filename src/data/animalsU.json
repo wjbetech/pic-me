@@ -4,64 +4,31 @@
     "commonName": "Uakari",
     "latinName": "Cacajao",
     "description": [
-      "Uakaris are short-tailed New World monkeys with distinctive faces, native to Amazonian forests.",
-      "They feed on fruit and seeds and are arboreal."
+      "These short-tailed New World monkeys have distinctive faces, native to Amazonian forests."
     ],
     "habitat": ["Tropical forests"],
     "difficulty": "Hard",
     "food": ["Fruit", "Seeds"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "u-2",
-    "commonName": "Urchin",
-    "latinName": "Echinoidea",
-    "description": [
-      "Sea urchins are spiny echinoderms that graze on algae on rocky reefs and play key ecological roles.",
-      "They have a round, spiny test and move using tube feet."
-    ],
-    "habitat": ["Rocky reefs", "Coastal waters"],
-    "difficulty": "Easy",
-    "food": ["Algae"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "u-3",
-    "commonName": "Umbrellabird",
-    "latinName": "Cephalopterus",
-    "description": [
-      "Umbrellabirds are tropical forest birds with a crest or umbrella-like plumage on their heads used in display.",
-      "They feed on fruit and small animals in the canopy."
-    ],
-    "habitat": ["Tropical forests"],
-    "difficulty": "Hard",
-    "food": ["Fruit", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Uakari_male.jpg"
+      }
+    ]
   },
   {
     "id": "u-4",
     "commonName": "Urial",
     "latinName": "Ovis vignei",
     "description": [
-      "The urial is a wild sheep of central and south Asia inhabiting mountainous and arid regions.",
-      "They graze on grasses and shrubs and form herds."
+      "This wild sheep of central and south Asia inhabits mountainous and arid regions."
     ],
     "habitat": ["Mountains", "Arid regions"],
     "difficulty": "Hard",
     "food": ["Grasses", "Shrubs"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "u-5",
-    "commonName": "Uromastyx",
-    "latinName": "Uromastyx",
-    "description": [
-      "Uromastyx are herbivorous agamid lizards native to arid regions, known for spiny tails and burrowing behaviour.",
-      "They feed primarily on plant material and are adapted to hot, dry habitats."
-    ],
-    "habitat": ["Deserts", "Rocky areas"],
-    "difficulty": "Medium",
-    "food": ["Plants", "Seeds"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Ovis_vignei_bochariensis.jpg"
+      }
+    ]
   }
 ]

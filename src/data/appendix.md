@@ -12,3 +12,16 @@
 #### I
 
 - Impala
+
+#### N
+
+- Numbat
+
+#### Q
+
+- Quoll
+
+#### U
+
+- Uakari
+- Urial

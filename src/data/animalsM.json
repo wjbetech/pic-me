@@ -2,66 +2,65 @@
   {
     "id": "m-1",
     "commonName": "Macaw",
-    "latinName": "Ara spp.",
+    "latinName": "Ara",
     "description": [
-      "Macaws are large, brightly coloured parrots from Central and South America, known for loud calls and strong beaks.",
-      "They feed on fruit, nuts and seeds and often form flocks."
+      "These large, brightly coloured tropical birds from Central and South America are known for loud calls and strong beaks."
     ],
     "habitat": ["Tropical forests", "Woodlands"],
     "difficulty": "Medium",
     "food": ["Fruit", "Nuts", "Seeds"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1609017910188-993211b015d6?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWFjYXd8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   },
   {
     "id": "m-2",
     "commonName": "Meerkat",
     "latinName": "Suricata suricatta",
     "description": [
-      "Meerkats are small social mongooses from southern Africa that forage in groups and live in burrows.",
-      "They feed on insects, small vertebrates and plants."
+      "These are small social mongooses from southern Africa that forage in groups and live in burrows."
     ],
-    "habitat": ["Deserts", "Arid regions"],
+    "habitat": ["Deserts", "Savanna"],
     "difficulty": "Easy",
     "food": ["Insects", "Small vertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1552071379-041b32707fed?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWVlcmthdHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "m-3",
     "commonName": "Mole",
     "latinName": "Talpidae",
     "description": [
-      "Moles are small, fossorial mammals adapted to digging and living underground, feeding on invertebrates.",
-      "They play roles in soil aeration and ecosystem engineering."
+      "These small mammals are adapted to digging and living underground, feeding on invertebrates."
     ],
     "habitat": ["Grasslands", "Woodlands"],
-    "difficulty": "Easy",
+    "difficulty": "Medium",
     "food": ["Earthworms", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1715195483059-77d76a0c70c7?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW9sZXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "m-4",
     "commonName": "Manatee",
     "latinName": "Trichechus",
     "description": [
-      "Manatees are large, slow-moving herbivorous marine mammals found in warm coastal waters and rivers.",
-      "They graze on aquatic vegetation and are gentle, long-lived animals."
+      "These large, slow-moving herbivorous marine mammals are found in warm coastal waters and rivers."
     ],
-    "habitat": ["Coastal waters", "Rivers"],
-    "difficulty": "Medium",
-    "food": ["Aquatic plants"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "m-5",
-    "commonName": "Mongoose",
-    "latinName": "Herpestidae",
-    "description": [
-      "Mongooses are small carnivorous mammals known for agility and, in some species, ability to confront venomous snakes.",
-      "They are found in Africa, Asia and southern Europe and feed on small animals and eggs."
-    ],
-    "habitat": ["Grasslands", "Woodlands"],
-    "difficulty": "Medium",
-    "food": ["Invertebrates", "Small vertebrates", "Eggs"],
-    "images": [{ "url": "" }]
+    "habitat": ["Coastal waters", "Rivers", "Mangroves"],
+    "difficulty": "Hard",
+    "food": ["plants"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1561486462-89834a03cb72?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuYXRlZXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   }
 ]

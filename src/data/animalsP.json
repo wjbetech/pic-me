@@ -4,64 +4,63 @@
     "commonName": "Penguin",
     "latinName": "Spheniscidae",
     "description": [
-      "Penguins are flightless seabirds adapted to cold marine environments with specialised flippers for swimming.",
-      "They feed primarily on fish, squid and krill and breed in colonies."
+      "These flightless seabirds are adapted to cold marine environments with specialised flippers for swimming."
     ],
     "habitat": ["Coastal waters", "Islands"],
     "difficulty": "Medium",
     "food": ["Fish", "Squid", "Krill"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "p-2",
-    "commonName": "Panther",
-    "latinName": "Panthera pardus",
-    "description": [
-      "Panther is a common name often used for large melanistic (or non-melanistic) big cats such as leopards or jaguars.",
-      "They are adaptable predators occupying forests and grasslands."
-    ],
-    "habitat": ["Forests", "Grasslands"],
-    "difficulty": "Hard",
-    "food": ["Mammals", "Birds"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1598439210625-5067c578f3f6?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVuZ3VpbnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "p-3",
     "commonName": "Porcupine",
     "latinName": "Erethizontidae",
     "description": [
-      "Porcupines are rodents with a coat of sharp quills used for defence and are primarily herbivorous.",
-      "They inhabit forests and grasslands and feed on vegetation."
+      "These are large rodents with a coat of sharp quills used for defence and are primarily herbivorous."
     ],
     "habitat": ["Forests", "Woodlands"],
     "difficulty": "Easy",
     "food": ["Bark", "Leaves", "Fruit"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1728963555336-9e26f871adfb?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9yY3VwaW5lfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "p-4",
     "commonName": "Puffin",
     "latinName": "Fratercula arctica",
     "description": [
-      "Puffins are small seabirds with colourful bills that dive for fish and nest on coastal cliff ledges and islands.",
-      "They feed primarily on small fish and often carry multiple fish crosswise in their bills."
+      "These small seabirds have colourful bills. They dive for fish and nest on coastal cliff ledges and islands."
     ],
     "habitat": ["Coastal cliffs", "Islands"],
     "difficulty": "Medium",
     "food": ["Small fish"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1504618223053-559bdef9dd5a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "p-5",
-    "commonName": "Python",
+    "commonName": "Reticulated Python",
     "latinName": "Pythonidae",
     "description": [
-      "Pythons are non-venomous constrictor snakes found in Africa, Asia and Australia that feed on mammals and birds.",
-      "They are ambush predators that swallow prey whole."
+      "These extremely large non-venomous constrictor snakes are found in Africa, Asia and Australia"
     ],
     "habitat": ["Forests", "Grasslands", "Wetlands"],
     "difficulty": "Hard",
     "food": ["Mammals", "Birds"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1671846626135-1dd273961d94?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   }
 ]

@@ -32,23 +32,6 @@
     ]
   },
   {
-    "id": "i-3",
-    "commonName": "Impala",
-    "latinName": "Aepyceros melampus",
-    "description": [
-      "The impala is a medium-sized African antelope known for its leaping ability and social herds.",
-      "They graze and browse in savannas and woodlands and are prey for large carnivores."
-    ],
-    "habitat": ["Savannas", "Woodlands"],
-    "difficulty": "Medium",
-    "food": ["Grasses", "Leaves"],
-    "images": [
-      {
-        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Impala_%28Aepyceros_melampus%29_male_Kruger.jpg/960px-Impala_%28Aepyceros_melampus%29_male_Kruger.jpg"
-      }
-    ]
-  },
-  {
     "id": "i-4",
     "commonName": "Indri",
     "latinName": "Indri indri",

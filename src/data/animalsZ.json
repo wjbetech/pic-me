@@ -4,64 +4,31 @@
     "commonName": "Zebra",
     "latinName": "Equus quagga",
     "description": [
-      "Zebras are African equids known for distinctive black-and-white striping, living in herds and grazing on grasses.",
-      "They use stripes for social signalling and potentially predator confusion."
+      "These large African equids are known for distinctive black-and-white striping, living in herds and grazing on grasses."
     ],
     "habitat": ["Savannas", "Grasslands"],
     "difficulty": "Easy",
     "food": ["Grasses"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1526319238109-524eecb9b913?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8emVicmF8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   },
   {
     "id": "z-2",
     "commonName": "Zebu",
     "latinName": "Bos indicus",
     "description": [
-      "Zebu are domesticated cattle breeds with a characteristic hump, adapted to tropical climates and used widely in agriculture.",
-      "They are important livestock across South Asia and other regions."
+      "These domesticated cattle breeds have a  hump, and are adapted to tropical climates."
     ],
     "habitat": ["Farmlands", "Tropical regions"],
-    "difficulty": "Easy",
+    "difficulty": "Hard",
     "food": ["Grasses", "Hay"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "z-3",
-    "commonName": "Zorilla",
-    "latinName": "Ictonyx striatus",
-    "description": [
-      "The zorilla (striped polecat) is a skunk-like mustelid from Africa capable of spraying a strong-smelling secretion for defence.",
-      "They are nocturnal and feed on small vertebrates and invertebrates."
-    ],
-    "habitat": ["Savannas", "Woodlands"],
-    "difficulty": "Medium",
-    "food": ["Invertebrates", "Small vertebrates"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "z-4",
-    "commonName": "Zander",
-    "latinName": "Sander lucioperca",
-    "description": [
-      "Zander is a freshwater predatory fish in Eurasia, prized in fisheries and similar in ecology to pike-perch.",
-      "They feed on smaller fish and inhabit lakes and rivers."
-    ],
-    "habitat": ["Lakes", "Rivers"],
-    "difficulty": "Medium",
-    "food": ["Small fish"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "z-5",
-    "commonName": "Zokor",
-    "latinName": "Myospalacinae",
-    "description": [
-      "Zokors are burrowing rodents native to Asia, similar in habit to moles and adapted to life underground.",
-      "They feed on roots and tubers and create extensive burrow systems."
-    ],
-    "habitat": ["Grasslands", "Steppe"],
-    "difficulty": "Medium",
-    "food": ["Roots", "Tubers"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1768347576679-0c2bfb117f6f?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8emVidXxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   }
 ]

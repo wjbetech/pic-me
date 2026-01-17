@@ -4,64 +4,79 @@
     "commonName": "Octopus",
     "latinName": "Octopoda",
     "description": [
-      "Octopuses are intelligent cephalopods with eight arms, known for problem-solving and camouflage abilities.",
-      "They feed on crustaceans, molluscs and fish and inhabit diverse marine habitats."
+      "These intelligent animals have eight arms and are known for problem-solving and camouflage abilities."
     ],
     "habitat": ["Reefs", "Coastal waters"],
     "difficulty": "Hard",
     "food": ["Crustaceans", "Molluscs", "Fish"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1628944681206-2ee8d63b0a6b?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b2N0b3B1c3xlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "o-2",
     "commonName": "Ocelot",
     "latinName": "Leopardus pardalis",
     "description": [
-      "The ocelot is a medium-sized wild cat from the Americas with a distinctive spotted coat and nocturnal habits.",
-      "They hunt small mammals, birds and reptiles in forested habitats."
+      "This medium-sized wild cat from the Americas has a distinctive spotted coat and nocturnal habits."
     ],
     "habitat": ["Tropical forests", "Shrublands"],
     "difficulty": "Hard",
     "food": ["Small mammals", "Birds", "Reptiles"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1613947355903-002fa9e2d4e7?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8b2NlbG90fGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "o-3",
     "commonName": "Orangutan",
     "latinName": "Pongo pygmaeus",
     "description": [
-      "Orangutans are great apes native to Borneo and Sumatra, primarily arboreal and frugivorous with high intelligence.",
-      "They live in tropical forests and have long lifespans and complex social behaviours."
+      "These great apes are native to Borneo and Sumatra, and are known for their intelligence and tree-based lifestyle."
     ],
     "habitat": ["Tropical forests"],
     "difficulty": "Hard",
     "food": ["Fruit", "Leaves", "Insects"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://plus.unsplash.com/premium_photo-1661821205919-aa973dad0529?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8b3Jhbmd1dGFufGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "o-4",
     "commonName": "Osprey",
     "latinName": "Pandion haliaetus",
     "description": [
-      "The osprey is a fish-eating raptor found near water bodies worldwide, noted for its hovering and plunge-diving hunting style.",
-      "They nest near coasts, rivers and lakes and feed almost exclusively on fish."
+      "This fish-eating bird is found near water bodies worldwide, noted for its hovering and plunge-diving hunting style."
     ],
     "habitat": ["Coastal areas", "Rivers", "Lakes"],
     "difficulty": "Medium",
     "food": ["Fish"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1536106900906-ded25fdd6938?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8b3NwcmV5fGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "o-5",
     "commonName": "Ostrich",
     "latinName": "Struthio camelus",
     "description": [
-      "The ostrich is the world's largest bird, flightless and adapted for running with powerful legs and large eyes.",
-      "They inhabit open plains and feed on plants and small animals."
+      "This is the world's largest bird, flightless and adapted for running with powerful legs and large eyes."
     ],
     "habitat": ["Savannas", "Deserts"],
     "difficulty": "Easy",
     "food": ["Plants", "Seeds", "Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1704805566048-c87c39bbcf11?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b3N0cmljaHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   }
 ]

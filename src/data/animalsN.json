@@ -4,64 +4,79 @@
     "commonName": "Narwhal",
     "latinName": "Monodon monoceros",
     "description": [
-      "The narwhal is a medium-sized toothed whale noted for the long spiral tusk found in males, inhabiting Arctic waters.",
-      "They feed on fish, squid and shrimp and are adapted to cold marine environments."
+      "This medium-sized toothed whale is noted for the long spiral tusk found in males, inhabiting Arctic waters."
     ],
     "habitat": ["Arctic waters"],
     "difficulty": "Hard",
     "food": ["Fish", "Squid", "Shrimp"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/%D0%9D%D0%B0%D1%80%D0%B2%D0%B0%D0%BB_%D0%B2_%D1%80%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B9_%D0%90%D1%80%D0%BA%D1%82%D0%B8%D0%BA%D0%B5.jpg"
+      }
+    ]
   },
   {
     "id": "n-2",
     "commonName": "Newt",
     "latinName": "Salamandridae",
     "description": [
-      "Newts are small amphibians in the salamander family with aquatic larvae and varying terrestrial or aquatic adult phases.",
-      "They feed on small invertebrates in ponds and damp habitats."
+      "These small amphibians have lizard-like bodies and tails, often found in moist environments near water."
     ],
     "habitat": ["Ponds", "Wetlands", "Woodlands"],
     "difficulty": "Medium",
     "food": ["Invertebrates"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1692478367222-335180ba7ae2?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmV3dHxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "n-3",
     "commonName": "Numbat",
     "latinName": "Myrmecobius fasciatus",
     "description": [
-      "The numbat is an Australian marsupial that feeds almost exclusively on termites and has distinctive banding on its body.",
-      "It is diurnal and forages on the ground using a long sticky tongue."
+      "This Australian marsupial feeds almost exclusively on termites and has distinctive banding on its body."
     ],
-    "habitat": ["Woodlands", "Eucalypt forests"],
+    "habitat": ["Woodlands", "Forests"],
     "difficulty": "Hard",
     "food": ["Termites"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Numbat%2C_Dryandra_Woodland%2C_Western_Australia.jpg"
+      }
+    ]
   },
   {
     "id": "n-4",
     "commonName": "Nightingale",
     "latinName": "Luscinia megarhynchos",
     "description": [
-      "The nightingale is a small passerine bird known for its powerful and beautiful song, most often heard at dusk and night.",
-      "They inhabit woodlands and scrub and feed on invertebrates and berries."
+      "This small bird is known for its powerful and beautiful song, most often heard at dusk and night."
     ],
     "habitat": ["Woodlands", "Scrub"],
-    "difficulty": "Medium",
+    "difficulty": "Hard",
     "food": ["Invertebrates", "Berries"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1715593412047-74823f84b31a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "n-5",
     "commonName": "Nutria",
     "latinName": "Myocastor coypus",
     "description": [
-      "Nutria (coypu) are large semiaquatic rodents introduced in many regions, feeding on aquatic plants and burrowing in banks.",
-      "They can impact wetland vegetation and agriculture."
+      "These are large semiaquatic rodents native to South America, often found near water bodies, known for their webbed hind feet and orange teeth."
     ],
     "habitat": ["Wetlands", "Marshes"],
     "difficulty": "Easy",
     "food": ["Aquatic plants"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDNEsEMfBXo-LAn73xJCd0jJFYO3E_clwZ3w&s"
+      }
+    ]
   }
 ]

@@ -4,64 +4,63 @@
     "commonName": "Tiger",
     "latinName": "Panthera tigris",
     "description": [
-      "The tiger is a large striped big cat native to Asia and is an apex predator in its range.",
-      "They hunt ungulates and are solitary hunters with large territories."
+      "This large, striped, big cat is native to Asia and is an apex predator in its range."
     ],
     "habitat": ["Forests", "Grasslands"],
     "difficulty": "Hard",
-    "food": ["Ungulates", "Large mammals"],
-    "images": [{ "url": "" }]
+    "food": ["Large mammals"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1615824996195-f780bba7cfab?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dGlnZXJ8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   },
   {
     "id": "t-2",
     "commonName": "Turtle",
     "latinName": "Testudines",
     "description": [
-      "Turtles are reptiles with a bony or cartilaginous shell, occupying marine, freshwater and terrestrial habitats.",
-      "Their diets vary from herbivorous to carnivorous depending on species."
+      "These reptiles have a bony or cartilaginous shell, occupying marine, freshwater and terrestrial habitats."
     ],
     "habitat": ["Oceans", "Rivers", "Terrestrial"],
-    "difficulty": "Medium",
+    "difficulty": "Easy",
     "food": ["Plants", "Invertebrates", "Fish"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHVydGxlfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "t-3",
     "commonName": "Toucan",
     "latinName": "Ramphastidae",
     "description": [
-      "Toucans are colourful birds with large bills native to the Neotropics, feeding primarily on fruit.",
-      "They inhabit tropical forests and are important seed dispersers."
+      "These colourful birds with large bills are native to the Tropics, feeding primarily on fruit."
     ],
     "habitat": ["Tropical forests"],
-    "difficulty": "Medium",
+    "difficulty": "Hard",
     "food": ["Fruit", "Insects"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1550853024-fae8cd4be47f?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dG91Y2FufGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "t-4",
     "commonName": "Tapir",
     "latinName": "Tapirus",
     "description": [
-      "Tapirs are large browsing mammals with a short prehensile snout, found in Central/South America and Southeast Asia.",
-      "They feed on leaves, shoots, and fruit in forested habitats."
+      "These large mammals have a short snout, found in Central/South America and Southeast Asia."
     ],
     "habitat": ["Forests", "Wetlands"],
-    "difficulty": "Medium",
+    "difficulty": "Hard",
     "food": ["Leaves", "Fruit"],
-    "images": [{ "url": "" }]
-  },
-  {
-    "id": "t-5",
-    "commonName": "Trout",
-    "latinName": "Salmonidae",
-    "description": [
-      "Trout are freshwater fish in the salmon family important to ecosystems and fisheries, often found in cool, clear streams and lakes.",
-      "They feed on invertebrates and small fish."
-    ],
-    "habitat": ["Rivers", "Lakes"],
-    "difficulty": "Medium",
-    "food": ["Invertebrates", "Small fish"],
-    "images": [{ "url": "" }]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1639501487490-06b2664b37fe?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGFwaXJ8ZW58MHx8MHx8fDA%3D"
+      }
+    ]
   }
 ]

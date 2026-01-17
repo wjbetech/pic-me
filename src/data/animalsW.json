@@ -1,71 +1,68 @@
 [
   {
-    "id": "w-1",
-    "commonName": "Whale",
-    "latinName": "Cetacea",
-    "description": [
-      "Whales are large marine mammals occupying diverse niches from baleen filter feeders to toothed predators.",
-      "They undertake long migrations and feed on krill, fish or other marine animals depending on species."
-    ],
-    "habitat": ["Open ocean"],
-    "difficulty": "Hard",
-    "food": ["Krill", "Fish", "Squid"],
-    "images": [ { "url": "" } ]
-  },
-  {
     "id": "w-2",
     "commonName": "Wolf",
     "latinName": "Canis lupus",
     "description": [
-      "Wolves are social canids that hunt cooperatively in packs and are key predators in many ecosystems.",
-      "They prey on ungulates and smaller mammals."
+      "These highly social canids hunt cooperatively in packs and are key predators in many ecosystems."
     ],
     "habitat": ["Forests", "Tundra", "Grasslands"],
     "difficulty": "Hard",
-    "food": ["Ungulates", "Small mammals"],
-    "images": [ { "url": "" } ]
+    "food": ["Small mammals"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1607350999170-b893fef057ea?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d29sZnxlbnwwfHwwfHx8MA%3D%3D"
+      }
+    ]
   },
   {
     "id": "w-3",
     "commonName": "Walrus",
     "latinName": "Odobenus rosmarus",
     "description": [
-      "Walruses are large pinnipeds with tusks and whiskers that inhabit Arctic seas, feeding on benthic invertebrates.",
-      "They haul out on ice or beaches to rest and breed."
+      "These large pinnipeds have tusks and whiskers, inhabiting Arctic seas."
     ],
     "habitat": ["Arctic seas", "Coastal ice"],
     "difficulty": "Hard",
-    "food": ["Bivalves", "Invertebrates"],
-    "images": [ { "url": "" } ]
+    "food": ["Clams", "Mussels", "Snails"],
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1460899960812-f6ee1ecaf117?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FscnVzfGVufDB8fDB8fHww"
+      }
+    ]
   },
   {
     "id": "w-4",
     "commonName": "Wombat",
     "latinName": "Vombatidae",
     "description": [
-      "Wombats are burrowing marsupials native to Australia with stocky bodies and strong claws for digging.",
-      "They feed on grasses and roots and are mainly nocturnal."
+      "These burrowing marsupials native to Australia have stocky bodies and strong claws for digging."
     ],
-    "habitat": ["Grasslands", "Eucalyptus forests"],
+    "habitat": ["Grasslands", "Forests"],
     "difficulty": "Easy",
     "food": ["Grasses", "Roots"],
-    "images": [ { "url": "" } ]
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1605164284889-207ecaaacd26?q=80&w=1488&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      }
+    ]
   },
   {
     "id": "w-5",
     "commonName": "Weasel",
     "latinName": "Mustela",
     "description": [
-      "Weasels are small carnivorous mammals with elongated bodies and short legs, adept at hunting small vertebrates.",
-      "They inhabit diverse habitats including woodlands and grasslands."
+      "These small carnivorous mammals have  elongated bodies and short legs, adept at hunting small vertebrates."
     ],
     "habitat": ["Woodlands", "Grasslands"],
     "difficulty": "Medium",
     "food": ["Small mammals", "Birds", "Invertebrates"],
-    "images": [ { "url": "" } ]
-  }
-]
-[
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1560510051-3035e7d523f3?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d2Vhc2VsfGVufDB8fDB8fHww"
+      }
+    ]
+  },
   {
     "id": "w-1",
     "commonName": "Blue Whale",
