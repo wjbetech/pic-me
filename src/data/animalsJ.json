@@ -3,6 +3,8 @@
     "id": "j-1",
     "commonName": "Jaguar",
     "latinName": "Panthera onca",
+    "animalClass": "Mammal",
+    "species": "Big cat",
     "description": [
       "This is a big cat native to the Americas, known for its powerful bite and spotted coat."
     ],
@@ -19,6 +21,8 @@
     "id": "j-2",
     "commonName": "Jay",
     "latinName": "Garrulus glandarius",
+    "animalClass": "Bird",
+    "species": "Passerine bird",
     "description": [
       "This small bird is known for its striking blue, black, and white feathers."
     ],
@@ -35,6 +39,8 @@
     "id": "j-3",
     "commonName": "Jerboa",
     "latinName": "Dipodidae",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
       "This small, hopping desert rodents with long hind legs is adapted for rapid movement."
     ],
@@ -51,9 +57,10 @@
     "id": "j-4",
     "commonName": "Jackal",
     "latinName": "Canis aureus",
+    "animalClass": "Mammal",
+    "species": "Canid",
     "description": [
-      "This medium-sized canid is found in Africa and Eurasia, and will eat almost anything",
-      "They scavenge and hunt small mammals and birds."
+      "This medium-sized canid is found in Africa and Eurasia, and will eat almost anything"
     ],
     "habitat": ["Grasslands", "Scrublands"],
     "difficulty": "Medium",
@@ -68,6 +75,8 @@
     "id": "j-5",
     "commonName": "Jellyfish",
     "latinName": "Scyphozoa",
+    "animalClass": "Invertebrate",
+    "species": "Jellyfish",
     "description": [
       "These animals are gelatinous marine animals with tentacles and stinging cells for capturing prey."
     ],

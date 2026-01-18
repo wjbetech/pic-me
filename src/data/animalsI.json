@@ -3,6 +3,8 @@
     "id": "i-1",
     "commonName": "Iguana",
     "latinName": "Iguana iguana",
+    "animalClass": "Reptile",
+    "species": "Lizard",
     "description": [
       "These large, colorful herbivorous lizards are found in tropical areas of Central and South America."
     ],
@@ -19,6 +21,8 @@
     "id": "i-2",
     "commonName": "Ibis",
     "latinName": "Threskiornithidae",
+    "animalClass": "Bird",
+    "species": "Wading bird",
     "description": [
       "This long-legged wading bird has a down-curved bill used for probing mud and shallow water for smaller animals."
     ],
@@ -35,9 +39,10 @@
     "id": "i-4",
     "commonName": "Indri",
     "latinName": "Indri indri",
+    "animalClass": "Mammal",
+    "species": "Lemur",
     "description": [
-      "The indri is a large lemur from Madagascar, known for its loud calls and arboreal lifestyle.",
-      "They feed on leaves, fruits and seeds in forest canopies."
+      "The indri is a large lemur from Madagascar, known for its loud calls and arboreal lifestyle."
     ],
     "habitat": ["Tropical forests"],
     "difficulty": "Hard",
