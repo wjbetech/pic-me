@@ -3,11 +3,13 @@
     "id": "n-1",
     "commonName": "Narwhal",
     "latinName": "Monodon monoceros",
+    "animalClass": "Mammal",
+    "species": "Toothed whale",
     "description": [
       "This medium-sized toothed whale is noted for the long spiral tusk found in males, inhabiting Arctic waters."
     ],
     "habitat": ["Arctic waters"],
-    "difficulty": "Hard",
+    "difficulty": "Medium",
     "food": ["Fish", "Squid", "Shrimp"],
     "images": [
       {
@@ -19,6 +21,8 @@
     "id": "n-2",
     "commonName": "Newt",
     "latinName": "Salamandridae",
+    "animalClass": "Amphibian",
+    "species": "Salamander",
     "description": [
       "These small amphibians have lizard-like bodies and tails, often found in moist environments near water."
     ],
@@ -35,6 +39,8 @@
     "id": "n-3",
     "commonName": "Numbat",
     "latinName": "Myrmecobius fasciatus",
+    "animalClass": "Mammal",
+    "species": "Marsupial",
     "description": [
       "This Australian marsupial feeds almost exclusively on termites and has distinctive banding on its body."
     ],
@@ -51,6 +57,8 @@
     "id": "n-4",
     "commonName": "Nightingale",
     "latinName": "Luscinia megarhynchos",
+    "animalClass": "Bird",
+    "species": "Songbird",
     "description": [
       "This small bird is known for its powerful and beautiful song, most often heard at dusk and night."
     ],
@@ -67,6 +75,8 @@
     "id": "n-5",
     "commonName": "Nutria",
     "latinName": "Myocastor coypus",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
       "These are large semiaquatic rodents native to South America, often found near water bodies, known for their webbed hind feet and orange teeth."
     ],

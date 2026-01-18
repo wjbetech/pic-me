@@ -3,6 +3,8 @@
     "id": "o-1",
     "commonName": "Octopus",
     "latinName": "Octopoda",
+    "animalClass": "Invertebrate",
+    "species": "Mollusc",
     "description": [
       "These intelligent animals have eight arms and are known for problem-solving and camouflage abilities."
     ],
@@ -19,6 +21,8 @@
     "id": "o-2",
     "commonName": "Ocelot",
     "latinName": "Leopardus pardalis",
+    "animalClass": "Mammal",
+    "species": "Wild cat",
     "description": [
       "This medium-sized wild cat from the Americas has a distinctive spotted coat and nocturnal habits."
     ],
@@ -35,6 +39,8 @@
     "id": "o-3",
     "commonName": "Orangutan",
     "latinName": "Pongo pygmaeus",
+    "animalClass": "Mammal",
+    "species": "Primate",
     "description": [
       "These great apes are native to Borneo and Sumatra, and are known for their intelligence and tree-based lifestyle."
     ],
@@ -51,6 +57,8 @@
     "id": "o-4",
     "commonName": "Osprey",
     "latinName": "Pandion haliaetus",
+    "animalClass": "Bird",
+    "species": "Bird of prey",
     "description": [
       "This fish-eating bird is found near water bodies worldwide, noted for its hovering and plunge-diving hunting style."
     ],
@@ -67,6 +75,8 @@
     "id": "o-5",
     "commonName": "Ostrich",
     "latinName": "Struthio camelus",
+    "animalClass": "Bird",
+    "species": "Flightless bird",
     "description": [
       "This is the world's largest bird, flightless and adapted for running with powerful legs and large eyes."
     ],

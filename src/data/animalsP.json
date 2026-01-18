@@ -3,6 +3,8 @@
     "id": "p-1",
     "commonName": "Penguin",
     "latinName": "Spheniscidae",
+    "animalClass": "Bird",
+    "species": "Flightless bird",
     "description": [
       "These flightless seabirds are adapted to cold marine environments with specialised flippers for swimming."
     ],
@@ -19,11 +21,13 @@
     "id": "p-3",
     "commonName": "Porcupine",
     "latinName": "Erethizontidae",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
       "These are large rodents with a coat of sharp quills used for defence and are primarily herbivorous."
     ],
     "habitat": ["Forests", "Woodlands"],
-    "difficulty": "Easy",
+    "difficulty": "Medium",
     "food": ["Bark", "Leaves", "Fruit"],
     "images": [
       {
@@ -35,6 +39,8 @@
     "id": "p-4",
     "commonName": "Puffin",
     "latinName": "Fratercula arctica",
+    "animalClass": "Bird",
+    "species": "Seabird",
     "description": [
       "These small seabirds have colourful bills. They dive for fish and nest on coastal cliff ledges and islands."
     ],
@@ -51,6 +57,8 @@
     "id": "p-5",
     "commonName": "Reticulated Python",
     "latinName": "Pythonidae",
+    "animalClass": "Reptile",
+    "species": "Snake",
     "description": [
       "These extremely large non-venomous constrictor snakes are found in Africa, Asia and Australia"
     ],
