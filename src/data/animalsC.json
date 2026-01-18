@@ -3,10 +3,10 @@
     "id": "c-1",
     "commonName": "Capybara",
     "latinName": "Hydrochoerus hydrochaeris",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
-      "This animal is the largest rodent in the world, native to South America and known for its semi-aquatic lifestyle.",
-      "These very large, social rodents often live in groups near bodies of water such as rivers, lakes, and swamps.",
-      "A very large, barrel shaped rodent with a short head, webbed feet, and reddish-brown fur."
+      "This animal is the largest rodent in the world, native to South America and known for its semi-aquatic lifestyle."
     ],
     "habitat": ["Forests", "Rivers", "Marshes", "Swamps"],
     "difficulty": "Medium",
@@ -24,9 +24,10 @@
     "id": "c-2",
     "commonName": "Caiman Crocodile",
     "latinName": "Caiman crocodilus",
+    "animalClass": "Reptile",
+    "species": "Crocodilian",
     "description": [
-      "This animal is a small to medium-sized crocodilian found in Central and South American freshwater habitats.",
-      "This animal is an opportunistic predator that feeds on fish, amphibians, and occasionally small mammals and birds."
+      "This animal is a small to medium-sized crocodilian found in Central and South American freshwater habitats."
     ],
     "habitat": ["Rivers", "Swamps", "Wetlands"],
     "difficulty": "Medium",
@@ -44,9 +45,10 @@
     "id": "c-3",
     "commonName": "Cheetah",
     "latinName": "Acinonyx jubatus",
+    "animalClass": "Mammal",
+    "species": "Big Cat",
     "description": [
-      "The cheetah is the fastest land animal, built for short bursts of high-speed pursuit across open terrain.",
-      "It primarily hunts small to medium-sized ungulates using eyesight and explosive acceleration."
+      "This is the fastest land animal, built for short bursts of high-speed pursuit across open terrain."
     ],
     "habitat": ["Savannas", "Grasslands", "Open plains"],
     "difficulty": "Easy",
@@ -64,13 +66,14 @@
     "id": "c-4",
     "commonName": "Crane",
     "latinName": "Gruidae",
+    "animalClass": "Large bird",
+    "species": "Crane",
     "description": [
-      "This animal is a large, long-legged and long-necked bird often associated with wetlands and grasslands.",
-      "Many of these animals perform courtship dances to attract a suitable mate."
+      "This animal is a large, long-legged and long-necked bird often associated with wetlands and grasslands."
     ],
     "habitat": ["Wetlands", "Marshes", "Grasslands"],
     "difficulty": "Medium",
-    "food": ["Plants", "Invertebrates", "Small vertebrates"],
+    "food": ["Plants", "Invertebrates"],
     "images": [
       {
         "url": "https://images.unsplash.com/photo-1712097897384-515c8eb2c779?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -81,9 +84,10 @@
     "id": "c-5",
     "commonName": "Coyote",
     "latinName": "Canis latrans",
+    "animalClass": "Mammal",
+    "species": "Canid",
     "description": [
-      "The animal is a highly adaptable canid native to North America, thriving in a wide range of habitats including urban areas.",
-      "They are opportunistic omnivores that hunt small mammals and scavenge when necessary."
+      "The animal is a highly adaptable canid native to North America, thriving in a wide range of habitats including urban areas."
     ],
     "habitat": [
       "Forests",
@@ -107,11 +111,12 @@
     "id": "c-6",
     "commonName": "Horseshoe Crab",
     "latinName": "Tachypleus gigas",
+    "animalClass": "Arthropod",
+    "species": "Crab",
     "description": [
-      "This animal is a a decapod crustacean with a compact body, a short projecting tail, and strong claws for feeding and defense.",
-      "This animal is farmed for its blue blood, which contains a substance used to detect bacterial toxins in medicine."
+      "This animal is in fact not a crab at all, but an arthropod, prized for its blue blood used in medicine."
     ],
-    "habitat": ["Tropical oceans", "Seagrass meadows", "Muddy shores"],
+    "habitat": ["Oceans", "Seagrass", "Shores"],
     "difficulty": "Medium",
     "food": ["Worms", "Clams", "Snails", "Fish"],
     "images": [
