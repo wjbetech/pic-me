@@ -3,6 +3,8 @@
     "id": "m-1",
     "commonName": "Macaw",
     "latinName": "Ara",
+    "animalClass": "Bird",
+    "species": "Parrot",
     "description": [
       "These large, brightly coloured tropical birds from Central and South America are known for loud calls and strong beaks."
     ],
@@ -19,6 +21,8 @@
     "id": "m-2",
     "commonName": "Meerkat",
     "latinName": "Suricata suricatta",
+    "animalClass": "Mammal",
+    "species": "Mongoose",
     "description": [
       "These are small social mongooses from southern Africa that forage in groups and live in burrows."
     ],
@@ -35,6 +39,8 @@
     "id": "m-3",
     "commonName": "Mole",
     "latinName": "Talpidae",
+    "animalClass": "Mammal",
+    "species": "Subterranean mammal",
     "description": [
       "These small mammals are adapted to digging and living underground, feeding on invertebrates."
     ],
@@ -51,12 +57,14 @@
     "id": "m-4",
     "commonName": "Manatee",
     "latinName": "Trichechus",
+    "animalClass": "Mammal",
+    "species": "Marine mammal",
     "description": [
       "These large, slow-moving herbivorous marine mammals are found in warm coastal waters and rivers."
     ],
     "habitat": ["Coastal waters", "Rivers", "Mangroves"],
     "difficulty": "Hard",
-    "food": ["plants"],
+    "food": ["Plants"],
     "images": [
       {
         "url": "https://images.unsplash.com/photo-1561486462-89834a03cb72?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuYXRlZXxlbnwwfHwwfHx8MA%3D%3D"
