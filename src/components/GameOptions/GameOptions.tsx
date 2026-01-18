@@ -237,7 +237,8 @@ export default function GameOptions({
               console.log("Rounds:", rounds);
 
               if (selected === "multiple-choice") {
-                const roundsValue = rounds === "all" ? "all" : Number(rounds);
+                const roundsValue: number | "all" =
+                  rounds === "all" ? "all" : Number(rounds);
                 onConfirm?.(selected, {
                   blur,
                   showDescription,
@@ -246,7 +247,8 @@ export default function GameOptions({
                   rounds: roundsValue,
                 });
               } else if (selected === "hangman") {
-                const roundsValue = rounds === "all" ? "all" : Number(rounds);
+                const roundsValue: number | "all" =
+                  rounds === "all" ? "all" : Number(rounds);
                 const settings = {
                   blur: 0,
                   showDescription: false,

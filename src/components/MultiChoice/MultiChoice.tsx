@@ -96,27 +96,19 @@ export default function MultiChoice({
       }
 
       // Pick next animal from the shuffled rotation queue (no repeats until exhausted)
-      let nextAnimal: Animal | undefined;
-
-      // Safety check: ensure animalQueue is populated
-      if (!animalQueue || animalQueue.length === 0) {
-        console.warn("Animal queue is empty, cannot load animal");
+      // Use the state queue if available, otherwise fall back to the provided animals array
+      const sourceQueue =
+        animalQueue && animalQueue.length > 0 ? animalQueue : animals;
+      if (!sourceQueue || sourceQueue.length === 0) {
+        console.warn("No animals available in queue or source to pick from");
         return;
       }
 
       const idx = queueIndexRef.current ?? 0;
-      nextAnimal = animalQueue[idx];
+      const randomAnimal: Animal = sourceQueue[idx % sourceQueue.length];
 
-      // Safety check: ensure we got a valid animal
-      if (!nextAnimal) {
-        console.warn("No animal found at queue index", idx);
-        return;
-      }
-
-      // advance index, wrapping around when we reach the end
-      queueIndexRef.current = (idx + 1) % animalQueue.length;
-
-      const randomAnimal = nextAnimal;
+      // advance index in the shared queue index so we don't repeat too soon
+      queueIndexRef.current = (idx + 1) % sourceQueue.length;
 
       if (DEBUG_SELECTION) {
         console.info(
@@ -265,16 +257,20 @@ export default function MultiChoice({
   useEffect(() => {
     const loadAllData = async () => {
       // Dynamically import all JSON files in src/data (Vite)
-      // @ts-ignore - import.meta.glob types may not be declared in the project
       const modules = import.meta.glob("../../data/*.json", { as: "json" });
       const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
       try {
         const results = await Promise.all(loaders.map((fn) => fn()));
         // Some bundlers return a module object with a `default` property.
         const combined: Animal[] = results.flatMap((r) => {
-          if (Array.isArray(r)) return r as Animal[];
-          if (r && typeof r === "object" && Array.isArray((r as any).default))
-            return (r as any).default as Animal[];
+          const mod = r as unknown;
+          if (Array.isArray(mod)) return mod as Animal[];
+          if (
+            mod &&
+            typeof mod === "object" &&
+            Array.isArray((mod as { default?: unknown }).default)
+          )
+            return (mod as { default: Animal[] }).default;
           console.warn("Unexpected data module format:", r);
           return [] as Animal[];
         });
@@ -286,11 +282,12 @@ export default function MultiChoice({
           `Loaded ${shuffledCombined.length} animals (shuffled) from data/*.json`
         );
         // Build queue using provided settings.rounds if available
-        // @ts-ignore - settings may contain extra props persisted from App
-        const roundsSetting = (settings as any)?.rounds as
-          | number
-          | "all"
-          | undefined;
+        // Cast settings to a minimal shape that may include `rounds` when provided
+        const roundsSetting = (
+          settings as unknown as {
+            rounds?: number | "all";
+          }
+        )?.rounds;
         buildQueue(shuffledCombined, roundsSetting);
         // Immediately load the first animal from the shuffled set
         loadNewAnimal(shuffledCombined);
