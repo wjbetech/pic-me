@@ -143,68 +143,113 @@ export default function Hangman({
   const renderLetterBoxes = () => {
     if (!currentAnimal) return null;
 
-    const name = currentAnimal.commonName.toUpperCase();
+    // Split the common name into words so multi-word names render on separate lines
+    const raw = currentAnimal.commonName.toUpperCase();
+    const words = raw.split(/\s+/).filter((w) => w.length > 0);
+
+    // Determine longest word length (letters only) to scale box sizes
+    const longest = Math.max(
+      1,
+      ...words.map((w) => w.replace(/[^A-Z]/g, "").length)
+    );
+
+    // Compute a reasonable box width (px) based on the longest word, clamped
+    const boxWidth = Math.min(
+      56,
+      Math.max(28, Math.floor(360 / Math.max(6, longest)))
+    );
+    const boxHeight = Math.round(boxWidth * 0.9);
+    const fontSize = Math.max(14, Math.round(boxWidth * 0.36));
 
     return (
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
-        {name.split("").map((char, idx) => {
-          const isLetter = /[A-Z]/.test(char);
-          const isGuessed = guessedLetters.has(char);
-          const shouldShow = !isLetter || isGuessed || gameState !== "playing";
+      <div className="flex flex-col gap-2 mb-8 items-center">
+        {words.map((word, wi) => (
+          <div key={wi} className="flex gap-2 justify-center">
+            {word.split("").map((char, idx) => {
+              const isLetter = /[A-Z]/.test(char);
+              const isGuessed = guessedLetters.has(char);
+              const shouldShow =
+                !isLetter || isGuessed || gameState !== "playing";
 
-          return (
-            <div
-              key={idx}
-              className={`w-10 h-12 md:w-12 md:h-14 flex items-center justify-center border-2 rounded text-xl md:text-2xl font-bold ${
-                isLetter
-                  ? shouldShow
-                    ? "bg-base-100 border-primary text-primary"
-                    : "bg-base-200 border-base-300"
-                  : "border-transparent"
-              }`}
-            >
-              {shouldShow ? char : ""}
-            </div>
-          );
-        })}
+              const boxClasses = isLetter
+                ? shouldShow
+                  ? "bg-base-100 border-primary text-primary"
+                  : "bg-base-200 border-base-300"
+                : "border-transparent";
+
+              return (
+                <div
+                  key={idx}
+                  style={{
+                    width: `${boxWidth}px`,
+                    height: `${boxHeight}px`,
+                    fontSize: `${fontSize}px`,
+                    lineHeight: `${boxHeight}px`,
+                  }}
+                  className={`flex items-center justify-center border-2 rounded font-bold ${boxClasses}`}
+                >
+                  {shouldShow ? char : ""}
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
     );
   };
 
   const renderKeyboard = () => {
+    // Create three rows that mimic keyboard staggering while keeping
+    // alphabetical order: 10, 9, 7 letters (A-J, K-S, T-Z).
+    const rows: string[][] = [
+      ALPHABET.slice(0, 10),
+      ALPHABET.slice(10, 19),
+      ALPHABET.slice(19, 26),
+    ];
+
     return (
-      <div className="grid grid-cols-7 gap-2 max-w-xl mx-auto">
-        {ALPHABET.map((letter) => {
-          const isGuessed = guessedLetters.has(letter);
-          const isWrong = wrongLetters.has(letter);
-          const appearsInName = currentAnimal
-            ? currentAnimal.commonName.toUpperCase().includes(letter)
-            : false;
+      <div className="flex flex-col items-center gap-2 max-w-xl mx-auto w-full">
+        {rows.map((row, rowIndex) => (
+          <div
+            key={rowIndex}
+            className={`flex justify-center gap-2 w-full ${
+              rowIndex === 1
+                ? "pl-3 md:pl-6"
+                : rowIndex === 2
+                ? "pl-6 md:pl-12"
+                : ""
+            }`}
+          >
+            {row.map((letter) => {
+              const isGuessed = guessedLetters.has(letter);
+              const isWrong = wrongLetters.has(letter);
+              const appearsInName = currentAnimal
+                ? currentAnimal.commonName.toUpperCase().includes(letter)
+                : false;
 
-          // When the game is over (buttons disabled), highlight letters that
-          // do not appear in the name as wrong (red), and letters that do
-          // appear as correct (green).
-          const showAsWrong =
-            isWrong || (gameState !== "playing" && !appearsInName);
-          const showAsCorrect =
-            isGuessed || (gameState !== "playing" && appearsInName);
+              const showAsWrong =
+                isWrong || (gameState !== "playing" && !appearsInName);
+              const showAsCorrect =
+                isGuessed || (gameState !== "playing" && appearsInName);
 
-          return (
-            <button
-              key={letter}
-              onClick={() => handleLetterGuess(letter)}
-              className={`btn btn-sm md:btn-md ${
-                showAsWrong
-                  ? "btn-error text-error-content"
-                  : showAsCorrect
-                  ? "btn-success text-success-content"
-                  : "btn-outline"
-              }`}
-            >
-              {letter}
-            </button>
-          );
-        })}
+              return (
+                <button
+                  key={letter}
+                  onClick={() => handleLetterGuess(letter)}
+                  className={`btn btn-sm md:btn-md w-10 md:w-14 ${
+                    showAsWrong
+                      ? "btn-error text-error-content"
+                      : showAsCorrect
+                      ? "btn-success text-success-content"
+                      : "btn-outline"
+                  }`}
+                >
+                  {letter}
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
     );
   };
