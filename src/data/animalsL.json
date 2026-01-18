@@ -3,9 +3,10 @@
     "id": "l-1",
     "commonName": "Lion",
     "latinName": "Panthera leo",
+    "animalClass": "Mammal",
+    "species": "Big cat",
     "description": [
-      "The lion is a large social cat living in groups called prides, native to Africa and parts of Asia.",
-      "They are apex predators feeding on large ungulates."
+      "These large social cats live in groups called prides, native to Africa and parts of Asia."
     ],
     "habitat": ["Savannas", "Grasslands"],
     "difficulty": "Hard",
@@ -20,6 +21,8 @@
     "id": "l-2",
     "commonName": "Lemur",
     "latinName": "Lemuridae",
+    "animalClass": "Mammal",
+    "species": "Primate",
     "description": [
       "These small primates live in Madagascar, with diverse forms, diets and social systems."
     ],
@@ -36,6 +39,8 @@
     "id": "l-3",
     "commonName": "Llama",
     "latinName": "Lama glama",
+    "animalClass": "Mammal",
+    "species": "Camelid",
     "description": [
       "These domesticated camelids from South America are used as pack animals and for wool."
     ],
@@ -52,6 +57,8 @@
     "id": "l-4",
     "commonName": "Lobster",
     "latinName": "Nephropidae",
+    "animalClass": "Invertebrate",
+    "species": "Crustacean",
     "description": [
       "These are large marine crustaceans prized as seafood and known for their strong claws and long lifespan."
     ],
@@ -68,6 +75,8 @@
     "id": "l-5",
     "commonName": "Lynx",
     "latinName": "Lynx lynx",
+    "animalClass": "Mammal",
+    "species": "Big cat",
     "description": [
       "These medium-sized wild cats have tufted ears and powerful limbs, adapted to forested habitats."
     ],

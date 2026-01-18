@@ -3,6 +3,8 @@
     "id": "k-1",
     "commonName": "Kangaroo",
     "latinName": "Macropus",
+    "animalClass": "Mammal",
+    "species": "Marsupial",
     "description": [
       "These large marsupials from Australia are known for hopping on powerful hind legs and carrying young in a pouch."
     ],
@@ -19,9 +21,10 @@
     "id": "k-2",
     "commonName": "Koala",
     "latinName": "Phascolarctos cinereus",
+    "animalClass": "Mammal",
+    "species": "Marsupial",
     "description": [
-      "These marsupials, native to Australia, feed predominantly on eucalyptus leaves.",
-      "These cute marsupials have specialised diets and spend much of their time resting in trees."
+      "These marsupials, native to Australia, feed predominantly on eucalyptus leaves."
     ],
     "habitat": ["Eucalyptus forests"],
     "difficulty": "Easy",
@@ -36,6 +39,8 @@
     "id": "k-3",
     "commonName": "Kudu",
     "latinName": "Tragelaphus strepsiceros",
+    "animalClass": "Mammal",
+    "species": "Antelope",
     "description": [
       "This four-legged mammal has impressive spiral horns and is native to African woodlands and savannas."
     ],
@@ -52,6 +57,8 @@
     "id": "k-4",
     "commonName": "Kingfisher",
     "latinName": "Alcedinidae",
+    "animalClass": "Bird",
+    "species": "Kingfisher",
     "description": [
       "These small, colourful birds are often associated with water, diving to catch fish with their sharp bills."
     ],
@@ -68,6 +75,8 @@
     "id": "k-5",
     "commonName": "Kestrel",
     "latinName": "Falco tinnunculus",
+    "animalClass": "Bird",
+    "species": "Bird of prey",
     "description": [
       "These birds are small falcons noted for hovering while hunting small mammals and insects in open country."
     ],
