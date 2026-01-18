@@ -3,6 +3,8 @@
     "id": "s-1",
     "commonName": "Salmon",
     "latinName": "Salmonidae",
+    "animalClass": "Fish",
+    "species": "Fish",
     "description": [
       "These fish migrate from the ocean to freshwater to spawn by jumping back upstream."
     ],
@@ -19,11 +21,13 @@
     "id": "s-2",
     "commonName": "Great White Shark",
     "latinName": "Carcharodon carcharias",
+    "animalClass": "Fish",
+    "species": "Shark",
     "description": [
       "These large fish were popularized by the movie 'Jaws' and are apex predators in coastal surface waters."
     ],
     "habitat": ["Oceans", "Coastal waters"],
-    "difficulty": "Hard",
+    "difficulty": "Medium",
     "food": ["Fish", "Marine mammals", "Invertebrates"],
     "images": [
       {
@@ -35,6 +39,8 @@
     "id": "s-3",
     "commonName": "Swan",
     "latinName": "Cygnus",
+    "animalClass": "Bird",
+    "species": "Waterfowl",
     "description": [
       "These large birds have long necks and a graceful appearance, often found on lakes and rivers."
     ],
@@ -51,6 +57,8 @@
     "id": "s-4",
     "commonName": "Seal",
     "latinName": "Pinnipedia",
+    "animalClass": "Mammal",
+    "species": "Marine mammal",
     "description": [
       "These marine mammals are adapted to aquatic life with flippers and insulating blubber, feeding on fish and invertebrates."
     ],
@@ -67,6 +75,8 @@
     "id": "s-5",
     "commonName": "Squirrel",
     "latinName": "Sciuridae",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
       "These small to medium-sized rodents have bushy tails, many species live in trees and feed on nuts and seeds."
     ],

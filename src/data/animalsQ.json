@@ -3,6 +3,8 @@
     "id": "q-1",
     "commonName": "Quail",
     "latinName": "Coturnix",
+    "animalClass": "Bird",
+    "species": "Game",
     "description": [
       "These small ground-dwelling birds are often found in grasslands and agricultural areas, feeding on seeds and insects."
     ],
@@ -19,6 +21,8 @@
     "id": "q-2",
     "commonName": "Quokka",
     "latinName": "Setonix brachyurus",
+    "animalClass": "Mammal",
+    "species": "Marsupial",
     "description": [
       "These small marsupials from Western Australia are known for their friendly appearance and rounded face."
     ],
@@ -35,6 +39,8 @@
     "id": "q-3",
     "commonName": "Quetzal",
     "latinName": "Pharomachrus mocinno",
+    "animalClass": "Bird",
+    "species": "Tropical bird",
     "description": [
       "This resplendent, colorful bird of Central American cloud forests is prized for its vibrant plumage."
     ],
@@ -51,6 +57,8 @@
     "id": "q-5",
     "commonName": "Quoll",
     "latinName": "Dasyurus",
+    "animalClass": "Mammal",
+    "species": "Marsupial",
     "description": [
       "These carnivorous marsupials are native to Australia and New Guinea, feeding on small vertebrates and invertebrates."
     ],

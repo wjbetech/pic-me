@@ -3,6 +3,8 @@
     "id": "r-1",
     "commonName": "Rhinoceros",
     "latinName": "Rhinocerotidae",
+    "animalClass": "Mammal",
+    "species": "Ungulate",
     "description": [
       "These large herbivorous mammals with one or two horns on their snouts are native to Africa and Asia."
     ],
@@ -19,6 +21,8 @@
     "id": "r-2",
     "commonName": "Rabbit",
     "latinName": "Oryctolagus cuniculus",
+    "animalClass": "Mammal",
+    "species": "Lagomorph",
     "description": [
       "These small herbivorous mammals have long ears and strong hind legs, appearing in children's stories and popular as pets."
     ],
@@ -35,6 +39,8 @@
     "id": "r-3",
     "commonName": "Raccoon",
     "latinName": "Procyon lotor",
+    "animalClass": "Mammal",
+    "species": "Raccoon",
     "description": [
       "These adaptable mammals with dexterous forepaws and masked facial markings are common in urban and wild areas."
     ],
@@ -51,6 +57,8 @@
     "id": "r-4",
     "commonName": "Redstart",
     "latinName": "Phoenicurus",
+    "animalClass": "Bird",
+    "species": "Songbird",
     "description": [
       "These small birds have colourful red tails and underbellies, and are often found in woodlands and gardens."
     ],
@@ -67,6 +75,8 @@
     "id": "r-5",
     "commonName": "Raven",
     "latinName": "Corvus corax",
+    "animalClass": "Bird",
+    "species": "Passerine bird",
     "description": [
       "These large, intelligent birds are known for adaptability, problem solving and vocal complexity."
     ],

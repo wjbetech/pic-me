@@ -3,11 +3,13 @@
     "id": "t-1",
     "commonName": "Tiger",
     "latinName": "Panthera tigris",
+    "animalClass": "Mammal",
+    "species": "Big cat",
     "description": [
       "This large, striped, big cat is native to Asia and is an apex predator in its range."
     ],
     "habitat": ["Forests", "Grasslands"],
-    "difficulty": "Hard",
+    "difficulty": "Easy",
     "food": ["Large mammals"],
     "images": [
       {
@@ -19,6 +21,8 @@
     "id": "t-2",
     "commonName": "Turtle",
     "latinName": "Testudines",
+    "animalClass": "Reptile",
+    "species": "Turtle",
     "description": [
       "These reptiles have a bony or cartilaginous shell, occupying marine, freshwater and terrestrial habitats."
     ],
@@ -35,11 +39,13 @@
     "id": "t-3",
     "commonName": "Toucan",
     "latinName": "Ramphastidae",
+    "animalClass": "Bird",
+    "species": "Tropical bird",
     "description": [
       "These colourful birds with large bills are native to the Tropics, feeding primarily on fruit."
     ],
     "habitat": ["Tropical forests"],
-    "difficulty": "Hard",
+    "difficulty": "Medium",
     "food": ["Fruit", "Insects"],
     "images": [
       {
@@ -51,6 +57,8 @@
     "id": "t-4",
     "commonName": "Tapir",
     "latinName": "Tapirus",
+    "animalClass": "Mammal",
+    "species": "Ungulate",
     "description": [
       "These large mammals have a short snout, found in Central/South America and Southeast Asia."
     ],
