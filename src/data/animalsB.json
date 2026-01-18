@@ -3,10 +3,10 @@
     "id": "b-1",
     "commonName": "American Bison",
     "latinName": "Bison bison",
+    "animalClass": "Mammal",
+    "species": "Bison",
     "description": [
-      "This animal is a large herbivore native to North America, known for its massive head and shaggy mane.",
-      "The name 'buffalo' is often used to refer to this animal, although it is not a true buffalo.",
-      "This animal once roamed the Great Plains in vast herds, but their numbers were greatly reduced due to hunting and habitat loss."
+      "This animal is a large herbivore native to North America, known for its massive head and shaggy mane."
     ],
     "habitat": ["Grasslands", "Plains", "River Valleys"],
     "difficulty": "Medium",
@@ -24,9 +24,10 @@
     "id": "b-2",
     "commonName": "Badger",
     "latinName": "Meles meles",
+    "animalClass": "Mammal",
+    "species": "Badger",
     "description": [
-      "Badgers are stout, short-legged mammals known for digging and burrowing habits.",
-      "They are omnivorous and have strong claws for excavating food and dens."
+      "These stout, short-legged mammals are known for their digging and burrowing habits."
     ],
     "habitat": ["Woodlands", "Grasslands", "Farmland"],
     "difficulty": "Medium",
@@ -44,9 +45,10 @@
     "id": "b-3",
     "commonName": "Baboon",
     "latinName": "Papio spp.",
+    "animalClass": "Mammal",
+    "species": "Primate",
     "description": [
-      "Baboons are large Old World monkeys with strong social groups and terrestrial habits.",
-      "They are highly adaptable omnivores found across Africa and parts of Arabia."
+      "These large Old World monkeys have sharp teeth and short tails"
     ],
     "habitat": ["Savannas", "Woodlands", "Rocky areas"],
     "difficulty": "Medium",
@@ -64,9 +66,10 @@
     "id": "b-4",
     "commonName": "Barracuda",
     "latinName": "Sphyraena spp.",
+    "animalClass": "Fish",
+    "species": "Fish",
     "description": [
-      "Barracudas are predatory marine fish known for their elongated bodies and sharp teeth.",
-      "They hunt smaller fish and are often found in warm coastal waters and coral reefs."
+      "These predatory marine fish are known for their elongated bodies and sharp teeth."
     ],
     "habitat": ["Coastal waters", "Reefs", "Open ocean"],
     "difficulty": "Medium",
@@ -84,9 +87,10 @@
     "id": "b-5",
     "commonName": "Bat",
     "latinName": "Chiroptera",
+    "animalClass": "Mammal",
+    "species": "Bat",
     "description": [
-      "Bats are the only mammals capable of sustained flight and occupy diverse ecological niches.",
-      "Some species are insectivorous while others feed on fruit, nectar, or even blood."
+      "This is the only mammal capable of sustained flight and is famous in horror folklore."
     ],
     "habitat": ["Caves", "Forests", "Urban areas"],
     "difficulty": "Easy",
@@ -104,9 +108,10 @@
     "id": "b-6",
     "commonName": "Beaver",
     "latinName": "Castor canadensis",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
-      "Beavers are large rodents known for building dams and lodges using wood and mud.",
-      "Their engineering activities create wetland habitats used by many other species."
+      "These large rodents are known for building dams and lodges using wood and mud."
     ],
     "habitat": ["Rivers", "Streams", "Wetlands"],
     "difficulty": "Easy",
