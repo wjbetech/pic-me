@@ -32,7 +32,6 @@ export default function Hangman({
   // Load all animals from JSON files
   useEffect(() => {
     const loadAllData = async () => {
-      // @ts-expect-error - import.meta.glob types may not be declared
       const modules = import.meta.glob("../../data/*.json", { as: "json" });
       const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
       try {
@@ -122,6 +121,25 @@ export default function Hangman({
     loadNewAnimal();
   };
 
+  // Keyboard input: allow players to type letters to guess
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      // Ignore if game is not playing or modifier keys are pressed
+      if (gameState !== "playing") return;
+      if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+      const key = e.key.toUpperCase();
+      if (/^[A-Z]$/.test(key)) {
+        // Prevent unintended scrolling or other side-effects
+        e.preventDefault();
+        handleLetterGuess(key);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [gameState, handleLetterGuess]);
+
   const renderLetterBoxes = () => {
     if (!currentAnimal) return null;
 
@@ -159,16 +177,26 @@ export default function Hangman({
         {ALPHABET.map((letter) => {
           const isGuessed = guessedLetters.has(letter);
           const isWrong = wrongLetters.has(letter);
+          const appearsInName = currentAnimal
+            ? currentAnimal.commonName.toUpperCase().includes(letter)
+            : false;
+
+          // When the game is over (buttons disabled), highlight letters that
+          // do not appear in the name as wrong (red), and letters that do
+          // appear as correct (green).
+          const showAsWrong =
+            isWrong || (gameState !== "playing" && !appearsInName);
+          const showAsCorrect =
+            isGuessed || (gameState !== "playing" && appearsInName);
 
           return (
             <button
               key={letter}
               onClick={() => handleLetterGuess(letter)}
-              disabled={isGuessed || gameState !== "playing"}
               className={`btn btn-sm md:btn-md ${
-                isWrong
+                showAsWrong
                   ? "btn-error text-error-content"
-                  : isGuessed
+                  : showAsCorrect
                   ? "btn-success text-success-content"
                   : "btn-outline"
               }`}
