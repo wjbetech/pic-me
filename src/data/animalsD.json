@@ -3,9 +3,10 @@
     "id": "d-1",
     "commonName": "Deer",
     "latinName": "Cervidae",
+    "animalClass": "Mammal",
+    "species": "Ungulate",
     "description": [
-      "These animals are hoofed, ruminant mammals forming the family Cervidae.",
-      "This animal species is known for its antlers, which mostly the males grow."
+      "These animals are hoofed, ruminant mammals commonly found in forests and grasslands around the world."
     ],
     "habitat": ["Grasslands", "Plains", "River Valleys"],
     "difficulty": "Medium",
@@ -23,9 +24,10 @@
     "id": "d-2",
     "commonName": "Bottlenose Dolphin",
     "latinName": "Tursiops truncatus",
+    "animalClass": "Mammal",
+    "species": "Dolphin",
     "description": [
-      "This animal is a highly intelligent marine mammal known for its playful behavior and complex social structures.",
-      "They large marine mammal feeds on fish and squid, using echolocation to hunt in various aquatic environments."
+      "This animal is a highly intelligent marine mammal known for its playful behavior and complex social structures."
     ],
     "habitat": ["Oceans", "Coastal Waters", "Rivers"],
     "difficulty": "Hard",
@@ -43,9 +45,10 @@
     "id": "d-3",
     "commonName": "Dingo",
     "latinName": "Canis lupus dingo",
+    "animalClass": "Mammal",
+    "species": "Canid",
     "description": [
-      "This is a wild canid native to Australia, typically sandy-colored and adaptable to varied habitats.",
-      "This medium-large sized canid is an opportunistic predator and scavenger, often hunting small mammals and birds."
+      "This is a wild canid native to Australia, typically sandy-colored and adaptable to varied habitats."
     ],
     "habitat": ["Grasslands", "Woodlands", "Deserts"],
     "difficulty": "Medium",
@@ -63,9 +66,10 @@
     "id": "d-4",
     "commonName": "Donkey",
     "latinName": "Equus africanus asinus",
+    "animalClass": "Mammal",
+    "species": "Equine",
     "description": [
-      "This animal is a domesticated member of the horse family often used as working animals for carrying loads.",
-      "This animal is a hardy, horse-like herbivore and can thrive in arid and semi-arid environments."
+      "This animal is a domesticated member of the equine family often used as working animals for carrying loads."
     ],
     "habitat": ["Farmland", "Grasslands", "Semi-arid regions"],
     "difficulty": "Easy",
@@ -83,9 +87,10 @@
     "id": "d-5",
     "commonName": "Duck",
     "latinName": "Marmaronetta angustirostris",
+    "animalClass": "Bird",
+    "species": "Waterfowl",
     "description": [
-      "This animal is a small to medium sized water-based bird found in wetlands across parts of Europe, Africa, and Asia.",
-      "This bird feeds on aquatic plants and invertebrates and prefers shallow, vegetated waters."
+      "This animal is a small to medium sized water-based bird found in wetlands across parts of Europe, Africa, and Asia."
     ],
     "habitat": ["Marshes", "Lagoons", "Shallow wetlands"],
     "difficulty": "Easy",
@@ -100,9 +105,10 @@
     "id": "d-6",
     "commonName": "Dhole",
     "latinName": "Cuon alpinus",
+    "animalClass": "Mammal",
+    "species": "Canid",
     "description": [
-      "This animal is an Asiatic wild dog known for its social packs and cooperative hunting of medium-sized ungulates.",
-      "This Asiatic canid inhabits forests and grasslands across South and Southeast Asia."
+      "This animal is an Asiatic wild dog known for its social packs and cooperative hunting of medium-sized ungulates."
     ],
     "habitat": ["Forests", "Grasslands", "Mountain foothills"],
     "difficulty": "Hard",

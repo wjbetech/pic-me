@@ -3,6 +3,8 @@
     "id": "e-1",
     "commonName": "African Elephant",
     "latinName": "Loxodonta africana",
+    "animalClass": "Mammal",
+    "species": "Elephant",
     "description": [
       "The African elephant is the largest land animal on Earth, known for its large ears and tusks."
     ],
@@ -22,9 +24,10 @@
     "id": "e-2",
     "commonName": "Bald Eagle",
     "latinName": "Haliaeetus leucocephalus",
+    "animalClass": "Bird",
+    "species": "Bird of Prey",
     "description": [
-      "This large bird of prey is native to and symbolic of North America, recognized by its white head and tail.",
-      "This large bird of prey primarily feeds on fish which it captures with powerful talons."
+      "This large bird of prey is native to and symbolic of North America, recognized by its white head and tail."
     ],
     "habitat": ["Coastal areas", "Rivers", "Lakes"],
     "difficulty": "Medium",
@@ -39,9 +42,10 @@
     "id": "e-3",
     "commonName": "Moray Eel",
     "latinName": "Muraenidae",
+    "animalClass": "Fish",
+    "species": "Eel",
     "description": [
-      "Moray eels are a family of elongated marine eels often found in crevices on reefs and rocky substrates.",
-      "They are primarily nocturnal predators feeding on fish and crustaceans."
+      "These elongated marine animals are often found in crevices on reefs and rocky substrates."
     ],
     "habitat": ["Reefs", "Rocky crevices", "Coastal waters"],
     "difficulty": "Medium",
@@ -59,9 +63,10 @@
     "id": "e-4",
     "commonName": "Emu",
     "latinName": "Dromaius novaehollandiae",
+    "animalClass": "Bird",
+    "species": "Flightless bird",
     "description": [
-      "The emu is a large, flightless bird native to Australia, with long legs adapted for running.",
-      "It feeds on plants and insects and is a nomadic forager across open country."
+      "This large, flightless bird is native to Australia, with long legs adapted for running."
     ],
     "habitat": ["Grasslands", "Savannah", "Open woodlands"],
     "difficulty": "Easy",
@@ -76,12 +81,13 @@
     "id": "e-5",
     "commonName": "Common Eland",
     "latinName": "Taurotragus oryx",
+    "animalClass": "Mammal",
+    "species": "Antelope",
     "description": [
-      "The common eland is one of the largest African antelopes, known for its spiral horns and grazing habits.",
-      "They inhabit savannas and open woodlands and often form herds."
+      "This large, African member of the antelopes is known for its spiral horns and grazing habits."
     ],
     "habitat": ["Savannas", "Woodlands", "Grasslands"],
-    "difficulty": "Medium",
+    "difficulty": "Hard",
     "food": ["Grasses", "Leaves", "Shrubs"],
     "images": [
       {
@@ -92,10 +98,11 @@
   {
     "id": "e-6",
     "commonName": "Elk",
-    "latinName": "Cervus canadensis",
+    "animalClass": "Mammal",
+    "species": "Cervid",
+    "latinName": "Deer",
     "description": [
-      "Elk (also called wapiti) are large cervids found in North America and eastern Asia, noted for their seasonal rutting calls.",
-      "They graze on grasses and browse shrubs in forests and meadows."
+      "These large deer-like animals are found in North America and eastern Asia, noted for their seasonal rutting calls."
     ],
     "habitat": ["Forests", "Meadows", "Mountains"],
     "difficulty": "Medium",
@@ -110,12 +117,13 @@
     "id": "e-7",
     "commonName": "Great Egret",
     "latinName": "Ardea alba",
+    "animalClass": "Bird",
+    "species": "Heron",
     "description": [
-      "The great egret is a large heron-like bird with a long neck and legs, often seen wading in shallow water hunting fish.",
-      "It feeds mainly on fish, frogs, and small aquatic animals."
+      "This large heron-like bird has a long neck and legs, often seen wading in shallow water hunting fish."
     ],
     "habitat": ["Wetlands", "Shorelines", "Marshes"],
-    "difficulty": "Medium",
+    "difficulty": "Hard",
     "food": ["Fish", "Amphibians", "Invertebrates"],
     "images": [
       {
