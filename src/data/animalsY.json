@@ -3,6 +3,8 @@
     "id": "y-1",
     "commonName": "Yak",
     "latinName": "Bos grunniens",
+    "animalClass": "Mammal",
+    "species": "Bovid",
     "description": [
       "These long-haired mammals are adapted to high-altitude environments in the Himalayas, used as pack animals and for milk and meat."
     ],
@@ -19,6 +21,8 @@
     "id": "y-2",
     "commonName": "Yellowhammer",
     "latinName": "Emberiza citrinella",
+    "animalClass": "Bird",
+    "species": "Passerine",
     "description": [
       "This small bird has bright yellow plumage and is commonly found in open countryside."
     ],
@@ -35,6 +39,8 @@
     "id": "y-3",
     "commonName": "Yabby",
     "latinName": "Cherax destructor",
+    "animalClass": "Crustacean",
+    "species": "Freshwater crayfish",
     "description": [
       "These blue-ish freshwater crayfish are native to Australia, living in rivers, lakes and wetlands"
     ],
@@ -51,6 +57,8 @@
     "id": "y-4",
     "commonName": "Yellowthroat",
     "latinName": "Geothlypis trichas",
+    "animalClass": "Bird",
+    "species": "Warbler",
     "description": [
       "This small New World warbler has a distinctive black mask in males, frequent in marshy and shrubby habitats."
     ],

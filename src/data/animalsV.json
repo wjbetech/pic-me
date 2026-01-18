@@ -3,6 +3,8 @@
     "id": "v-1",
     "commonName": "Vulture",
     "latinName": "Cathartidae",
+    "animalClass": "Bird",
+    "species": "Bird of prey",
     "description": [
       "These scavenging birds of prey play vital roles in ecosystems by consuming carrion."
     ],
@@ -19,6 +21,8 @@
     "id": "v-3",
     "commonName": "Vicuna",
     "latinName": "Vicugna vicugna",
+    "animalClass": "Mammal",
+    "species": "Camelid",
     "description": [
       "This wild South American camelid is valued for fine wool, found in high-altitude grasslands."
     ],
@@ -35,6 +39,8 @@
     "id": "v-5",
     "commonName": "Vervet",
     "latinName": "Chlorocebus pygerythrus",
+    "animalClass": "Mammal",
+    "species": "Primate",
     "description": [
       "These monkeys are medium-sized Old World monkeys common in sub-Saharan Africa, highly social and adaptable."
     ],

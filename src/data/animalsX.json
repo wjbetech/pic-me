@@ -3,8 +3,10 @@
     "id": "x-2",
     "commonName": "Xerus",
     "latinName": "Xerus",
+    "animalClass": "Mammal",
+    "species": "Ground squirrel",
     "description": [
-      "These ground squirrels from Africa  inhabit savannas and open habitats, living in burrows and foraging on seeds and plants."
+      "These ground squirrels from Africa inhabit savannas and open habitats, living in burrows and foraging on seeds and plants."
     ],
     "habitat": ["Savannas", "Grasslands"],
     "difficulty": "Medium",

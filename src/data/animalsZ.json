@@ -3,6 +3,8 @@
     "id": "z-1",
     "commonName": "Zebra",
     "latinName": "Equus quagga",
+    "animalClass": "Mammal",
+    "species": "Equine",
     "description": [
       "These large African equids are known for distinctive black-and-white striping, living in herds and grazing on grasses."
     ],
@@ -19,6 +21,8 @@
     "id": "z-2",
     "commonName": "Zebu",
     "latinName": "Bos indicus",
+    "animalClass": "Mammal",
+    "species": "Bovid",
     "description": [
       "These domesticated cattle breeds have a  hump, and are adapted to tropical climates."
     ],

@@ -3,6 +3,8 @@
     "id": "u-1",
     "commonName": "Uakari",
     "latinName": "Cacajao",
+    "animalClass": "Mammal",
+    "species": "Primate",
     "description": [
       "These short-tailed New World monkeys have distinctive faces, native to Amazonian forests."
     ],
@@ -19,6 +21,8 @@
     "id": "u-4",
     "commonName": "Urial",
     "latinName": "Ovis vignei",
+    "animalClass": "Mammal",
+    "species": "Sheep",
     "description": [
       "This wild sheep of central and south Asia inhabits mountainous and arid regions."
     ],
