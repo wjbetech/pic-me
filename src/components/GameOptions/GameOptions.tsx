@@ -31,6 +31,7 @@ export default function GameOptions({
       hintsEnabled?: boolean;
       hintType?: string;
       rounds?: number | "all";
+      lives?: number;
     }
   ) => void;
 }) {
@@ -40,6 +41,7 @@ export default function GameOptions({
   const [hintsEnabled, setHintsEnabled] = useState<boolean>(false);
   const [hintType, setHintType] = useState<string>("habitat");
   const [rounds, setRounds] = useState<string>("10");
+  const [lives, setLives] = useState<string>("6");
 
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
@@ -180,6 +182,45 @@ export default function GameOptions({
                   </div>
                 </div>
               )}
+
+              {/* Hangman Settings Popup */}
+              {selected === "hangman" && o.id === "hangman" && (
+                <div className="mt-3 p-4 bg-base-200 rounded-lg border border-base-300">
+                  <h3 className="font-semibold mb-4 text-sm">Game Settings</h3>
+
+                  {/* Lives Dropdown */}
+                  <div className="mb-4">
+                    <label className="text-sm font-medium">
+                      Starting Lives
+                    </label>
+                    <select
+                      value={lives}
+                      onChange={(e) => setLives(e.target.value)}
+                      className="select select-sm w-full mt-2"
+                    >
+                      <option value="3">3</option>
+                      <option value="6">6</option>
+                      <option value="9">9</option>
+                      <option value="12">12</option>
+                    </select>
+                  </div>
+
+                  {/* Rounds Dropdown */}
+                  <div>
+                    <label className="text-sm font-medium">Rounds</label>
+                    <select
+                      value={rounds}
+                      onChange={(e) => setRounds(e.target.value)}
+                      className="select select-sm w-full mt-2"
+                    >
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="20">20</option>
+                      <option value="all">All</option>
+                    </select>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -191,6 +232,10 @@ export default function GameOptions({
           <button
             className="btn btn-primary ml-auto"
             onClick={() => {
+              console.log("Selected mode:", selected);
+              console.log("Lives:", lives);
+              console.log("Rounds:", rounds);
+
               if (selected === "multiple-choice") {
                 const roundsValue = rounds === "all" ? "all" : Number(rounds);
                 onConfirm?.(selected, {
@@ -200,6 +245,16 @@ export default function GameOptions({
                   hintType: hintsEnabled ? hintType : undefined,
                   rounds: roundsValue,
                 });
+              } else if (selected === "hangman") {
+                const roundsValue = rounds === "all" ? "all" : Number(rounds);
+                const settings = {
+                  blur: 0,
+                  showDescription: false,
+                  lives: Number(lives),
+                  rounds: roundsValue,
+                };
+                console.log("Hangman settings:", settings);
+                onConfirm?.(selected, settings);
               } else {
                 onConfirm?.(selected);
               }

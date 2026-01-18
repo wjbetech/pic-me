@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import GameOptions from "./components/GameOptions/GameOptions";
 import MultiChoice from "./components/MultiChoice/MultiChoice";
+import Hangman from "./components/Hangman/Hangman";
 
 type Route = "home" | "options" | "play";
 
@@ -12,6 +13,7 @@ interface GameSettings {
   hintsEnabled?: boolean;
   hintType?: string;
   rounds?: number | "all";
+  lives?: number;
 }
 
 const STORAGE_KEYS = {
@@ -70,6 +72,7 @@ function App() {
           <GameOptions
             onBack={() => setRoute("home")}
             onConfirm={(selected, settings) => {
+              console.log("GameOptions onConfirm called:", selected, settings);
               setMode(selected);
               if (settings) {
                 setGameSettings(settings);
@@ -86,20 +89,37 @@ function App() {
           />
         )}
 
-        {route === "play" && mode !== "multiple-choice" && (
-          <div className="h-full w-full flex items-center justify-center p-4">
-            <div className="text-center max-w-md">
-              <h2 className="text-2xl font-bold mb-2">Ready to play</h2>
-              <p className="mb-4">Selected mode: {mode}</p>
-              <p className="opacity-70">Game implementation coming soon.</p>
-              <div className="mt-6 flex justify-center">
-                <button className="btn" onClick={() => setRoute("options")}>
-                  Change Mode
-                </button>
+        {route === "play" && mode === "hangman" && (
+          <Hangman onBack={() => setRoute("options")} settings={gameSettings} />
+        )}
+
+        {route === "play" &&
+          (() => {
+            console.log(
+              "Play route - mode:",
+              mode,
+              "gameSettings:",
+              gameSettings
+            );
+            return null;
+          })()}
+
+        {route === "play" &&
+          mode !== "multiple-choice" &&
+          mode !== "hangman" && (
+            <div className="h-full w-full flex items-center justify-center p-4">
+              <div className="text-center max-w-md">
+                <h2 className="text-2xl font-bold mb-2">Ready to play</h2>
+                <p className="mb-4">Selected mode: {mode}</p>
+                <p className="opacity-70">Game implementation coming soon.</p>
+                <div className="mt-6 flex justify-center">
+                  <button className="btn" onClick={() => setRoute("options")}>
+                    Change Mode
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

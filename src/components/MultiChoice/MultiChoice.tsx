@@ -97,9 +97,22 @@ export default function MultiChoice({
 
       // Pick next animal from the shuffled rotation queue (no repeats until exhausted)
       let nextAnimal: Animal | undefined;
+
+      // Safety check: ensure animalQueue is populated
+      if (!animalQueue || animalQueue.length === 0) {
+        console.warn("Animal queue is empty, cannot load animal");
+        return;
+      }
+
       const idx = queueIndexRef.current ?? 0;
-      // eslint-disable-next-line prefer-const
       nextAnimal = animalQueue[idx];
+
+      // Safety check: ensure we got a valid animal
+      if (!nextAnimal) {
+        console.warn("No animal found at queue index", idx);
+        return;
+      }
+
       // advance index, wrapping around when we reach the end
       queueIndexRef.current = (idx + 1) % animalQueue.length;
 
