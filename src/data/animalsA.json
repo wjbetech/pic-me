@@ -3,9 +3,10 @@
     "id": "a-1",
     "commonName": "Antelope",
     "latinName": "Antilopinae",
+    "animalClass": "Mammal",
+    "species": "Antelope",
     "description": [
-      "Antelopes are a diverse group of herbivorous mammals known for their speed and agility.",
-      "They are found in various habitats across Africa and parts of Asia."
+      "These four-legged mammals are a diverse group of herbivorous mammals known for their speed and agility."
     ],
     "habitat": ["Savannas", "Grasslands", "Woodlands"],
     "difficulty": "Medium",
@@ -23,9 +24,10 @@
     "id": "a-2",
     "commonName": "Aardvark",
     "latinName": "Orycteropus afer",
+    "animalClass": "Mammal",
+    "species": "Aardvark",
     "description": [
-      "The aardvark is a nocturnal mammal native to Africa, known for its long snout and strong digging claws.",
-      "It primarily feeds on ants and termites, which it captures with a long, sticky tongue."
+      "This nocturnal mammal native to Africa is known for its long snout and strong digging claws."
     ],
     "habitat": ["Savannas", "Grasslands", "Woodlands"],
     "difficulty": "Hard",
@@ -40,9 +42,10 @@
     "id": "a-3",
     "commonName": "Albatross",
     "latinName": "Diomedeidae",
+    "animalClass": "Bird",
+    "species": "Seabird",
     "description": [
-      "Albatrosses are large seabirds with long wingspans adapted for dynamic soaring over the open ocean.",
-      "They feed on fish and squid and spend much of their life far from land."
+      "These large seabirds with long wingspans adapted for dynamic soaring over the open ocean."
     ],
     "habitat": ["Open ocean", "Coastal waters"],
     "difficulty": "Hard",
@@ -58,11 +61,12 @@
   },
   {
     "id": "a-4",
-    "commonName": "Alligator",
+    "commonName": "American Alligator",
     "latinName": "Alligator mississippiensis",
+    "animalClass": "Reptile",
+    "species": "Crocodilian",
     "description": [
-      "Alligators are large semiaquatic reptiles found in freshwater wetlands and rivers in the southeastern United States.",
-      "They are opportunistic predators that eat fish, birds, and small mammals."
+      "These large semiaquatic reptiles are found in freshwater wetlands and rivers in the southeastern United States."
     ],
     "habitat": ["Freshwater wetlands", "Swamps", "Rivers"],
     "difficulty": "Easy",
@@ -80,9 +84,10 @@
     "id": "a-5",
     "commonName": "Anaconda",
     "latinName": "Eunectes murinus",
+    "animalClass": "Reptile",
+    "species": "Snake",
     "description": [
-      "The green anaconda is one of the largest snakes in the world and is native to South American wetlands.",
-      "It is a powerful constrictor that preys on fish, mammals, and birds."
+      "This is one of the largest snakes in the world and is native to South American wetlands."
     ],
     "habitat": ["Swamps", "Marshes", "Slow-moving rivers"],
     "difficulty": "Easy",
@@ -97,9 +102,10 @@
     "id": "a-6",
     "commonName": "Armadillo",
     "latinName": "Dasypodidae",
+    "animalClass": "Mammal",
+    "species": "Armadillo",
     "description": [
-      "Armadillos are small to medium-sized mammals known for their bony armor shell and digging behavior.",
-      "They feed mostly on insects, larvae, and other small invertebrates."
+      "These small to medium-sized mammals are known for their bony armor shell and digging behavior."
     ],
     "habitat": ["Grasslands", "Forests", "Scrublands"],
     "difficulty": "Medium",
@@ -117,9 +123,10 @@
     "id": "a-7",
     "commonName": "Axolotl",
     "latinName": "Ambystoma mexicanum",
+    "animalClass": "Amphibian",
+    "species": "Salamander",
     "description": [
-      "The axolotl is a neotenic salamander endemic to lakes and canals in Mexico, famous for retaining larval features into adulthood.",
-      "It is carnivorous and feeds on small prey like worms and crustaceans."
+      "This small, cute salamander is endemic to lakes and canals in Mexico, famous for retaining larval features into adulthood."
     ],
     "habitat": ["Freshwater lakes", "Canals"],
     "difficulty": "Hard",

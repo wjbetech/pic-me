@@ -2,6 +2,8 @@ export interface Animal {
   id: string;
   commonName: string;
   latinName: string;
+  animalClass: string;
+  species?: string;
   description: string[];
   tags?: string[];
   habitat: string[];
