@@ -53,8 +53,19 @@ export default function Hangman({
         animalQueueRef.current = shuffled;
         console.log(`Loaded ${shuffled.length} animals for Hangman`);
 
-        // Load first animal
-        loadNewAnimal(shuffled);
+        // Initialize first animal directly (avoid calling loadNewAnimal() here
+        // to prevent duplicate increments in dev StrictMode). This sets up
+        // the queue index and rounds counter deterministically.
+        if (shuffled.length > 0) {
+          queueIndexRef.current = 1; // next index to use
+          const first = shuffled[0];
+          setCurrentAnimal(first);
+          setGuessedLetters(new Set());
+          setWrongLetters(new Set());
+          setLivesRemaining(settings.lives ?? 6);
+          setGameState("playing");
+          setRoundsPlayed(1);
+        }
       } catch (err) {
         console.error("Failed to load animal data:", err);
       }
@@ -153,10 +164,12 @@ export default function Hangman({
       ...words.map((w) => w.replace(/[^A-Z]/g, "").length)
     );
 
-    // Compute a reasonable box width (px) based on the longest word, clamped
+    // Compute a reasonable box width (px) based on the longest word, clamped.
+    // Use a slightly larger base divisor and max so medium-long single words
+    // don't end up too small.
     const boxWidth = Math.min(
-      56,
-      Math.max(28, Math.floor(360 / Math.max(6, longest)))
+      64,
+      Math.max(32, Math.floor(480 / Math.max(6, longest)))
     );
     const boxHeight = Math.round(boxWidth * 0.9);
     const fontSize = Math.max(14, Math.round(boxWidth * 0.36));
