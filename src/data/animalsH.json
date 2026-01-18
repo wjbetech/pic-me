@@ -3,9 +3,10 @@
     "id": "h-1",
     "commonName": "European Hedgehog",
     "latinName": "Erinaceus europaeus",
+    "animalClass": "Mammal",
+    "species": "Hedgehog",
     "description": [
-      "The small insectivorous mammal is covered in spines, common in gardens and woodlands.",
-      "It feeds on insects, snails, and other invertebrates and is mostly nocturnal."
+      "The small insectivorous mammal is covered in spines, common in gardens and woodlands."
     ],
     "habitat": ["Gardens", "Woodlands", "Hedgerows"],
     "difficulty": "Easy",
@@ -20,9 +21,10 @@
     "id": "h-2",
     "commonName": "Arctic Hare",
     "latinName": "Lepus arcticus",
+    "animalClass": "Mammal",
+    "species": "Hare",
     "description": [
-      "This cute, cold-adapted animal has thick fur that goes through seasonal color changes.",
-      "They forage on woody plants, mosses, and lichens and are adapted to extreme cold."
+      "This cute, cold-adapted rabbit-like animal has a thick fur that goes through seasonal color changes."
     ],
     "habitat": ["Tundra", "Arctic plains"],
     "difficulty": "Medium",
@@ -37,6 +39,8 @@
     "id": "h-3",
     "commonName": "Hummingbird",
     "latinName": "Archilochus colubris",
+    "animalClass": "Bird",
+    "species": "Bird",
     "description": [
       "A small, noisy bird found in eastern North America, noted for its rapid wingbeat and hovering flight."
     ],
@@ -53,9 +57,10 @@
     "id": "h-4",
     "commonName": "Atlantic Herring",
     "latinName": "Clupea harengus",
+    "animalClass": "Fish",
+    "species": "Ocean fish",
     "description": [
-      "Atlantic herring is a schooling fish found in the North Atlantic, important for marine food webs and fisheries.",
-      "They feed on plankton and are prey for many larger predators."
+      "This schooling fish is found in the North Atlantic, being one of the most common fish species."
     ],
     "habitat": ["Coastal waters", "Open ocean"],
     "difficulty": "Medium",
@@ -70,9 +75,10 @@
     "id": "h-5",
     "commonName": "Great Hornbill",
     "latinName": "Buceros bicornis",
+    "animalClass": "Bird",
+    "species": "Tropical bird",
     "description": [
-      "The large, colourful forest bird with a prominent casque on its bill, found in South and Southeast Asia.",
-      "They feed on fruit, small animals, and are important seed dispersers."
+      "The large, colourful forest bird with a prominent casque on its bill, found in South and Southeast Asia."
     ],
     "habitat": ["Tropical forests", "Woodlands"],
     "difficulty": "Hard",
@@ -87,6 +93,8 @@
     "id": "h-6",
     "commonName": "Harrier",
     "latinName": "Circus pygargus",
+    "animalClass": "Bird",
+    "species": "Bird of prey",
     "description": [
       "This slim, long-winged bird lives in open landscapes across Europe and Asia and migrates to Africa for winter."
     ],

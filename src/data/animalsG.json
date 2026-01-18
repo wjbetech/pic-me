@@ -3,9 +3,10 @@
     "id": "g-1",
     "commonName": "Giraffe",
     "latinName": "Giraffa camelopardalis",
+    "animalClass": "Mammal",
+    "species": "Giraffe",
     "description": [
-      "This animal is the tallest living animal, known for its long neck and legs as well as distinctive pattern.",
-      "This tall animal browse trees in savannas and woodlands, feeding on acacia leaves."
+      "This animal is the tallest living animal, known for its long neck and legs as well as distinctive pattern."
     ],
     "habitat": ["Savannas", "Woodlands", "Grasslands"],
     "difficulty": "Easy",
@@ -20,8 +21,10 @@
     "id": "g-2",
     "commonName": "Gorilla",
     "latinName": "Gorilla gorilla",
+    "animalClass": "Mammal",
+    "species": "Primate",
     "description": [
-      "This large mammal is native to central African forests, eating leaves."
+      "This large, powerful mammal is native to central African forests, eating leaves."
     ],
     "habitat": ["Tropical forest"],
     "difficulty": "Hard",
@@ -36,9 +39,10 @@
     "id": "g-3",
     "commonName": "Gazelle",
     "latinName": "Gazella spp.",
+    "animalClass": "Mammal",
+    "species": "Antelope",
     "description": [
-      "This four-legged mammal is known for its speed and agility, able to run away from predators.",
-      "This four-legged mammal is prey for large predators in the savannas and grasslands."
+      "This four-legged mammal is known for its speed and agility, able to run away from predators."
     ],
     "habitat": ["Savannas", "Grasslands", "Semi-deserts"],
     "difficulty": "Medium",
@@ -53,6 +57,8 @@
     "id": "g-4",
     "commonName": "Grouse",
     "latinName": "Tetraoninae",
+    "animalClass": "Bird",
+    "species": "Game",
     "description": [
       "This medium-sized game bird is often found in colder places with lots of plants and shrubs."
     ],
@@ -69,12 +75,13 @@
     "id": "g-5",
     "commonName": "Groundhog",
     "latinName": "Marmota monax",
+    "animalClass": "Mammal",
+    "species": "Rodent",
     "description": [
-      "This animal is a burrowing rodent from North America, known for hibernation and digging extensive burrows.",
-      "This rodent shares its name with a popular tradition of predicting the arrival of spring."
+      "This animal is a burrowing rodent from North America, known for hibernation and digging extensive burrows."
     ],
     "habitat": ["Fields", "Woodland edges", "Meadows"],
-    "difficulty": "Easy",
+    "difficulty": "Medium",
     "food": ["Grasses", "Herbs", "Vegetation"],
     "images": [
       {
@@ -86,9 +93,10 @@
     "id": "g-6",
     "commonName": "Gecko",
     "latinName": "Gekkota",
+    "animalClass": "Reptile",
+    "species": "Lizard",
     "description": [
-      "This small to medium-sized lizard is known for its sticky toe pads and nocturnal habits",
-      "This small to medium-sized lizard feeds mainly on insects and other small invertebrates."
+      "This small to medium-sized lizard is known for its sticky toe pads and nocturnal habits"
     ],
     "habitat": ["Tropical forests", "Deserts", "Urban areas"],
     "difficulty": "Medium",

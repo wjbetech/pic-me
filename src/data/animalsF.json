@@ -3,11 +3,13 @@
     "id": "f-1",
     "commonName": "Arctic Fox",
     "latinName": "Vulpes lagopus",
+    "animalClass": "Mammal",
+    "species": "Canid",
     "description": [
-      "This small, furry mammal adapted to living in cold environments, known for its thick fur and ability to change color with the seasons."
+      "This small, furry mammal is adapted to living in cold environments, known for its thick fur and ability to change color with the seasons."
     ],
     "habitat": ["Tundra", "Coastal areas"],
-    "difficulty": "Hard",
+    "difficulty": "Medium",
     "food": ["Lemmings", "Birds", "Fish", "Invertebrates"],
     "images": [
       {
@@ -22,9 +24,10 @@
     "id": "f-2",
     "commonName": "Bullfrog",
     "latinName": "Lithobates catesbeianus",
+    "animalClass": "Amphibian",
+    "species": "Frog",
     "description": [
-      "This animal is a large, acoustically loud amphibians common in ponds and wetlands.",
-      "This large amphibian is an opportunistic predator, feeding on insects, fish, and small vertebrates."
+      "This animal is a large, acoustically loud amphibian common in ponds and wetlands."
     ],
     "habitat": ["Ponds", "Marshes", "Wetlands"],
     "difficulty": "Medium",
@@ -39,12 +42,13 @@
     "id": "f-3",
     "commonName": "Flamingo",
     "latinName": "Phoenicopteridae",
+    "animalClass": "Bird",
+    "species": "Wading bird",
     "description": [
-      "This tall, pink wading bird is known for its bright pink plumage and long legs.",
-      "This tall bird feeds by filtering small organisms from shallow water and often form large social flocks."
+      "This tall, pink wading bird is known for its bright pink plumage and long legs."
     ],
     "habitat": ["Lagoons", "Shallow lakes", "Coastal wetlands"],
-    "difficulty": "Medium",
+    "difficulty": "Easy",
     "food": ["Algae", "Small crustaceans", "Plankton"],
     "images": [
       {
@@ -56,9 +60,10 @@
     "id": "f-4",
     "commonName": "Peregrine Falcon",
     "latinName": "Falco peregrinus",
+    "animalClass": "Bird",
+    "species": "Bird of Prey",
     "description": [
-      "This bird of prey is famous for its incredible diving speed when hunting.",
-      "This speedy bird of prey occupies a wide range of habitats and primarily preys on other birds."
+      "This bird of prey is famous for its incredible diving speed when hunting."
     ],
     "habitat": ["Cliffs", "Open country", "Urban areas"],
     "difficulty": "Hard",
@@ -73,9 +78,10 @@
     "id": "f-5",
     "commonName": "Fossa",
     "latinName": "Cryptoprocta ferox",
+    "animalClass": "Mammal",
+    "species": "Mammalian carnivore",
     "description": [
-      "This animal is a cat-like carnivore from the forests of Madagascar",
-      "This large cat-like animal preys on lemurs and other small to medium-sized animals."
+      "This animal is a large cat-like carnivore from the forests of Madagascar"
     ],
     "habitat": ["Forests", "Rainforests"],
     "difficulty": "Hard",
@@ -90,11 +96,12 @@
     "id": "f-7",
     "commonName": "Flounder",
     "latinName": "Paralichthys spp.",
+    "animalClass": "Fish",
+    "species": "Flatfish",
     "description": [
-      "Flounders are flatfish that live on the sea bottom and are adapted for camouflage with both eyes on one side of the head.",
-      "They are ambush predators feeding on fish and crustaceans."
+      "These flatfish live on the sea bottom and are adapted for camouflage with both eyes on one side of the head."
     ],
-    "habitat": ["Sandy bottoms", "Coastal waters", "Estuaries"],
+    "habitat": ["Sea floor", "Coastal waters", "Estuaries"],
     "difficulty": "Medium",
     "food": ["Small fish", "Crabs", "Sea Snails"],
     "images": [
@@ -107,9 +114,10 @@
     "id": "f-8",
     "commonName": "Firefly",
     "latinName": "Lampyridae",
+    "animalClass": "Insect",
+    "species": "Beetle",
     "description": [
-      "This insect is a bioluminescent beetle known for its flashing light signals used in mating displays.",
-      "This glowing insect inhabits moist environments and often feed on smaller invertebrates or decaying plant material."
+      "This insect is a bioluminescent beetle known for its flashing light signals used in mating displays."
     ],
     "habitat": ["Woodlands", "Meadows", "Wet areas"],
     "difficulty": "Easy",
