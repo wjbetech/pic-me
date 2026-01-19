@@ -8,6 +8,8 @@ interface HangmanSettings {
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
+const STORAGE_KEY = "picme-hangman-state-v1";
+
 export default function Hangman({
   onBack,
   settings = { lives: 6 },

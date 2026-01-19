@@ -1,45 +1,4 @@
-import React from "react";
 import "./AnswerGrid.css";
-
-export default function AnswerGrid({
-  answerOptions,
-  selectedAnswer,
-  isAnswered,
-  correctAnswer,
-  handleAnswerClick,
-}: {
-  answerOptions: string[];
-  selectedAnswer: string | null;
-  isAnswered: boolean;
-  correctAnswer: string;
-  handleAnswerClick: (s: string) => void;
-}) {
-  return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {answerOptions.map((ans) => {
-        const isCorrect = isAnswered && ans === correctAnswer;
-        const isSelected = isAnswered && ans === selectedAnswer;
-        const baseClass = "btn btn-lg text-left";
-        let cls = `${baseClass} btn-outline`;
-        if (isCorrect) cls = `${baseClass} btn-success`;
-        else if (isSelected) cls = `${baseClass} btn-error`;
-
-        return (
-          <button
-            key={ans}
-            type="button"
-            className={cls}
-            onClick={() => handleAnswerClick(ans)}
-            disabled={isAnswered}
-          >
-            {ans}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-import React from "react";
 
 export default function AnswerGrid({
   answerOptions,

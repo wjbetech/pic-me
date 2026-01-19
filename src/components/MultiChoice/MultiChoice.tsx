@@ -36,7 +36,6 @@ export default function MultiChoice({
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [isSwipingIn, setIsSwipingIn] = useState(true);
   const [score, setScore] = useState(0);
 
   // rounds controls how many rounds to play: 'all' for a fixed shuffled queue, or a number
@@ -63,7 +62,6 @@ export default function MultiChoice({
       return;
     }
     // Reset animation state
-    setIsSwipingIn(false);
     setSelectedAnswer(null);
     setIsAnswered(false);
 
@@ -246,7 +244,7 @@ export default function MultiChoice({
       const shuffledOptions = finalOptions.sort(() => Math.random() - 0.5);
 
       setAnswerOptions(shuffledOptions);
-      setIsSwipingIn(true);
+      // finished loading; animation handled in child
     }, 300);
   };
 

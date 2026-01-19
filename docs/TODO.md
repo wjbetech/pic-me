@@ -1,21 +1,12 @@
 ## To-do List
 
-1. Refactor larger components or pages into their own components or sub-components
-   - [x] Identify largest components by LOC and props
-   - [x] Create branch `feat/refactor-components`
-   - [x] Create a `components/` subfolder for extracted pieces
-   - [x] Create a `components/` subfolder for extracted pieces
-   - [x] Move JSX + styles into new component files
-   - [ ] Update imports and run the build to verify
-   - [ ] Add unit or smoke tests for refactored pieces
-
-   Branch suggestion: `feat/refactor-components`
-
 2. Fix the Choose a game mode screen into three headers that spawn their own dropdowns
    - [ ] Sketch header + dropdown UX layout (mobile/desktop)
    - [ ] Implement header components with accessible buttons
    - [ ] Implement dropdown components (keyboard + focus management)
    - [ ] Integrate with `GameOptions` state and persist selection
+   - [ ] Ensure refreshing the Choose a game mode screen does not reset selected options (persist state)
+   - [ ] Restyle the title 'Choose a game mode' to match updated design across breakpoints
    - [ ] QA interactions and visual styling across themes
 
    Branch suggestion: `feat/game-options-headers`
