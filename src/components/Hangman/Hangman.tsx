@@ -7,9 +7,7 @@ interface HangmanSettings {
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-// local storage key for Hangman progress/settings
-const STORAGE_KEY = "pic-me:hangman";
-
+// local storage key for Hangman progress/settings (versioned)
 const STORAGE_KEY = "picme-hangman-state-v1";
 
 export default function Hangman({
