@@ -65,7 +65,7 @@ function App() {
 
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden bg-base-300 text-base-content">
-      <Navbar />
+      <Navbar onHome={() => setRoute("home")} />
       <div className="flex-1 overflow-hidden relative">
         {route === "home" && <Main onStart={() => setRoute("options")} />}
         {route === "options" && (
@@ -99,7 +99,7 @@ function App() {
               "Play route - mode:",
               mode,
               "gameSettings:",
-              gameSettings
+              gameSettings,
             );
             return null;
           })()}
