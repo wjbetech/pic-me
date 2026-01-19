@@ -2,7 +2,9 @@
 /* DaisyUI themes are provided via the Tailwind plugin in tailwind.config.js.
    If you define custom themes here, ensure the token name matches DaisyUI's theme name 'cmyk'. */
 @plugin "daisyui" {
-  themes: light --cymk, dark --dracula;
+  themes:
+    light --cymk,
+    dark --dracula;
 }
 
 :root {
@@ -46,4 +48,57 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Pulsing ring that animates multi-layer RGB box-shadow only (does not affect child opacity) */
+.ring-glow {
+  /* Slow the RGB cycle for a calmer effect */
+  -webkit-animation: ringGlow 4s ease-in-out infinite;
+  animation: ringGlow 4s ease-in-out infinite;
+}
+
+@-webkit-keyframes ringGlow {
+  0% {
+    box-shadow:
+      0 0 34px 14px rgba(255, 0, 0, 0.42),
+      0 0 8px 2px rgba(255, 0, 0, 0.18);
+  }
+  33% {
+    box-shadow:
+      0 0 34px 14px rgba(0, 255, 0, 0.42),
+      0 0 8px 2px rgba(0, 255, 0, 0.18);
+  }
+  66% {
+    box-shadow:
+      0 0 34px 14px rgba(0, 0, 255, 0.42),
+      0 0 8px 2px rgba(0, 0, 255, 0.18);
+  }
+  100% {
+    box-shadow:
+      0 0 34px 14px rgba(255, 0, 0, 0.42),
+      0 0 8px 2px rgba(255, 0, 0, 0.18);
+  }
+}
+
+@keyframes ringGlow {
+  0% {
+    box-shadow:
+      0 0 34px 14px rgba(255, 0, 0, 0.42),
+      0 0 8px 2px rgba(255, 0, 0, 0.18);
+  }
+  33% {
+    box-shadow:
+      0 0 34px 14px rgba(0, 255, 0, 0.42),
+      0 0 8px 2px rgba(0, 255, 0, 0.18);
+  }
+  66% {
+    box-shadow:
+      0 0 34px 14px rgba(0, 0, 255, 0.42),
+      0 0 8px 2px rgba(0, 0, 255, 0.18);
+  }
+  100% {
+    box-shadow:
+      0 0 34px 14px rgba(255, 0, 0, 0.42),
+      0 0 8px 2px rgba(255, 0, 0, 0.18);
+  }
 }

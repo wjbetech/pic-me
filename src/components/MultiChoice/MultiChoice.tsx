@@ -40,9 +40,14 @@ export default function MultiChoice({
   // rounds controls how many rounds to play: 'all' for a fixed shuffled queue, or a number
   // for a limited number of rounds where each round is sampled randomly from the full dataset.
   const [roundsTotal, setRoundsTotal] = useState<number | "all" | undefined>(
-    undefined
+    undefined,
   );
   const [roundsPlayed, setRoundsPlayed] = useState<number>(0);
+
+  const allRoundsCompleted =
+    roundsTotal !== "all" && typeof roundsTotal === "number"
+      ? roundsPlayed >= roundsTotal
+      : false;
 
   const loadNewAnimal = (animalsParam?: Animal[]) => {
     const animals = animalsParam ?? allAnimals;
@@ -89,7 +94,7 @@ export default function MultiChoice({
       if (requestId !== loadRequestIdRef.current) {
         if (DEBUG_SELECTION) {
           console.info(
-            `Ignoring stale load callback (id ${requestId}), current id ${loadRequestIdRef.current}`
+            `Ignoring stale load callback (id ${requestId}), current id ${loadRequestIdRef.current}`,
           );
         }
         return;
@@ -116,7 +121,7 @@ export default function MultiChoice({
             randomAnimal?.commonName || ""
           } | queue index: ${idx} / ${
             animalQueue.length
-          } | roundsPlayed: ${roundsPlayed} / ${roundsTotal}`
+          } | roundsPlayed: ${roundsPlayed} / ${roundsTotal}`,
         );
       }
 
@@ -144,7 +149,7 @@ export default function MultiChoice({
           if (requestId !== loadRequestIdRef.current) {
             if (DEBUG_SELECTION)
               console.info(
-                `Ignoring image onload for stale request ${requestId}`
+                `Ignoring image onload for stale request ${requestId}`,
               );
             return;
           }
@@ -156,7 +161,7 @@ export default function MultiChoice({
           setRoundsPlayed((p) => p + 1);
           if (DEBUG_SELECTION)
             console.info(
-              `Applied animal (request ${requestId}): ${randomAnimal?.id}`
+              `Applied animal (request ${requestId}): ${randomAnimal?.id}`,
             );
         };
         img.onerror = () => {
@@ -164,7 +169,7 @@ export default function MultiChoice({
           if (requestId !== loadRequestIdRef.current) {
             if (DEBUG_SELECTION)
               console.info(
-                `Ignoring image onerror for stale request ${requestId}`
+                `Ignoring image onerror for stale request ${requestId}`,
               );
             return;
           }
@@ -174,7 +179,7 @@ export default function MultiChoice({
           // remove the failing animal from queue to avoid infinite loop
           if (animalQueue && animalQueue.length > 0) {
             const filtered = animalQueue.filter(
-              (a) => a.id !== randomAnimal.id
+              (a) => a.id !== randomAnimal.id,
             );
             setAnimalQueue(filtered);
           }
@@ -187,7 +192,7 @@ export default function MultiChoice({
         if (requestId !== loadRequestIdRef.current) {
           if (DEBUG_SELECTION)
             console.info(
-              `Ignoring no-image apply for stale request ${requestId}`
+              `Ignoring no-image apply for stale request ${requestId}`,
             );
           return;
         }
@@ -198,7 +203,7 @@ export default function MultiChoice({
         setRoundsPlayed((p) => p + 1);
         if (DEBUG_SELECTION)
           console.info(
-            `Applied (no-image) animal (request ${requestId}): ${randomAnimal?.id}`
+            `Applied (no-image) animal (request ${requestId}): ${randomAnimal?.id}`,
           );
       }
 
@@ -221,7 +226,7 @@ export default function MultiChoice({
 
       // Fallback: if still not enough options, sample from ALL_ANIMALS (excluding current)
       const fallback = animals.filter(
-        (a) => a.id !== randomAnimal.id && !optionSet.has(a.commonName)
+        (a) => a.id !== randomAnimal.id && !optionSet.has(a.commonName),
       );
       while (optionSet.size < 4 && fallback.length > 0) {
         const idx = Math.floor(Math.random() * fallback.length);
@@ -243,11 +248,11 @@ export default function MultiChoice({
     }, 300);
   };
 
-  // Build rotation queue: always create a shuffled queue with no repeats.
+  // Build rotation queue: create a shuffled queue with no repeats.
   // The roundsSetting parameter determines how many rounds to play (or "all" for unlimited).
   const buildQueue = (animals: Animal[], roundsSetting?: number | "all") => {
-    // Always shuffle the full dataset to avoid repeats
-    const q = createRotation(animals, "all");
+    // Create a rotation according to the requested rounds (number or "all").
+    const q = createRotation(animals, roundsSetting ?? "all");
     queueIndexRef.current = 0;
     setAnimalQueue(q);
     setRoundsTotal(roundsSetting ?? "all");
@@ -279,7 +284,7 @@ export default function MultiChoice({
         const shuffledCombined = createRotation(combined, "all");
         setAllAnimals(shuffledCombined);
         console.log(
-          `Loaded ${shuffledCombined.length} animals (shuffled) from data/*.json`
+          `Loaded ${shuffledCombined.length} animals (shuffled) from data/*.json`,
         );
         // Build queue using provided settings.rounds if available
         // Cast settings to a minimal shape that may include `rounds` when provided
@@ -390,6 +395,20 @@ export default function MultiChoice({
             )}
           </div>
 
+          {allRoundsCompleted && (
+            <div className="text-center mb-6">
+              <p className="text-2xl font-bold mb-2">All rounds completed!</p>
+              <p className="mb-2">
+                Final score: <span className="font-semibold">{score}</span>
+              </p>
+              <div className="flex justify-center">
+                <button className="btn" onClick={() => onBack && onBack()}>
+                  Back to Menu
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Answer Buttons Grid */}
           <div className="flex-1 flex flex-col min-h-0 w-full overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
@@ -404,8 +423,8 @@ export default function MultiChoice({
                         ? "btn-success border-success"
                         : "btn-error border-error"
                       : isAnswered && option === correctAnswer
-                      ? "btn-success border-success"
-                      : "border-base-300 hover:border-base-400"
+                        ? "btn-success border-success"
+                        : "border-base-300 hover:border-base-400"
                   } ${isAnswered ? "opacity-60" : ""}`}
                 >
                   <span className="line-clamp-2">{option}</span>
@@ -424,11 +443,16 @@ export default function MultiChoice({
         </div>
 
         {/* Back Button */}
-        <div className="flex justify-center mt-6 shrink-0">
-          <button className="btn btn-ghost" onClick={() => onBack && onBack()}>
-            Back to Menu
-          </button>
-        </div>
+        {!allRoundsCompleted && (
+          <div className="flex justify-center mt-6 shrink-0">
+            <button
+              className="btn btn-ghost"
+              onClick={() => onBack && onBack()}
+            >
+              Back to Menu
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

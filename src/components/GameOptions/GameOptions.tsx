@@ -32,7 +32,7 @@ export default function GameOptions({
       hintType?: string;
       rounds?: number | "all";
       lives?: number;
-    }
+    },
   ) => void;
 }) {
   const [selected, setSelected] = useState<string>(OPTIONS[0].id);
@@ -41,7 +41,7 @@ export default function GameOptions({
   const [hintsEnabled, setHintsEnabled] = useState<boolean>(false);
   const [hintType, setHintType] = useState<string>("habitat");
   const [rounds, setRounds] = useState<string>("10");
-  const [lives, setLives] = useState<string>("6");
+  const [lives, setLives] = useState<number>(5);
 
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
@@ -173,6 +173,7 @@ export default function GameOptions({
                       onChange={(e) => setShowDescription(e.target.checked)}
                       className="checkbox checkbox-sm"
                     />
+
                     <label
                       htmlFor="show-description"
                       className="text-sm font-medium cursor-pointer"
@@ -193,16 +194,39 @@ export default function GameOptions({
                     <label className="text-sm font-medium">
                       Starting Lives
                     </label>
-                    <select
-                      value={lives}
-                      onChange={(e) => setLives(e.target.value)}
-                      className="select select-sm w-full mt-2"
-                    >
-                      <option value="3">3</option>
-                      <option value="6">6</option>
-                      <option value="9">9</option>
-                      <option value="12">12</option>
-                    </select>
+                    <div className="mt-2 flex items-center gap-2">
+                      <button
+                        type="button"
+                        className="btn btn-sm"
+                        onClick={() => setLives((v) => Math.max(5, v - 1))}
+                        disabled={lives <= 5}
+                      >
+                        −
+                      </button>
+
+                      <input
+                        type="number"
+                        min={5}
+                        max={15}
+                        step={1}
+                        value={lives}
+                        onChange={(e) => {
+                          const n = Number(e.target.value);
+                          if (Number.isNaN(n)) return;
+                          setLives(Math.min(15, Math.max(5, Math.trunc(n))));
+                        }}
+                        className="input input-sm w-16 text-center"
+                      />
+
+                      <button
+                        type="button"
+                        className="btn btn-sm"
+                        onClick={() => setLives((v) => Math.min(15, v + 1))}
+                        disabled={lives >= 15}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
 
                   {/* Rounds Dropdown */}

@@ -25,11 +25,17 @@ export default function Hangman({
   const [score, setScore] = useState(0);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
   const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
-    "playing"
+    "playing",
   );
+
+  const [roundsTotal, setRoundsTotal] = useState<number | "all" | undefined>(
+    settings.rounds ?? "all",
+  );
+  const [allRoundsCompleted, setAllRoundsCompleted] = useState(false);
 
   const animalQueueRef = useRef<Animal[]>([]);
   const queueIndexRef = useRef(0);
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   // Load all animals from JSON files
   useEffect(() => {
@@ -55,6 +61,59 @@ export default function Hangman({
         animalQueueRef.current = shuffled;
         console.log(`Loaded ${shuffled.length} animals for Hangman`);
 
+        // Attempt to restore saved state so reloads preserve progress
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw) as Record<string, unknown>;
+            const savedName = parsed.currentCommonName as string | undefined;
+            const savedGuessed = Array.isArray(parsed.guessed)
+              ? (parsed.guessed as string[])
+              : [];
+            const savedWrong = Array.isArray(parsed.wrong)
+              ? (parsed.wrong as string[])
+              : [];
+            const savedLives =
+              typeof parsed.livesRemaining === "number"
+                ? parsed.livesRemaining
+                : (settings.lives ?? 6);
+            const savedScore =
+              typeof parsed.score === "number" ? parsed.score : 0;
+            const savedRoundsPlayed =
+              typeof parsed.roundsPlayed === "number"
+                ? parsed.roundsPlayed
+                : undefined;
+            const savedRoundsTotal =
+              parsed.roundsTotal ?? settings.rounds ?? "all";
+            const savedAllCompleted = Boolean(parsed.allRoundsCompleted);
+
+            const foundIndex = savedName
+              ? shuffled.findIndex((a) => a.commonName === savedName)
+              : -1;
+            if (foundIndex >= 0) {
+              const found = shuffled[foundIndex];
+              setCurrentAnimal(found);
+              setGuessedLetters(
+                new Set((savedGuessed || []).map((s) => s.toUpperCase())),
+              );
+              setWrongLetters(
+                new Set((savedWrong || []).map((s) => s.toUpperCase())),
+              );
+              setLivesRemaining(savedLives);
+              setScore(savedScore);
+              if (typeof savedRoundsPlayed === "number")
+                setRoundsPlayed(savedRoundsPlayed);
+              setRoundsTotal(savedRoundsTotal as number | "all" | undefined);
+              setAllRoundsCompleted(savedAllCompleted);
+              queueIndexRef.current = (foundIndex + 1) % shuffled.length;
+              // restored — skip default initialization below
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn("Failed to restore Hangman state:", err);
+        }
+
         // Initialize first animal directly (avoid calling loadNewAnimal() here
         // to prevent duplicate increments in dev StrictMode). This sets up
         // the queue index and rounds counter deterministically.
@@ -67,6 +126,8 @@ export default function Hangman({
           setLivesRemaining(settings.lives ?? 6);
           setGameState("playing");
           setRoundsPlayed(1);
+          const roundsSetting = settings.rounds ?? "all";
+          setRoundsTotal(roundsSetting);
         }
       } catch (err) {
         console.error("Failed to load animal data:", err);
@@ -94,6 +155,16 @@ export default function Hangman({
     const source = animals ?? allAnimals;
     if (!source || source.length === 0) {
       setTimeout(() => loadNewAnimal(), 200);
+      return;
+    }
+
+    // If rounds is a number and we've already completed the requested rounds, stop here
+    if (
+      roundsTotal !== "all" &&
+      typeof roundsTotal === "number" &&
+      roundsPlayed >= roundsTotal
+    ) {
+      setAllRoundsCompleted(true);
       return;
     }
 
@@ -147,6 +218,27 @@ export default function Hangman({
     loadNewAnimal();
   };
 
+  // Allow pressing Enter to advance when the round is won
+  useEffect(() => {
+    const onEnter = (e: KeyboardEvent) => {
+      if (gameState === "won" && (e.key === "Enter" || e.key === "Return")) {
+        e.preventDefault();
+        handleNextRound();
+      }
+    };
+    window.addEventListener("keydown", onEnter);
+    return () => window.removeEventListener("keydown", onEnter);
+  }, [gameState]);
+
+  // Focus the Next button when round is won
+  useEffect(() => {
+    if (gameState === "won" && nextButtonRef.current) {
+      try {
+        nextButtonRef.current.focus();
+      } catch {}
+    }
+  }, [gameState]);
+
   // Keyboard input: allow players to type letters to guess
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -166,6 +258,35 @@ export default function Hangman({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [gameState, handleLetterGuess]);
 
+  // Persist relevant game state so reloads don't lose progress
+  useEffect(() => {
+    try {
+      const toSave = {
+        currentCommonName: currentAnimal?.commonName,
+        queueIndex: queueIndexRef.current,
+        guessed: Array.from(guessedLetters),
+        wrong: Array.from(wrongLetters),
+        livesRemaining,
+        score,
+        roundsPlayed,
+        roundsTotal,
+        allRoundsCompleted,
+      } as const;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch (err) {
+      /* ignore storage errors */
+    }
+  }, [
+    currentAnimal,
+    guessedLetters,
+    wrongLetters,
+    livesRemaining,
+    score,
+    roundsPlayed,
+    roundsTotal,
+    allRoundsCompleted,
+  ]);
+
   const renderLetterBoxes = () => {
     if (!currentAnimal) return null;
 
@@ -176,7 +297,7 @@ export default function Hangman({
     // Determine longest word length (letters only) to scale box sizes
     const longest = Math.max(
       1,
-      ...words.map((w) => w.replace(/[^A-Z]/g, "").length)
+      ...words.map((w) => w.replace(/[^A-Z]/g, "").length),
     );
 
     // Compute a reasonable box width (px) based on the longest word, clamped.
@@ -184,7 +305,7 @@ export default function Hangman({
     // don't end up too small.
     const boxWidth = Math.min(
       64,
-      Math.max(32, Math.floor(480 / Math.max(6, longest)))
+      Math.max(32, Math.floor(480 / Math.max(6, longest))),
     );
     const boxHeight = Math.round(boxWidth * 0.9);
     const fontSize = Math.max(14, Math.round(boxWidth * 0.36));
@@ -244,8 +365,8 @@ export default function Hangman({
               rowIndex === 1
                 ? "pl-3 md:pl-6"
                 : rowIndex === 2
-                ? "pl-6 md:pl-12"
-                : ""
+                  ? "pl-6 md:pl-12"
+                  : ""
             }`}
           >
             {row.map((letter) => {
@@ -268,8 +389,8 @@ export default function Hangman({
                     showAsWrong
                       ? "btn-error text-error-content"
                       : showAsCorrect
-                      ? "btn-success text-success-content"
-                      : "btn-outline"
+                        ? "btn-success text-success-content"
+                        : "btn-outline"
                   }`}
                 >
                   {letter}
@@ -326,9 +447,17 @@ export default function Hangman({
             <p className="text-2xl font-bold text-success mb-4">
               🎉 Correct! It's {currentAnimal?.commonName}!
             </p>
-            <button onClick={handleNextRound} className="btn btn-success">
-              Next Animal
-            </button>
+            <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+              <button
+                ref={nextButtonRef}
+                onClick={handleNextRound}
+                disabled={allRoundsCompleted}
+                aria-disabled={allRoundsCompleted}
+                className={`btn btn-success ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                Next Animal
+              </button>
+            </div>
           </div>
         )}
 
@@ -337,9 +466,33 @@ export default function Hangman({
             <p className="text-2xl font-bold text-error mb-4">
               💀 Game Over! The answer was {currentAnimal?.commonName}
             </p>
-            <button onClick={handleNextRound} className="btn btn-error">
-              Try Another
-            </button>
+            <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+              <button onClick={handleNextRound} className="btn btn-error">
+                Try Again
+              </button>
+            </div>
+          </div>
+        )}
+
+        {allRoundsCompleted && (
+          <div className="text-center">
+            <p className="text-2xl font-bold mb-4">All rounds completed!</p>
+            <p className="mb-4">
+              Final score: <span className="font-semibold">{score}</span>
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                className="btn"
+                onClick={() => {
+                  try {
+                    localStorage.removeItem(STORAGE_KEY);
+                  } catch {}
+                  onBack && onBack();
+                }}
+              >
+                Back to Menu
+              </button>
+            </div>
           </div>
         )}
 
@@ -347,11 +500,21 @@ export default function Hangman({
         {gameState === "playing" && renderKeyboard()}
 
         {/* Back Button */}
-        <div className="flex justify-center mt-4">
-          <button className="btn btn-ghost" onClick={() => onBack && onBack()}>
-            Back to Menu
-          </button>
-        </div>
+        {!allRoundsCompleted && (
+          <div className="flex justify-center mt-4">
+            <button
+              className="btn btn-ghost"
+              onClick={() => {
+                try {
+                  localStorage.removeItem(STORAGE_KEY);
+                } catch {}
+                onBack && onBack();
+              }}
+            >
+              Back to Menu
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

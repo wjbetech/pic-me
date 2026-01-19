@@ -1,10 +1,16 @@
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
-export default function Navbar() {
+export default function Navbar({ onHome }: { onHome?: () => void }) {
   return (
     <div className="navbar bg-base-100 shadow-md w-full items-center align-middle p-4 z-10">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl text-amber-500 p-0">PicMe</a>
+        <button
+          onClick={() => onHome && onHome()}
+          className="btn btn-ghost text-xl text-amber-500 p-0"
+          aria-label="PicMe Home"
+        >
+          PicMe
+        </button>
       </div>
       <div className="flex gap-4 items-center">
         <ThemeToggle />
