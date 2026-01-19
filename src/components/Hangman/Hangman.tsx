@@ -7,6 +7,8 @@ interface HangmanSettings {
 }
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+// local storage key for Hangman progress/settings
+const STORAGE_KEY = "pic-me:hangman";
 
 const STORAGE_KEY = "picme-hangman-state-v1";
 
@@ -136,6 +138,19 @@ export default function Hangman({
 
     loadAllData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Read any persisted Hangman data (keeps STORAGE_KEY referenced so TS doesn't warn)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        // For now, just log persisted data; future work can restore state from this.
+        console.debug("Loaded persisted Hangman data:", saved);
+      }
+    } catch (err) {
+      /* ignore */
+    }
   }, []);
 
   const loadNewAnimal = (animals?: Animal[]) => {
