@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import type { Animal } from "../../types/Animal";
 import "./MultiChoice.css";
 import { createRotation } from "../../utils/rotation";
+import AnswerGrid from "./AnswerGrid/AnswerGrid";
+import DisplayCard from "./DisplayCard/DisplayCard";
 
 // Toggle debug logging for selection tracing
 const DEBUG_SELECTION = true; // temporarily enabled to trace repeated A selection
@@ -334,66 +336,13 @@ export default function MultiChoice({
 
         {/* Content Container */}
         <div className="flex-1 overflow-y-scroll flex flex-col min-h-0">
-          {/* Animal Image or Description Container with Swipe Animation */}
-          <div className="shrink-0 mb-6">
-            <div
-              className={`swipe-container ${
-                isSwipingIn ? "swipe-in" : "swipe-out"
-              }`}
-            >
-              {settings.showDescription ? (
-                <div className="w-full h-64 md:h-80 bg-base-200 rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col justify-center">
-                  {currentAnimal && (
-                    <div className="space-y-3">
-                      <h3 className="font-bold text-lg">
-                        {currentAnimal.commonName}
-                      </h3>
-                      <p className="italic text-sm opacity-70">
-                        {currentAnimal.latinName}
-                      </p>
-                      {currentAnimal.description.map((desc, idx) => (
-                        <p key={idx} className="text-sm leading-relaxed">
-                          {desc}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="relative w-full h-64 md:h-80">
-                  {isImageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-base-200 rounded-lg">
-                      <div className="mc-spinner" aria-hidden />
-                    </div>
-                  )}
-
-                  {currentImage && (
-                    <img
-                      src={currentImage}
-                      alt={currentAnimal?.commonName || "Animal"}
-                      className={`w-full h-64 md:h-80 object-cover rounded-lg shadow-lg ${
-                        isImageLoading ? "opacity-0" : "opacity-100"
-                      }`}
-                      style={{
-                        filter:
-                          settings.blur > 0
-                            ? `blur(${settings.blur * 2}px)`
-                            : "none",
-                        transition: "opacity 200ms ease-in-out",
-                      }}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Animal Name Hint */}
-            {currentAnimal && (
-              <p className="text-center opacity-60 mt-3 text-sm">
-                Hint: {currentAnimal.habitat.join(", ")}
-              </p>
-            )}
-          </div>
+          <DisplayCard
+            currentAnimal={currentAnimal}
+            currentImage={currentImage}
+            isImageLoading={isImageLoading}
+            showDescription={settings.showDescription}
+            settings={settings}
+          />
 
           {allRoundsCompleted && (
             <div className="text-center mb-6">
@@ -409,37 +358,13 @@ export default function MultiChoice({
             </div>
           )}
 
-          {/* Answer Buttons Grid */}
-          <div className="flex-1 flex flex-col min-h-0 w-full overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-              {answerOptions.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerClick(option)}
-                  disabled={isAnswered}
-                  className={`btn justify-center text-center px-4 py-3 border-2 bg-white text-base-content w-full overflow-hidden ${
-                    selectedAnswer === option
-                      ? option === correctAnswer
-                        ? "btn-success border-success"
-                        : "btn-error border-error"
-                      : isAnswered && option === correctAnswer
-                        ? "btn-success border-success"
-                        : "border-base-300 hover:border-base-400"
-                  } ${isAnswered ? "opacity-60" : ""}`}
-                >
-                  <span className="line-clamp-2">{option}</span>
-                  {isAnswered && option === correctAnswer && (
-                    <span className="text-lg">✓</span>
-                  )}
-                  {isAnswered &&
-                    selectedAnswer === option &&
-                    option !== correctAnswer && (
-                      <span className="text-lg">✗</span>
-                    )}
-                </button>
-              ))}
-            </div>
-          </div>
+          <AnswerGrid
+            answerOptions={answerOptions}
+            selectedAnswer={selectedAnswer}
+            isAnswered={isAnswered}
+            correctAnswer={correctAnswer}
+            handleAnswerClick={handleAnswerClick}
+          />
         </div>
 
         {/* Back Button */}

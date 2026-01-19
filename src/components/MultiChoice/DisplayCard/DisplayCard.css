@@ -1,0 +1,30 @@
+/* Placeholder styles for DisplayCard component; main styling uses Tailwind */
+.swipe-container {
+  transition:
+    transform 240ms ease,
+    opacity 180ms ease;
+}
+.swipe-in {
+  transform: translateY(0);
+  opacity: 1;
+}
+.swipe-out {
+  transform: translateY(8px);
+  opacity: 0;
+}
+
+.mc-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: 4px solid rgba(0, 0, 0, 0.08);
+  border-top-color: rgba(0, 0, 0, 0.3);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* DisplayCard scoped styles can go here */

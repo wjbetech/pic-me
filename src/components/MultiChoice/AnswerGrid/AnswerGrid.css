@@ -1,0 +1,5 @@
+/* Placeholder styles for AnswerGrid; keep simple, rely on Tailwind */
+.answer-grid {
+  display: grid;
+}
+/* Styles local to AnswerGrid can be added here if needed. */
