@@ -256,7 +256,11 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
 
         {/* Action Buttons */}
         <div className="px-6 pb-6 flex gap-3">
-          <button className="btn btn-ghost" onClick={() => onBack && onBack()}>
+          <button
+            aria-label="Go back"
+            className="btn btn-secondary"
+            onClick={() => onBack && onBack()}
+          >
             Back
           </button>
           <button className="btn btn-primary ml-auto" onClick={handleConfirm}>
