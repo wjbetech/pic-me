@@ -6,7 +6,7 @@ export default function Navbar({ onHome }: { onHome?: () => void }) {
       <div className="flex-1">
         <button
           onClick={() => onHome && onHome()}
-          className="btn btn-ghost text-xl text-amber-500 p-0"
+          className="btn btn-ghost text-2xl md:text-3xl text-amber-500 p-0"
           aria-label="PicMe Home"
         >
           PicMe
@@ -14,7 +14,6 @@ export default function Navbar({ onHome }: { onHome?: () => void }) {
       </div>
       <div className="flex gap-4 items-center">
         <ThemeToggle />
-        <a className="text-amber-500">Link</a>
       </div>
     </div>
   );

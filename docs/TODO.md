@@ -3,6 +3,9 @@
 3. Fix the home page to be more relevant to the actual app
    - [ ] Audit content to identify outdated copy and links
    - [ ] Update hero section with concise app description and CTA
+   - [ ] Add a scrolling(?) animal collage SVG/PNG with object-cover and mix-blend-mode for visual depth.
+   - [ ] Add a hero gradient + stronger headline copy (implement)
+   - [ ] Add Framer Motion entry animation and card hover polish
    - [ ] Add screenshots or animated GIFs of gameplay
    - [ ] Ensure responsive layout and accessibility (aria labels)
    - [ ] Run visual tests in both light and dark themes
