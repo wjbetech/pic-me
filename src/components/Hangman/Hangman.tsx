@@ -57,16 +57,14 @@ export default function Hangman({
 
         // Shuffle the animals
         const shuffled = combined.sort(() => Math.random() - 0.5);
-        setAllAnimals(shuffled);
-        animalQueueRef.current = shuffled;
         console.log(`Loaded ${shuffled.length} animals for Hangman`);
 
         // Attempt to restore saved state so reloads preserve progress
+        let didRestore = false;
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
           if (raw) {
             const parsed = JSON.parse(raw) as Record<string, unknown>;
-            const savedName = parsed.currentCommonName as string | undefined;
             const savedGuessed = Array.isArray(parsed.guessed)
               ? (parsed.guessed as string[])
               : [];
@@ -86,11 +84,34 @@ export default function Hangman({
             const savedRoundsTotal =
               parsed.roundsTotal ?? settings.rounds ?? "all";
             const savedAllCompleted = Boolean(parsed.allRoundsCompleted);
+            const savedGameState =
+              parsed.gameState === "won" ||
+              parsed.gameState === "lost" ||
+              parsed.gameState === "playing"
+                ? parsed.gameState
+                : "playing";
 
-            const foundIndex = savedName
-              ? shuffled.findIndex((a) => a.commonName === savedName)
-              : -1;
-            if (foundIndex >= 0) {
+            // Prefer restoring the full saved animal object if present
+            const savedAnimal = parsed.currentAnimal as Animal | undefined;
+            if (savedAnimal) {
+              console.log("Restoring saved animal:", savedAnimal.commonName);
+
+              // Ensure the saved animal exists in the shuffled list; if not, put it at the front.
+              let foundIndex = shuffled.findIndex(
+                (a) => a.commonName === savedAnimal.commonName,
+              );
+              if (foundIndex < 0) {
+                shuffled.unshift(savedAnimal);
+                foundIndex = 0;
+                console.log(
+                  "Saved animal not in shuffled list, added at front",
+                );
+              }
+
+              // Update refs and state with modified shuffled array
+              setAllAnimals(shuffled);
+              animalQueueRef.current = shuffled;
+
               const found = shuffled[foundIndex];
               setCurrentAnimal(found);
               setGuessedLetters(
@@ -101,33 +122,39 @@ export default function Hangman({
               );
               setLivesRemaining(savedLives);
               setScore(savedScore);
+              setGameState(savedGameState);
               if (typeof savedRoundsPlayed === "number")
                 setRoundsPlayed(savedRoundsPlayed);
               setRoundsTotal(savedRoundsTotal as number | "all" | undefined);
               setAllRoundsCompleted(savedAllCompleted);
               queueIndexRef.current = (foundIndex + 1) % shuffled.length;
-              // restored — skip default initialization below
-              return;
+
+              didRestore = true;
+              console.log("Successfully restored game state:", savedGameState);
             }
           }
         } catch (err) {
           console.warn("Failed to restore Hangman state:", err);
         }
 
-        // Initialize first animal directly (avoid calling loadNewAnimal() here
-        // to prevent duplicate increments in dev StrictMode). This sets up
-        // the queue index and rounds counter deterministically.
-        if (shuffled.length > 0) {
-          queueIndexRef.current = 1; // next index to use
-          const first = shuffled[0];
-          setCurrentAnimal(first);
-          setGuessedLetters(new Set());
-          setWrongLetters(new Set());
-          setLivesRemaining(settings.lives ?? 6);
-          setGameState("playing");
-          setRoundsPlayed(1);
-          const roundsSetting = settings.rounds ?? "all";
-          setRoundsTotal(roundsSetting);
+        // Only initialize first animal if we didn't restore saved state
+        if (!didRestore) {
+          setAllAnimals(shuffled);
+          animalQueueRef.current = shuffled;
+
+          if (shuffled.length > 0) {
+            queueIndexRef.current = 1; // next index to use
+            const first = shuffled[0];
+            setCurrentAnimal(first);
+            setGuessedLetters(new Set());
+            setWrongLetters(new Set());
+            setLivesRemaining(settings.lives ?? 6);
+            setGameState("playing");
+            setRoundsPlayed(1);
+            const roundsSetting = settings.rounds ?? "all";
+            setRoundsTotal(roundsSetting);
+            console.log("Started new game with:", first.commonName);
+          }
         }
       } catch (err) {
         console.error("Failed to load animal data:", err);
@@ -260,9 +287,15 @@ export default function Hangman({
 
   // Persist relevant game state so reloads don't lose progress
   useEffect(() => {
+    // Don't persist until we have a current animal loaded
+    if (!currentAnimal) return;
+
     try {
       const toSave = {
-        currentCommonName: currentAnimal?.commonName,
+        // Save full current animal object when available to ensure
+        // exact restoration across reloads (avoids mismatches from shuffling).
+        currentAnimal: currentAnimal,
+        currentCommonName: currentAnimal.commonName,
         queueIndex: queueIndexRef.current,
         guessed: Array.from(guessedLetters),
         wrong: Array.from(wrongLetters),
@@ -271,10 +304,19 @@ export default function Hangman({
         roundsPlayed,
         roundsTotal,
         allRoundsCompleted,
+        gameState,
       } as const;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+      console.log(
+        "Persisted game state:",
+        currentAnimal.commonName,
+        "guessed:",
+        guessedLetters.size,
+        "wrong:",
+        wrongLetters.size,
+      );
     } catch (err) {
-      /* ignore storage errors */
+      console.error("Failed to persist state:", err);
     }
   }, [
     currentAnimal,
@@ -285,6 +327,7 @@ export default function Hangman({
     roundsPlayed,
     roundsTotal,
     allRoundsCompleted,
+    gameState,
   ]);
 
   const renderLetterBoxes = () => {
