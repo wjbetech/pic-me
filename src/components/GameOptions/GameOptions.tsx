@@ -141,7 +141,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
       <div className="w-full max-w-3xl text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold">Pick a game mode!</h1>
+        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
+          Pick a game mode!
+        </h1>
       </div>
       <div className="max-w-3xl w-full bg-base-100 rounded-lg border overflow-hidden">
         {/* Menu Header */}
