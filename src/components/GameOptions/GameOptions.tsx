@@ -66,7 +66,10 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
   const selectedOption = OPTIONS.find((o) => o.id === selected);
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
+    <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
+      <div className="w-full max-w-3xl text-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold">Pick a game mode!</h1>
+      </div>
       <div className="max-w-3xl w-full bg-base-100 rounded-lg border overflow-hidden">
         {/* Menu Header */}
         <div className="flex border-b bg-base-200">

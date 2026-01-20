@@ -75,7 +75,15 @@ function App() {
               console.log("GameOptions onConfirm called:", selected, settings);
               setMode(selected);
               if (settings) {
-                setGameSettings(settings);
+                setGameSettings((prev) => ({
+                  blur: settings.blur ?? prev.blur,
+                  showDescription:
+                    settings.showDescription ?? prev.showDescription,
+                  hintsEnabled: settings.hintsEnabled ?? prev.hintsEnabled,
+                  hintType: settings.hintType ?? prev.hintType,
+                  rounds: settings.rounds ?? prev.rounds,
+                  lives: settings.lives ?? prev.lives,
+                }));
               }
               setRoute("play");
             }}
