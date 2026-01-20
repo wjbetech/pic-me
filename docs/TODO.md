@@ -1,10 +1,10 @@
 ## To-do List
 
 2. Fix the Choose a game mode screen into three headers that spawn their own dropdowns
-   - [ ] Sketch header + dropdown UX layout (mobile/desktop)
-   - [ ] Implement header components with accessible buttons
-   - [ ] Implement dropdown components (keyboard + focus management)
-   - [ ] Integrate with `GameOptions` state and persist selection
+   - [X] Sketch header + dropdown UX layout (mobile/desktop)
+   - [X] Implement header components with accessible buttons
+   - [X] Implement dropdown components (keyboard + focus management)
+   - [X] Integrate with `GameOptions` state and persist selection
    - [ ] Ensure refreshing the Choose a game mode screen does not reset selected options (persist state)
    - [ ] Restyle the title 'Choose a game mode' to match updated design across breakpoints
    - [ ] QA interactions and visual styling across themes

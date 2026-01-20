@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const MotionDiv: any = motion.div;
@@ -37,13 +37,79 @@ interface Props {
 }
 
 export default function GameOptions({ onBack, onConfirm }: Props) {
-  const [selected, setSelected] = useState<string>(OPTIONS[0].id);
-  const [blur, setBlur] = useState<number>(0);
-  const [showDescription, setShowDescription] = useState<boolean>(false);
-  const [hintsEnabled, setHintsEnabled] = useState<boolean>(false);
-  const [hintType, setHintType] = useState<string>("habitat");
-  const [rounds, setRounds] = useState<string>("10");
-  const [lives, setLives] = useState<number>(5);
+  const STORAGE_MODE = "pic-me:mode";
+  const STORAGE_SETTINGS = "pic-me:settings";
+
+  const [selected, setSelected] = useState<string>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_MODE);
+      if (saved && OPTIONS.some((o) => o.id === saved)) return saved;
+    } catch {}
+    return OPTIONS[0].id;
+  });
+
+  const [blur, setBlur] = useState<number>(() => {
+    try {
+      const s = localStorage.getItem(STORAGE_SETTINGS);
+      if (s) {
+        const j = JSON.parse(s);
+        return typeof j.blur === "number" ? j.blur : 0;
+      }
+    } catch {}
+    return 0;
+  });
+  const [showDescription, setShowDescription] = useState<boolean>(() => {
+    try {
+      const s = localStorage.getItem(STORAGE_SETTINGS);
+      if (s) {
+        const j = JSON.parse(s);
+        return typeof j.showDescription === "boolean"
+          ? j.showDescription
+          : false;
+      }
+    } catch {}
+    return false;
+  });
+  const [hintsEnabled, setHintsEnabled] = useState<boolean>(() => {
+    try {
+      const s = localStorage.getItem(STORAGE_SETTINGS);
+      if (s) {
+        const j = JSON.parse(s);
+        return typeof j.hintsEnabled === "boolean" ? j.hintsEnabled : false;
+      }
+    } catch {}
+    return false;
+  });
+  const [hintType, setHintType] = useState<string>(() => {
+    try {
+      const s = localStorage.getItem(STORAGE_SETTINGS);
+      if (s) {
+        const j = JSON.parse(s);
+        return typeof j.hintType === "string" ? j.hintType : "habitat";
+      }
+    } catch {}
+    return "habitat";
+  });
+  const [rounds, setRounds] = useState<string>(() => {
+    try {
+      const s = localStorage.getItem(STORAGE_SETTINGS);
+      if (s) {
+        const j = JSON.parse(s);
+        return j.rounds === "all" ? "all" : String(j.rounds ?? "10");
+      }
+    } catch {}
+    return "10";
+  });
+  const [lives, setLives] = useState<number>(() => {
+    try {
+      const s = localStorage.getItem(STORAGE_SETTINGS);
+      if (s) {
+        const j = JSON.parse(s);
+        return typeof j.lives === "number" ? j.lives : 5;
+      }
+    } catch {}
+    return 5;
+  });
 
   const handleConfirm = () => {
     const roundsValue: number | "all" =
@@ -62,6 +128,13 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
       onConfirm?.(selected);
     }
   };
+
+  // persist selected mode when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_MODE, selected);
+    } catch {}
+  }, [selected]);
 
   const selectedOption = OPTIONS.find((o) => o.id === selected);
 
