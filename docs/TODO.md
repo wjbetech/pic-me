@@ -15,6 +15,9 @@
 
 4. Fix styling errors between light and dark
    - [ ] Create a theme checklist (colors, borders, shadows, contrast)
+      - [ ] Consider a /src/styles directory for handling app-wide styling
+        - [ ] --color-surface, --color-on-surface, --color-accent
+      - [ ] Update ```tailwind.config.js``` to reflect those changes
    - [ ] Inspect components in both themes and list mismatches
    - [ ] Update Tailwind/DaisyUI theme overrides as needed
    - [ ] Add CSS variables for problematic tokens if required
