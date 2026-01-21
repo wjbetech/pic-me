@@ -20,7 +20,7 @@ export default function Main({ onStart }: { onStart?: () => void }) {
       <div className="hero-content text-center flex-col max-w-md w-full">
         <div className="w-full rounded-lg p-6 bg-linear-to-br from-primary/6 to-secondary/6 mb-4">
           <h1 className="text-3xl md:text-5xl font-bold text-primary mb-2 md:mb-3">
-            PicMe — Guess the animal!
+            PicMe
           </h1>
           <p className="text-md md:text-lg mb-0 text-base-content/80">
             Play quick rounds to learn animal names — no sign-in required.
@@ -55,30 +55,6 @@ export default function Main({ onStart }: { onStart?: () => void }) {
           </MotionDiv>
 
           <MotionDiv
-            className="card bg-base-100 shadow-lg md:shadow-xl border border-base-content/10 opacity-60 transform transition-shadow duration-200"
-            variants={cardVariants}
-            whileHover={{ y: -6, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300, damping: 24 }}
-          >
-            <div className="card-body p-3 md:p-4 flex flex-row items-center gap-3 md:gap-4">
-              <div className="text-xl md:text-2xl text-accent">
-                <FaVolumeUp />
-              </div>
-              <div className="text-left">
-                <h3 className="font-bold text-sm md:text-base">
-                  <span className="text-xs uppercase opacity-70 mr-2">
-                    (COMING SOON)
-                  </span>
-                  Immersive Sounds
-                </h3>
-                <p className="text-xs md:text-sm opacity-70">
-                  Coming soon — feature not yet implemented
-                </p>
-              </div>
-            </div>
-          </MotionDiv>
-
-          <MotionDiv
             className="card bg-base-100 shadow-lg md:shadow-xl border border-base-content/10 transform transition-shadow duration-200 hover:shadow-xl"
             variants={cardVariants}
             whileHover={{ y: -6, scale: 1.02 }}
@@ -96,10 +72,34 @@ export default function Main({ onStart }: { onStart?: () => void }) {
               </div>
             </div>
           </MotionDiv>
+
+          <MotionDiv
+            className="card bg-base-100 shadow-lg md:shadow-xl border border-base-content/10 opacity-60 transform transition-shadow duration-200"
+            variants={cardVariants}
+            whileHover={{ y: -6, scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+          >
+            <div className="card-body p-3 md:p-4 flex flex-row items-center gap-3 md:gap-4">
+              <div className="text-xl md:text-2xl text-accent">
+                <FaVolumeUp />
+              </div>
+              <div className="text-left opacity-30">
+                <h3 className="font-bold text-sm md:text-base">
+                  <span className="text-xs uppercase opacity-70 mr-2">
+                    (COMING SOON)
+                  </span>
+                  Immersive Sounds
+                </h3>
+                <p className="text-xs md:text-sm opacity-70">
+                  Coming soon — feature not yet implemented
+                </p>
+              </div>
+            </div>
+          </MotionDiv>
         </MotionDiv>
 
         <button
-          className="btn btn-primary btn-wide text-xl shadow-lg animate-pulse"
+          className="btn btn-primary btn-wide text-xl shadow-lg"
           onClick={() => onStart && onStart()}
         >
           Start Playing
