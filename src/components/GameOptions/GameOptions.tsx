@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
+// Use a loose MotionDiv alias to avoid strict Motion prop type issues
+// when passing standard HTML props like `className` in TSX.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MotionDiv: any = motion.div;
-const MotionNav: any = motion.nav;
 
 const OPTIONS = [
   {
@@ -44,7 +46,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
     try {
       const saved = localStorage.getItem(STORAGE_MODE);
       if (saved && OPTIONS.some((o) => o.id === saved)) return saved;
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return OPTIONS[0].id;
   });
 
@@ -55,7 +59,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
         const j = JSON.parse(s);
         return typeof j.blur === "number" ? j.blur : 0;
       }
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return 0;
   });
   const [showDescription, setShowDescription] = useState<boolean>(() => {
@@ -67,7 +73,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
           ? j.showDescription
           : false;
       }
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return false;
   });
   const [hintsEnabled, setHintsEnabled] = useState<boolean>(() => {
@@ -77,7 +85,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
         const j = JSON.parse(s);
         return typeof j.hintsEnabled === "boolean" ? j.hintsEnabled : false;
       }
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return false;
   });
   const [hintType, setHintType] = useState<string>(() => {
@@ -87,7 +97,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
         const j = JSON.parse(s);
         return typeof j.hintType === "string" ? j.hintType : "habitat";
       }
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return "habitat";
   });
   const [rounds, setRounds] = useState<string>(() => {
@@ -97,7 +109,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
         const j = JSON.parse(s);
         return j.rounds === "all" ? "all" : String(j.rounds ?? "10");
       }
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return "10";
   });
   const [lives, setLives] = useState<number>(() => {
@@ -107,7 +121,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
         const j = JSON.parse(s);
         return typeof j.lives === "number" ? j.lives : 5;
       }
-    } catch {}
+    } catch (error) {
+      console.log("Error reading saved mode from localStorage", error);
+    }
     return 5;
   });
 
@@ -133,7 +149,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_MODE, selected);
-    } catch {}
+    } catch (error) {
+      console.log("Error saving selected mode to localStorage", error);
+    }
   }, [selected]);
 
   const selectedOption = OPTIONS.find((o) => o.id === selected);
