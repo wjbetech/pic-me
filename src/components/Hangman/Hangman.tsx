@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import BackButton from "../BackButton/BackButton";
 import type { Animal } from "../../types/Animal";
 
 interface HangmanSettings {
@@ -12,11 +13,14 @@ const STORAGE_KEY = "picme-hangman-state-v1";
 
 export default function Hangman({
   onBack,
+  onHome,
   settings = { lives: 6 },
 }: {
   onBack?: () => void;
+  onHome?: () => void;
   settings?: HangmanSettings;
 }) {
+  const [showBackModal, setShowBackModal] = useState(false);
   const [allAnimals, setAllAnimals] = useState<Animal[]>([]);
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
   const [guessedLetters, setGuessedLetters] = useState<Set<string>>(new Set());
@@ -524,17 +528,15 @@ export default function Hangman({
               Final score: <span className="font-semibold">{score}</span>
             </p>
             <div className="flex justify-center gap-3">
-              <button
-                className="btn"
-                onClick={() => {
+              <BackButton
+                label="Back to Menu"
+                onBack={() => {
                   try {
                     localStorage.removeItem(STORAGE_KEY);
                   } catch {}
                   onBack && onBack();
                 }}
-              >
-                Back to Menu
-              </button>
+              />
             </div>
           </div>
         )}
@@ -545,17 +547,64 @@ export default function Hangman({
         {/* Back Button */}
         {!allRoundsCompleted && (
           <div className="flex justify-center mt-4">
-            <button
-              className="btn btn-ghost"
-              onClick={() => {
-                try {
-                  localStorage.removeItem(STORAGE_KEY);
-                } catch {}
-                onBack && onBack();
-              }}
-            >
-              Back to Menu
-            </button>
+            <div>
+              <BackButton
+                label="Back to Menu"
+                className="btn-ghost"
+                onBack={() => setShowBackModal(true)}
+              />
+
+              {showBackModal && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                  <div
+                    className="absolute inset-0 bg-black/50"
+                    onClick={() => setShowBackModal(false)}
+                  />
+                  <div className="bg-base-100 text-base-content rounded-lg p-8 z-10 w-11/12 max-w-lg shadow-lg relative">
+                    <button
+                      aria-label="Close"
+                      className="absolute top-3 right-3 btn btn-ghost btn-sm"
+                      onClick={() => setShowBackModal(false)}
+                    >
+                      ×
+                    </button>
+
+                    <h3 className="text-lg font-bold mb-4">Leave this game?</h3>
+                    <p className="mb-6 text-sm opacity-80">
+                      You can return to Hangman settings or go back to the home
+                      page.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <button
+                        className="btn bg-accent text-accent-content"
+                        onClick={() => {
+                          try {
+                            localStorage.removeItem(STORAGE_KEY);
+                          } catch {}
+                          setShowBackModal(false);
+                          if (onHome) onHome();
+                          else onBack && onBack();
+                        }}
+                      >
+                        Back to Home
+                      </button>
+                      <button
+                        className="btn bg-accent text-accent-content"
+                        onClick={() => {
+                          try {
+                            localStorage.removeItem(STORAGE_KEY);
+                          } catch {}
+                          setShowBackModal(false);
+                          onBack && onBack();
+                        }}
+                      >
+                        Back to Settings
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

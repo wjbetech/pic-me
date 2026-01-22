@@ -4,6 +4,7 @@ import "./MultiChoice.css";
 import { createRotation } from "../../utils/rotation";
 import AnswerGrid from "./AnswerGrid/AnswerGrid";
 import DisplayCard from "./DisplayCard/DisplayCard";
+import BackButton from "../BackButton/BackButton";
 
 // Toggle debug logging for selection tracing
 const DEBUG_SELECTION = true; // temporarily enabled to trace repeated A selection
@@ -349,9 +350,7 @@ export default function MultiChoice({
                 Final score: <span className="font-semibold">{score}</span>
               </p>
               <div className="flex justify-center">
-                <button className="btn" onClick={() => onBack && onBack()}>
-                  Back to Menu
-                </button>
+                <BackButton onBack={() => onBack && onBack()} />
               </div>
             </div>
           )}
@@ -368,12 +367,7 @@ export default function MultiChoice({
         {/* Back Button */}
         {!allRoundsCompleted && (
           <div className="flex justify-center mt-6 shrink-0">
-            <button
-              className="btn btn-ghost"
-              onClick={() => onBack && onBack()}
-            >
-              Back to Menu
-            </button>
+            <BackButton onBack={() => onBack && onBack()} />
           </div>
         )}
       </div>

@@ -98,7 +98,11 @@ function App() {
         )}
 
         {route === "play" && mode === "hangman" && (
-          <Hangman onBack={() => setRoute("options")} settings={gameSettings} />
+          <Hangman
+            onBack={() => setRoute("options")}
+            onHome={() => setRoute("home")}
+            settings={gameSettings}
+          />
         )}
 
         {route === "play" &&

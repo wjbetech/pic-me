@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import BackButton from "../BackButton/BackButton";
 
 // Use a loose MotionDiv alias to avoid strict Motion prop type issues
 // when passing standard HTML props like `className` in TSX.
@@ -173,7 +174,7 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
               onClick={() => setSelected(o.id)}
               className={`flex-1 px-4 py-3 font-semibold transition-colors whitespace-nowrap ${
                 selected === o.id
-                  ? "bg-base-100 border-b-2 border-primary"
+                  ? "bg-accent border-b-2 border-primary"
                   : "hover:bg-base-100/50"
               }`}
               aria-pressed={selected === o.id}
@@ -352,13 +353,7 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
 
         {/* Action Buttons */}
         <div className="px-6 pb-6 flex gap-3">
-          <button
-            aria-label="Go back"
-            className="btn btn-secondary"
-            onClick={() => onBack && onBack()}
-          >
-            Back
-          </button>
+          <BackButton className="btn-ghost" onBack={() => onBack && onBack()} />
           <button className="btn btn-primary ml-auto" onClick={handleConfirm}>
             Continue
           </button>

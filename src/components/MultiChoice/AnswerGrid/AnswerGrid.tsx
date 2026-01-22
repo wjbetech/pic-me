@@ -21,7 +21,7 @@ export default function AnswerGrid({
             key={index}
             onClick={() => handleAnswerClick(option)}
             disabled={isAnswered}
-            className={`btn justify-center text-center px-4 py-3 border-2 bg-white text-base-content w-full overflow-hidden ${
+            className={`btn justify-center text-center px-4 py-3 border-2 bg-base-200 text-base-content w-full overflow-hidden ${
               selectedAnswer === option
                 ? option === correctAnswer
                   ? "btn-success border-success"
