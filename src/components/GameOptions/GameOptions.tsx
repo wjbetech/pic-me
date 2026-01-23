@@ -194,7 +194,9 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
             transition={{ duration: 0.25 }}
             className="p-6"
           >
-            <p className="mb-6 text-sm opacity-80">{selectedOption?.desc}</p>
+            <p className="mb-6 text-lg font-semibold opacity-80">
+              {selectedOption?.desc}
+            </p>
 
             {selected === "multiple-choice" && (
               <div>

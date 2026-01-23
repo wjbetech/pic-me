@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import type { Animal } from "../../types/Animal";
 import BackButton from "../BackButton/BackButton";
 import "./OpenAnswer.css";
@@ -83,11 +84,21 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
       setCurrentAnimal(next);
       setCurrentImage(imgUrl);
       setIsImageLoading(false);
+      try {
+        sessionStorage.setItem("openAnswer.currentId", next.id);
+      } catch (error) {
+        console.log(error, "Failed to save current animal ID");
+      }
     };
     img.onerror = () => {
       setCurrentAnimal(next);
       setCurrentImage("");
       setIsImageLoading(false);
+      try {
+        sessionStorage.setItem("openAnswer.currentId", next.id);
+      } catch (error) {
+        console.log(error, "Failed to save current animal ID");
+      }
     };
   }, []);
 
@@ -110,6 +121,38 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
           return [] as Animal[];
         });
         allAnimalsRef.current = combined;
+        // If a current animal is persisted in sessionStorage, restore it
+        try {
+          const savedId = sessionStorage.getItem("openAnswer.currentId");
+          if (savedId) {
+            const found = combined.find((a) => a.id === savedId);
+            if (found) {
+              const imgUrl = found.images?.[0]?.url ?? "";
+              if (!imgUrl) {
+                setCurrentAnimal(found);
+                setCurrentImage("");
+                setIsImageLoading(false);
+              } else {
+                const img = new Image();
+                img.src = imgUrl;
+                img.onload = () => {
+                  setCurrentAnimal(found);
+                  setCurrentImage(imgUrl);
+                  setIsImageLoading(false);
+                };
+                img.onerror = () => {
+                  setCurrentAnimal(found);
+                  setCurrentImage("");
+                  setIsImageLoading(false);
+                };
+              }
+              return;
+            }
+          }
+        } catch (error) {
+          console.log(error, "Failed to restore current animal ID");
+        }
+
         loadNewAnimal(combined);
       } catch (err) {
         console.error("Failed to load animal data:", err);
@@ -147,7 +190,7 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
       setScore((s) => s + 1);
       triggerFlash("correct");
     } else {
-      setFeedback("Incorrect! Try again");
+      setFeedback("Incorrect! Try again.");
       setIsCorrect(false);
       triggerFlash("wrong");
     }
@@ -225,17 +268,24 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
             />
 
             {feedback && (
-              <p
-                className={`text-sm font-semibold text-center w-full ${
-                  feedback.startsWith("Correct")
-                    ? "text-success"
-                    : feedback.startsWith("Incorrect")
-                      ? "text-error"
-                      : "text-warning"
-                }`}
+              <motion.div
+                key={feedback}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
               >
-                {feedback}
-              </p>
+                <p
+                  className={`text-sm font-semibold text-center w-full ${
+                    feedback.startsWith("Correct")
+                      ? "text-success"
+                      : feedback.startsWith("Incorrect")
+                        ? "text-error"
+                        : "text-warning"
+                  }`}
+                >
+                  {feedback}
+                </p>
+              </motion.div>
             )}
 
             {isCorrect && (
