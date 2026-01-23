@@ -1,0 +1,31 @@
+.open-answer-input.flash-correct {
+  animation: flash-correct 0.6s ease-in-out 3;
+}
+
+.open-answer-input.flash-wrong {
+  animation: flash-wrong 0.6s ease-in-out 3;
+}
+
+@keyframes flash-correct {
+  0%,
+  100% {
+    border-color: hsl(var(--b3));
+    box-shadow: 0 0 0 0 hsl(var(--su) / 0.35);
+  }
+  50% {
+    border-color: hsl(var(--su));
+    box-shadow: 0 0 0 6px hsl(var(--su) / 0.35);
+  }
+}
+
+@keyframes flash-wrong {
+  0%,
+  100% {
+    border-color: hsl(var(--b3));
+    box-shadow: 0 0 0 0 hsl(var(--er) / 0.35);
+  }
+  50% {
+    border-color: hsl(var(--er));
+    box-shadow: 0 0 0 6px hsl(var(--er) / 0.35);
+  }
+}

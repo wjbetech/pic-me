@@ -4,6 +4,7 @@ import Main from "./components/Main/Main";
 import GameOptions from "./components/GameOptions/GameOptions";
 import MultiChoice from "./components/MultiChoice/MultiChoice";
 import Hangman from "./components/Hangman/Hangman";
+import OpenAnswer from "./components/OpenAnswer/OpenAnswer";
 
 type Route = "home" | "options" | "play";
 
@@ -105,6 +106,10 @@ function App() {
           />
         )}
 
+        {route === "play" && mode === "open-answer" && (
+          <OpenAnswer onBack={() => setRoute("options")} />
+        )}
+
         {route === "play" &&
           (() => {
             console.log(
@@ -118,7 +123,8 @@ function App() {
 
         {route === "play" &&
           mode !== "multiple-choice" &&
-          mode !== "hangman" && (
+          mode !== "hangman" &&
+          mode !== "open-answer" && (
             <div className="h-full w-full flex items-center justify-center p-4">
               <div className="text-center max-w-md">
                 <h2 className="text-2xl font-bold mb-2">Ready to play</h2>
