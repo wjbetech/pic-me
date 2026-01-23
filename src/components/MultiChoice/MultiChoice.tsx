@@ -55,6 +55,38 @@ export default function MultiChoice({
       ? roundsPlayed >= roundsTotal
       : false;
 
+  // Helper: build up to 4 answer options (including correct) for a given animal
+  const buildOptionsForAnimal = (
+    target: Animal,
+    animals: Animal[],
+  ): { correct: string; options: string[] } => {
+    const otherAnimals = animals.filter((a) => a.id !== target.id);
+    const optionSet = new Set<string>();
+    optionSet.add(target.commonName);
+
+    const pool = [...otherAnimals];
+    while (optionSet.size < 4 && pool.length > 0) {
+      const idx = Math.floor(Math.random() * pool.length);
+      const picked = pool.splice(idx, 1)[0];
+      if (picked && picked.commonName) optionSet.add(picked.commonName);
+    }
+
+    const fallback = animals.filter(
+      (a) => a.id !== target.id && !optionSet.has(a.commonName),
+    );
+    while (optionSet.size < 4 && fallback.length > 0) {
+      const idx = Math.floor(Math.random() * fallback.length);
+      const picked = fallback.splice(idx, 1)[0];
+      if (picked && picked.commonName) optionSet.add(picked.commonName);
+    }
+
+    const finalOptions = Array.from(optionSet);
+    while (finalOptions.length < 4)
+      finalOptions.push(finalOptions[0] ?? "Unknown");
+    const shuffled = finalOptions.sort(() => Math.random() - 0.5);
+    return { correct: target.commonName, options: shuffled };
+  };
+
   const loadNewAnimal = (animalsParam?: Animal[]) => {
     const animals = animalsParam ?? allAnimals;
     if (!animals || animals.length === 0) {
@@ -162,6 +194,14 @@ export default function MultiChoice({
           setCurrentImage(imageUrl);
           setCorrectAnswer(randomAnimal.commonName);
           setIsImageLoading(false);
+          try {
+            sessionStorage.setItem("multiChoice.currentId", randomAnimal.id);
+          } catch (error) {
+            console.log(
+              error,
+              "Error setting sessionStorage for multiChoice.currentId",
+            );
+          }
           // Count this loaded round (for numeric rounds)
           setRoundsPlayed((p) => p + 1);
           if (DEBUG_SELECTION)
@@ -180,6 +220,14 @@ export default function MultiChoice({
           }
           console.warn("Failed to load image, picking another.", imageUrl);
           setIsImageLoading(false);
+          try {
+            sessionStorage.setItem("multiChoice.currentId", randomAnimal.id);
+          } catch (error) {
+            console.log(
+              error,
+              "Error setting sessionStorage for multiChoice.currentId",
+            );
+          }
           // If image fails, try next in queue (if any)
           // remove the failing animal from queue to avoid infinite loop
           if (animalQueue && animalQueue.length > 0) {
@@ -264,6 +312,36 @@ export default function MultiChoice({
     setRoundsPlayed(0);
   };
 
+  // Reset the MultiChoice game state (used when leaving the game)
+  const resetMultiChoice = () => {
+    try {
+      sessionStorage.removeItem("multiChoice.currentId");
+    } catch (error) {
+      console.log(
+        error,
+        "Error removing sessionStorage for multiChoice.currentId",
+      );
+    }
+    // Reset visible state
+    setCurrentAnimal(null);
+    setCurrentImage("");
+    setIsImageLoading(false);
+    setAnswerOptions([]);
+    setCorrectAnswer("");
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+    setScore(0);
+    setRoundsPlayed(0);
+    setAnimalQueue([]);
+    setAllAnimals([]);
+    queueIndexRef.current = 0;
+    loadRequestIdRef.current = 0;
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+  };
+
   useEffect(() => {
     const loadAllData = async () => {
       // Dynamically import all JSON files in src/data (Vite)
@@ -299,6 +377,85 @@ export default function MultiChoice({
           }
         )?.rounds;
         buildQueue(shuffledCombined, roundsSetting);
+        // Try to restore a persisted current animal so refresh/HMR don't load a new one
+        try {
+          const savedId = sessionStorage.getItem("multiChoice.currentId");
+          if (savedId) {
+            const foundIndex = shuffledCombined.findIndex(
+              (a) => a.id === savedId,
+            );
+            if (foundIndex >= 0) {
+              // Ensure queue reflects shuffledCombined
+              setAllAnimals(shuffledCombined);
+              setAnimalQueue(shuffledCombined);
+              // Set queue index to the next item after the restored one
+              queueIndexRef.current =
+                (foundIndex + 1) % shuffledCombined.length;
+
+              const found = shuffledCombined[foundIndex];
+              const imgUrl = found.images?.[0]?.url ?? "";
+              if (!imgUrl) {
+                setCurrentAnimal(found);
+                setCurrentImage("");
+                setIsImageLoading(false);
+                try {
+                  const built = buildOptionsForAnimal(found, shuffledCombined);
+                  setCorrectAnswer(built.correct);
+                  setAnswerOptions(built.options);
+                } catch (e) {
+                  console.warn(
+                    "Failed to build options for restored animal:",
+                    e,
+                  );
+                }
+              } else {
+                const img = new Image();
+                img.src = imgUrl;
+                img.onload = () => {
+                  setCurrentAnimal(found);
+                  setCurrentImage(imgUrl);
+                  setIsImageLoading(false);
+                  try {
+                    const built = buildOptionsForAnimal(
+                      found,
+                      shuffledCombined,
+                    );
+                    setCorrectAnswer(built.correct);
+                    setAnswerOptions(built.options);
+                  } catch (e) {
+                    console.warn(
+                      "Failed to build options for restored animal:",
+                      e,
+                    );
+                  }
+                };
+                img.onerror = () => {
+                  setCurrentAnimal(found);
+                  setCurrentImage("");
+                  setIsImageLoading(false);
+                  try {
+                    const built = buildOptionsForAnimal(
+                      found,
+                      shuffledCombined,
+                    );
+                    setCorrectAnswer(built.correct);
+                    setAnswerOptions(built.options);
+                  } catch (e) {
+                    console.warn(
+                      "Failed to build options for restored animal:",
+                      e,
+                    );
+                  }
+                };
+              }
+              // restored, skip loading a new random one
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn("Failed to restore MultiChoice currentId:", err);
+        }
+
         // Immediately load the first animal from the shuffled set
         loadNewAnimal(shuffledCombined);
       } catch (err) {
@@ -377,11 +534,13 @@ export default function MultiChoice({
               onClose={() => setShowBackModal(false)}
               onHome={() => {
                 setShowBackModal(false);
+                resetMultiChoice();
                 if (onHome) onHome();
                 else onBack?.();
               }}
               onSettings={() => {
                 setShowBackModal(false);
+                resetMultiChoice();
                 onBack?.();
               }}
               title="Leave this game?"

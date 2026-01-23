@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Animal } from "../../../types/Animal";
 import "./DisplayCard.css";
 
@@ -14,6 +15,7 @@ export default function DisplayCard({
   showDescription: boolean;
   settings: { blur: number };
 }) {
+  const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
   return (
     <div className="shrink-0 mb-6">
       <div
@@ -49,9 +51,17 @@ export default function DisplayCard({
               <img
                 src={currentImage}
                 alt={currentAnimal?.commonName || "Animal"}
-                className={`w-full h-64 md:h-80 object-cover rounded-lg shadow-lg ${
+                onLoad={(e) => {
+                  try {
+                    const img = e.currentTarget as HTMLImageElement;
+                    setIsPortrait(img.naturalHeight > img.naturalWidth);
+                  } catch {
+                    setIsPortrait(null);
+                  }
+                }}
+                className={`w-full h-64 md:h-80 rounded-lg shadow-lg ${
                   isImageLoading ? "opacity-0" : "opacity-100"
-                }`}
+                } ${isPortrait ? "object-contain" : "object-cover"}`}
                 style={{
                   filter:
                     settings.blur > 0 ? `blur(${settings.blur * 2}px)` : "none",
