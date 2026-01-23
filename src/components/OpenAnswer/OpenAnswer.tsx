@@ -200,6 +200,23 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
     loadNewAnimal();
   };
 
+  const handleBack = () => {
+    try {
+      sessionStorage.removeItem("openAnswer.currentId");
+    } catch (error) {
+      console.log(error, "Failed to clear current animal ID");
+      // ignore storage errors
+    }
+    setScore(0);
+    setCurrentAnimal(null);
+    setCurrentImage("");
+    setInputValue("");
+    setFeedback(null);
+    setIsCorrect(false);
+    clearFlash();
+    if (onBack) onBack();
+  };
+
   const inputClass = [
     "input",
     "w-full",
@@ -304,7 +321,7 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
           <BackButton
             label="Back"
             className="bg-error text-error-content"
-            onBack={() => onBack && onBack()}
+            onBack={handleBack}
           />
         </div>
       </div>
