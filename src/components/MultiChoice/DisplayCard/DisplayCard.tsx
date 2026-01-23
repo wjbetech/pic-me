@@ -17,7 +17,7 @@ export default function DisplayCard({
 }) {
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
   return (
-    <div className="shrink-0 mb-6">
+    <div className="shrink-0 min-w-0 mb-6">
       <div
         className={`swipe-container ${isImageLoading ? "swipe-out" : "swipe-in"}`}
       >

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { Animal } from "../../types/Animal";
 import "./MultiChoice.css";
 import { createRotation } from "../../utils/rotation";
@@ -40,6 +41,7 @@ export default function MultiChoice({
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
+  const [disabledOptions, setDisabledOptions] = useState<string[]>([]);
   const [score, setScore] = useState(0);
   const [showBackModal, setShowBackModal] = useState(false);
 
@@ -101,6 +103,7 @@ export default function MultiChoice({
     // Reset animation state
     setSelectedAnswer(null);
     setIsAnswered(false);
+    setDisabledOptions([]);
 
     // If rounds is a number and we've already completed the requested rounds, stop here
     if (
@@ -468,24 +471,26 @@ export default function MultiChoice({
   }, []);
 
   const handleAnswerClick = (answer: string) => {
+    // Prevent clicks on disabled options or when already answered correctly
     if (isAnswered) return;
+    if (disabledOptions.includes(answer)) return;
 
-    setSelectedAnswer(answer);
-    setIsAnswered(true);
-
-    if (answer === correctAnswer) {
-      setScore(score + 1);
+    // Wrong answer: mark as disabled and show feedback, but don't advance
+    if (answer !== correctAnswer) {
+      setSelectedAnswer(answer);
+      setDisabledOptions((d) => (d.includes(answer) ? d : [...d, answer]));
+      return;
     }
 
-    // Load next animal after a delay
-    setTimeout(() => {
-      loadNewAnimal();
-    }, 1500);
+    // Correct answer: mark answered and award point. User will click Next to continue.
+    setSelectedAnswer(answer);
+    setIsAnswered(true);
+    setScore((s) => s + 1);
   };
 
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-hidden">
-      <div className="max-w-4xl w-full flex flex-col max-h-full overflow-hidden">
+      <div className="max-w-4xl w-full flex flex-col max-h-full overflow-hidden pb-6">
         {/* Header */}
         <div className="mb-4 text-center shrink-0">
           <h2 className="text-2xl md:text-3xl font-bold mb-1">
@@ -495,7 +500,7 @@ export default function MultiChoice({
         </div>
 
         {/* Content Container */}
-        <div className="flex-1 overflow-y-scroll flex flex-col min-h-0">
+        <div className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto flex flex-col min-h-0 gap-4 pb-4">
           <DisplayCard
             currentAnimal={currentAnimal}
             currentImage={currentImage}
@@ -522,12 +527,36 @@ export default function MultiChoice({
             isAnswered={isAnswered}
             correctAnswer={correctAnswer}
             handleAnswerClick={handleAnswerClick}
+            disabledOptions={disabledOptions}
           />
         </div>
 
-        {/* Back Button */}
-        {!allRoundsCompleted && (
-          <div className="flex justify-center mt-6 shrink-0">
+        {/* Footer Buttons (stacked) */}
+        <div className="flex flex-col items-center mt-6 shrink-0 pb-4 gap-3">
+          <AnimatePresence>
+            {isAnswered && (
+              <motion.div
+                key="next-animal"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ type: "spring", stiffness: 400, damping: 28 }}
+              >
+                <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+                  <button
+                    onClick={() => loadNewAnimal()}
+                    disabled={allRoundsCompleted}
+                    aria-disabled={allRoundsCompleted}
+                    className={`btn btn-success ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
+                  >
+                    Next Animal
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="flex items-center gap-3">
             <BackButton onBack={() => setShowBackModal(true)} />
             <ConfirmBackModal
               isOpen={showBackModal}
@@ -547,7 +576,7 @@ export default function MultiChoice({
               description="You can return to settings or go back to the home page."
             />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

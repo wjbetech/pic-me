@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function ConfirmBackModal({
   isOpen,
   onClose,
@@ -13,6 +15,16 @@ export default function ConfirmBackModal({
   title?: string;
   description?: string;
 }) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" || e.key === "Esc") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
   if (!isOpen) return null;
 
   return (

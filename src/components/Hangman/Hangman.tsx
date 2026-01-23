@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import type { Animal } from "../../types/Animal";
@@ -178,77 +178,83 @@ export default function Hangman({
         // For now, just log persisted data; future work can restore state from this.
         console.debug("Loaded persisted Hangman data:", saved);
       }
-    } catch (err) {
-      /* ignore */
+    } catch (error) {
+      console.debug("Failed to read persisted Hangman data:", error);
     }
   }, []);
 
-  const loadNewAnimal = (animals?: Animal[]) => {
-    const source = animals ?? allAnimals;
-    if (!source || source.length === 0) {
-      setTimeout(() => loadNewAnimal(), 200);
-      return;
-    }
-
-    // If rounds is a number and we've already completed the requested rounds, stop here
-    if (
-      roundsTotal !== "all" &&
-      typeof roundsTotal === "number" &&
-      roundsPlayed >= roundsTotal
-    ) {
-      setAllRoundsCompleted(true);
-      return;
-    }
-
-    // Get next animal from queue
-    const idx = queueIndexRef.current % source.length;
-    const nextAnimal = source[idx];
-    queueIndexRef.current = idx + 1;
-
-    setCurrentAnimal(nextAnimal);
-    setGuessedLetters(new Set());
-    setWrongLetters(new Set());
-    setLivesRemaining(settings.lives ?? 6);
-    setGameState("playing");
-    setRoundsPlayed((p) => p + 1);
-  };
-
-  const handleLetterGuess = (letter: string) => {
-    if (gameState !== "playing" || guessedLetters.has(letter)) return;
-
-    const newGuessed = new Set(guessedLetters);
-    newGuessed.add(letter);
-    setGuessedLetters(newGuessed);
-
-    const animalName = currentAnimal?.commonName.toUpperCase() ?? "";
-
-    if (!animalName.includes(letter)) {
-      // Wrong guess
-      const newWrong = new Set(wrongLetters);
-      newWrong.add(letter);
-      setWrongLetters(newWrong);
-
-      const newLives = livesRemaining - 1;
-      setLivesRemaining(newLives);
-
-      if (newLives === 0) {
-        setGameState("lost");
+  const loadNewAnimal = useCallback(
+    (animals?: Animal[]) => {
+      const source = animals ?? allAnimals;
+      if (!source || source.length === 0) {
+        setTimeout(() => loadNewAnimal(), 200);
+        return;
       }
-    } else {
-      // Check if word is complete
-      const allLetters = animalName.split("").filter((c) => /[A-Z]/.test(c));
-      const allGuessed = allLetters.every((c) => newGuessed.has(c));
 
-      if (allGuessed) {
-        setGameState("won");
-        setScore((s) => s + 1);
+      // If rounds is a number and we've already completed the requested rounds, stop here
+      if (
+        roundsTotal !== "all" &&
+        typeof roundsTotal === "number" &&
+        roundsPlayed >= roundsTotal
+      ) {
+        setAllRoundsCompleted(true);
+        return;
       }
-    }
-  };
 
-  const handleNextRound = () => {
+      // Get next animal from queue
+      const idx = queueIndexRef.current % source.length;
+      const nextAnimal = source[idx];
+      queueIndexRef.current = idx + 1;
+
+      setCurrentAnimal(nextAnimal);
+      setGuessedLetters(new Set());
+      setWrongLetters(new Set());
+      setLivesRemaining(settings.lives ?? 6);
+      setGameState("playing");
+      setRoundsPlayed((p) => p + 1);
+    },
+    [allAnimals, roundsTotal, roundsPlayed, settings.lives],
+  );
+
+  const handleLetterGuess = useCallback(
+    (letter: string) => {
+      if (gameState !== "playing" || guessedLetters.has(letter)) return;
+
+      const newGuessed = new Set(guessedLetters);
+      newGuessed.add(letter);
+      setGuessedLetters(newGuessed);
+
+      const animalName = currentAnimal?.commonName.toUpperCase() ?? "";
+
+      if (!animalName.includes(letter)) {
+        // Wrong guess
+        const newWrong = new Set(wrongLetters);
+        newWrong.add(letter);
+        setWrongLetters(newWrong);
+
+        const newLives = livesRemaining - 1;
+        setLivesRemaining(newLives);
+
+        if (newLives === 0) {
+          setGameState("lost");
+        }
+      } else {
+        // Check if word is complete
+        const allLetters = animalName.split("").filter((c) => /[A-Z]/.test(c));
+        const allGuessed = allLetters.every((c) => newGuessed.has(c));
+
+        if (allGuessed) {
+          setGameState("won");
+          setScore((s) => s + 1);
+        }
+      }
+    },
+    [gameState, guessedLetters, wrongLetters, livesRemaining, currentAnimal],
+  );
+
+  const handleNextRound = useCallback(() => {
     loadNewAnimal();
-  };
+  }, [loadNewAnimal]);
 
   // Allow pressing Enter to advance when the round is won
   useEffect(() => {
@@ -260,14 +266,16 @@ export default function Hangman({
     };
     window.addEventListener("keydown", onEnter);
     return () => window.removeEventListener("keydown", onEnter);
-  }, [gameState]);
+  }, [gameState, handleNextRound]);
 
   // Focus the Next button when round is won
   useEffect(() => {
     if (gameState === "won" && nextButtonRef.current) {
       try {
         nextButtonRef.current.focus();
-      } catch {}
+      } catch (error) {
+        console.debug("Failed to focus next button:", error);
+      }
     }
   }, [gameState]);
 
@@ -534,8 +542,10 @@ export default function Hangman({
                 onBack={() => {
                   try {
                     localStorage.removeItem(STORAGE_KEY);
-                  } catch {}
-                  onBack && onBack();
+                  } catch (error) {
+                    console.debug("Failed to clear Hangman storage:", error);
+                  }
+                  if (onBack) onBack();
                 }}
               />
             </div>
@@ -561,15 +571,19 @@ export default function Hangman({
                 onHome={() => {
                   try {
                     localStorage.removeItem(STORAGE_KEY);
-                  } catch {}
+                  } catch (error) {
+                    console.debug("Failed to clear Hangman storage:", error);
+                  }
                   if (onHome) onHome();
-                  else onBack && onBack();
+                  else if (onBack) onBack();
                 }}
                 onSettings={() => {
                   try {
                     localStorage.removeItem(STORAGE_KEY);
-                  } catch {}
-                  onBack && onBack();
+                  } catch (error) {
+                    console.debug("Failed to clear Hangman storage:", error);
+                  }
+                  if (onBack) onBack();
                 }}
                 title="Leave this game?"
                 description="You can return to Hangman settings or go back to the home page."
