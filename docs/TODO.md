@@ -9,7 +9,7 @@
 - [ ] Implement homepage collage (deferred)
   - Create a responsive image collage on the main page using remote thumbnails or a hosted image service. Deferred until core gameplay features are prioritized.
 
-- [ ] Implement Open Answer game mode
+- [x] Implement Open Answer game mode
   - Add the Open Answer mode: present a random animal, accept typed input, validate answers ignoring case/punctuation, do not show letter placeholders or hints, handle scoring and rounds, and persist progress.
 
 - [ ] Fix MultiChoice scrolling on new-load

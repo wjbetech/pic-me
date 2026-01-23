@@ -94,6 +94,7 @@ function App() {
         {route === "play" && mode === "multiple-choice" && (
           <MultiChoice
             onBack={() => setRoute("options")}
+            onHome={() => setRoute("home")}
             settings={gameSettings}
           />
         )}
@@ -107,7 +108,10 @@ function App() {
         )}
 
         {route === "play" && mode === "open-answer" && (
-          <OpenAnswer onBack={() => setRoute("options")} />
+          <OpenAnswer
+            onBack={() => setRoute("options")}
+            onHome={() => setRoute("home")}
+          />
         )}
 
         {route === "play" &&

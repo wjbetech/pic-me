@@ -2,16 +2,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import type { Animal } from "../../types/Animal";
 import BackButton from "../BackButton/BackButton";
+import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import "./OpenAnswer.css";
 
 interface OpenAnswerProps {
   onBack?: () => void;
+  onHome?: () => void;
 }
 
 const normalizeAnswer = (value: string) =>
   value.trim().toLowerCase().replace(/\s+/g, " ");
 
-export default function OpenAnswer({ onBack }: OpenAnswerProps) {
+export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
   const [currentImage, setCurrentImage] = useState<string>("");
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -22,6 +24,7 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
   const [flashState, setFlashState] = useState<"correct" | "wrong" | null>(
     null,
   );
+  const [showBackModal, setShowBackModal] = useState(false);
   const flashTimeoutRef = useRef<number | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const allAnimalsRef = useRef<Animal[]>([]);
@@ -321,7 +324,29 @@ export default function OpenAnswer({ onBack }: OpenAnswerProps) {
           <BackButton
             label="Back"
             className="bg-error text-error-content"
-            onBack={handleBack}
+            onBack={() => setShowBackModal(true)}
+          />
+          <ConfirmBackModal
+            isOpen={showBackModal}
+            onClose={() => setShowBackModal(false)}
+            onHome={() => {
+              // On home: clear persisted id and navigate home if provided
+              try {
+                sessionStorage.removeItem("openAnswer.currentId");
+              } catch (error) {
+                console.log(error, "Failed to clear current animal ID");
+              }
+              setShowBackModal(false);
+              if (onHome) onHome();
+              else onBack?.();
+            }}
+            onSettings={() => {
+              // Treat Settings as 'back' here: reset state then navigate back
+              handleBack();
+              setShowBackModal(false);
+            }}
+            title="Leave this game?"
+            description="You can return to settings or go back to the home page."
           />
         </div>
       </div>

@@ -5,6 +5,7 @@ import { createRotation } from "../../utils/rotation";
 import AnswerGrid from "./AnswerGrid/AnswerGrid";
 import DisplayCard from "./DisplayCard/DisplayCard";
 import BackButton from "../BackButton/BackButton";
+import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 
 // Toggle debug logging for selection tracing
 const DEBUG_SELECTION = true; // temporarily enabled to trace repeated A selection
@@ -17,9 +18,11 @@ interface GameSettings {
 
 export default function MultiChoice({
   onBack,
+  onHome,
   settings = { blur: 0, showDescription: false },
 }: {
   onBack?: () => void;
+  onHome?: () => void;
   settings?: GameSettings;
 }) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
@@ -38,6 +41,7 @@ export default function MultiChoice({
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
+  const [showBackModal, setShowBackModal] = useState(false);
 
   // rounds controls how many rounds to play: 'all' for a fixed shuffled queue, or a number
   // for a limited number of rounds where each round is sampled randomly from the full dataset.
@@ -350,7 +354,7 @@ export default function MultiChoice({
                 Final score: <span className="font-semibold">{score}</span>
               </p>
               <div className="flex justify-center">
-                <BackButton onBack={() => onBack && onBack()} />
+                <BackButton onBack={onBack} />
               </div>
             </div>
           )}
@@ -367,7 +371,22 @@ export default function MultiChoice({
         {/* Back Button */}
         {!allRoundsCompleted && (
           <div className="flex justify-center mt-6 shrink-0">
-            <BackButton onBack={() => onBack && onBack()} />
+            <BackButton onBack={() => setShowBackModal(true)} />
+            <ConfirmBackModal
+              isOpen={showBackModal}
+              onClose={() => setShowBackModal(false)}
+              onHome={() => {
+                setShowBackModal(false);
+                if (onHome) onHome();
+                else onBack?.();
+              }}
+              onSettings={() => {
+                setShowBackModal(false);
+                onBack?.();
+              }}
+              title="Leave this game?"
+              description="You can return to settings or go back to the home page."
+            />
           </div>
         )}
       </div>
