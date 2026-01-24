@@ -29,7 +29,7 @@ export default function BackButton({
     <button
       type="button"
       aria-label={label ?? "Go back"}
-      className={`btn bg-base-100 ${className}`}
+      className={`btn bg-warning text-warning-content ${className}`}
       onClick={handleClick}
     >
       {children ?? label ?? "Back"}
