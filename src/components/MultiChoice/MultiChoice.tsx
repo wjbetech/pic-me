@@ -492,11 +492,13 @@ export default function MultiChoice({
     <div className="h-full w-full flex items-center justify-center p-4 overflow-hidden">
       <div className="max-w-4xl w-full flex flex-col max-h-full overflow-hidden pb-6">
         {/* Header */}
-        <div className="mb-4 text-center shrink-0">
-          <h2 className="text-2xl md:text-3xl font-bold mb-1">
+        <div className="mb-2 md:mb-4 text-center shrink-0">
+          <h2 className="text-xl md:text-3xl font-bold mb-1">
             Multiple Choice
           </h2>
-          <p className="text-lg font-semibold opacity-80">Score: {score}</p>
+          <p className="text-base md:text-lg font-semibold opacity-80">
+            Score: {score}
+          </p>
         </div>
 
         {/* Content Container */}
@@ -532,7 +534,7 @@ export default function MultiChoice({
         </div>
 
         {/* Footer Buttons (stacked) */}
-        <div className="flex flex-col items-center mt-6 shrink-0 pb-4 gap-3">
+        <div className="flex flex-col items-center mt-4 md:mt-6 shrink-0 pb-3 md:pb-4 gap-2 md:gap-3">
           <AnimatePresence>
             {isAnswered && (
               <motion.div
@@ -547,7 +549,7 @@ export default function MultiChoice({
                     onClick={() => loadNewAnimal()}
                     disabled={allRoundsCompleted}
                     aria-disabled={allRoundsCompleted}
-                    className={`btn btn-success ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`btn btn-success btn-sm md:btn-md text-sm md:text-base ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     Next Animal
                   </button>
@@ -557,7 +559,10 @@ export default function MultiChoice({
           </AnimatePresence>
 
           <div className="flex items-center gap-3">
-            <BackButton onBack={() => setShowBackModal(true)} />
+            <BackButton
+              className="btn-sm md:btn-md text-sm md:text-base"
+              onBack={() => setShowBackModal(true)}
+            />
             <ConfirmBackModal
               isOpen={showBackModal}
               onClose={() => setShowBackModal(false)}

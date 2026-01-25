@@ -25,7 +25,7 @@ export default function Main({ onStart }: { onStart?: () => void }) {
           className="h-full w-full object-cover scale-110"
         />
       </div>
-      <div className="absolute inset-0 z-10 bg-base-100/40 backdrop-blur-sm" />
+      <div className="absolute inset-0 z-10 bg-base-100/40 backdrop-blur-xs" />
 
       <div className="relative z-20 flex-1 w-full overflow-auto flex items-center justify-center">
         <div className="hero-content text-center flex-col max-w-md w-full">

@@ -42,3 +42,23 @@
    - [ ] QA interactions and visual styling across themes
 
    Branch suggestion: `fix/theme-styling`
+
+### Mobile responsiveness TODOs
+
+- [ ] Reduce mobile button sizes in Multiple Choice
+  - Adjust Next/Back button sizes, spacing, and layout in `src/components/MultiChoice/MultiChoice.tsx` for small screens. Reduce font-size and padding for mobile, stack buttons compactly, and scale down `Multiple Choice` title and `Score` text at small breakpoints.
+
+- [ ] Auto-focus Open Answer input on load
+  - When `OpenAnswer` mounts, focus the input (use `useRef` + `autoFocus` fallback) so users can start typing immediately. Ensure this works across iOS and Android browsers.
+
+- [ ] Ensure mobile keyboard doesn't impede UI in Open Answer
+  - When keyboard opens on mobile, ensure layout keeps the input visible: use viewport-safe-height container, avoid fixed-position elements overlapping input, and consider `scrollIntoView({behavior:'smooth'})` when input receives focus.
+
+- [ ] Make mode picker horizontally scrollable
+  - Make the Pick-a-mode mini-menu horizontally scrollable on narrow screens (use `overflow-x-auto` with `-mx-4` paddings and `whitespace-nowrap` on the item container). Add touch-friendly `scroll-snap` optional enhancement.
+
+- [ ] Scale Hangman keyboard for small screens
+  - Reduce per-letter button size on small screens: update keyboard CSS (responsive `w-` classes and `btn-sm`) and ensure layout wraps without clipping when vertical space is limited. Test portrait mobile in common heights.
+
+- [ ] Responsive QA & verification
+  - Run manual QA on common breakpoints (360x800, 375x812, 412x915, 768x1024, 1366x768, 1920x1080). Verify keyboard visibility, scrolling, and spacing; update styles as needed and commit fixes.

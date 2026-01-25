@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import type { Animal } from "../../types/Animal";
+import computeLetterBoxDimensions from "../../utils/letterBox";
 
 interface HangmanSettings {
   lives?: number;
@@ -41,6 +42,35 @@ export default function Hangman({
   const animalQueueRef = useRef<Animal[]>([]);
   const queueIndexRef = useRef(0);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [keyDims, setKeyDims] = useState<{ width: number; height: number }>({
+    width: 30,
+    height: 36,
+  });
+
+  // Update keyboard key dimensions responsively based on viewport width
+  useEffect(() => {
+    const computeKeyDims = () => {
+      const viewport = typeof window !== "undefined" ? window.innerWidth : 640;
+      const maxContainer = Math.min(viewport, 1024);
+      const reserved = 64; // padding/margins
+      const gapPx = 6; // gap-1 ~ 4-6px
+      const numKeys = 10; // largest row length
+
+      const available = Math.max(200, maxContainer - reserved);
+      const proposed = Math.floor(
+        (available - (numKeys - 1) * gapPx) / numKeys,
+      );
+
+      const width = Math.max(22, Math.min(52, proposed));
+      const height = Math.max(28, Math.round(width * 1.2));
+
+      setKeyDims({ width, height });
+    };
+
+    computeKeyDims();
+    window.addEventListener("resize", computeKeyDims);
+    return () => window.removeEventListener("resize", computeKeyDims);
+  }, []);
 
   // Load all animals from JSON files
   useEffect(() => {
@@ -93,7 +123,7 @@ export default function Hangman({
               parsed.gameState === "won" ||
               parsed.gameState === "lost" ||
               parsed.gameState === "playing"
-                ? parsed.gameState
+                ? (parsed.gameState as "won" | "lost" | "playing")
                 : "playing";
 
             // Prefer restoring the full saved animal object if present
@@ -145,7 +175,6 @@ export default function Hangman({
         // Only initialize first animal if we didn't restore saved state
         if (!didRestore) {
           setAllAnimals(shuffled);
-          animalQueueRef.current = shuffled;
 
           if (shuffled.length > 0) {
             queueIndexRef.current = 1; // next index to use
@@ -356,15 +385,11 @@ export default function Hangman({
       ...words.map((w) => w.replace(/[^A-Z]/g, "").length),
     );
 
-    // Compute a reasonable box width (px) based on the longest word, clamped.
-    // Use a slightly larger base divisor and max so medium-long single words
-    // don't end up too small.
-    const boxWidth = Math.min(
-      64,
-      Math.max(32, Math.floor(480 / Math.max(6, longest))),
-    );
-    const boxHeight = Math.round(boxWidth * 0.9);
-    const fontSize = Math.max(14, Math.round(boxWidth * 0.36));
+    // Compute box dimensions using utility that only shrinks when
+    // the longest word is 6 letters or longer and progressively more
+    // for longer names.
+    const { boxWidth, boxHeight, fontSize } =
+      computeLetterBoxDimensions(longest);
 
     return (
       <div className="flex flex-col gap-2 mb-8 items-center">
@@ -376,10 +401,17 @@ export default function Hangman({
               const shouldShow =
                 !isLetter || isGuessed || gameState !== "playing";
 
-              const boxClasses = isLetter
-                ? shouldShow
-                  ? "bg-base-100 border-primary text-primary"
-                  : "bg-base-200 border-base-300"
+              let boxClasses = "";
+              if (isLetter) {
+                boxClasses = shouldShow
+                  ? "bg-base-100 text-primary"
+                  : "bg-base-200";
+              } else {
+                boxClasses = "bg-transparent";
+              }
+
+              const borderClass = isLetter
+                ? "border-base-content/20"
                 : "border-transparent";
 
               return (
@@ -391,7 +423,7 @@ export default function Hangman({
                     fontSize: `${fontSize}px`,
                     lineHeight: `${boxHeight}px`,
                   }}
-                  className={`flex items-center justify-center border-2 rounded font-bold ${boxClasses}`}
+                  className={`flex items-center justify-center border-2 rounded font-bold ${boxClasses} ${borderClass}`}
                 >
                   {shouldShow ? char : ""}
                 </div>
@@ -413,17 +445,11 @@ export default function Hangman({
     ];
 
     return (
-      <div className="flex flex-col items-center gap-2 max-w-xl mx-auto w-full">
+      <div className="flex flex-col items-center gap-1 max-w-full mx-auto w-full px-3 sm:px-4">
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className={`flex justify-center gap-2 w-full ${
-              rowIndex === 1
-                ? "pl-3 md:pl-6"
-                : rowIndex === 2
-                  ? "pl-6 md:pl-12"
-                  : ""
-            }`}
+            className={`flex justify-center gap-1 w-full flex-nowrap`}
           >
             {row.map((letter) => {
               const isGuessed = guessedLetters.has(letter);
@@ -437,17 +463,28 @@ export default function Hangman({
               const showAsCorrect =
                 isGuessed || (gameState !== "playing" && appearsInName);
 
+              const keyBorderClass = "border-base-content/20";
+
               return (
                 <button
                   key={letter}
                   onClick={() => handleLetterGuess(letter)}
-                  className={`btn btn-sm md:btn-md w-10 md:w-14 ${
+                  className={`inline-flex items-center justify-center rounded-md text-sm leading-none border-2 ${keyBorderClass} ${
                     showAsWrong
-                      ? "btn-error text-error-content"
+                      ? "bg-error text-error-content"
                       : showAsCorrect
-                        ? "btn-success text-success-content"
-                        : "btn-outline"
+                        ? "bg-success text-success-content"
+                        : "bg-transparent text-base-content"
                   }`}
+                  style={{
+                    minWidth: 0,
+                    width: keyDims.width,
+                    height: keyDims.height,
+                    padding: 0,
+                    margin: 0,
+                    fontSize: Math.max(12, Math.round(keyDims.width * 0.45)),
+                    lineHeight: `${keyDims.height}px`,
+                  }}
                 >
                   {letter}
                 </button>
