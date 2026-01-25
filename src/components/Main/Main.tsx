@@ -1,5 +1,6 @@
 import { FaGamepad, FaVolumeUp, FaGraduationCap } from "react-icons/fa";
 import { motion } from "framer-motion";
+import backgroundImage from "../../assets/background-wallpaper.avif";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MotionDiv: any = motion.div;
@@ -16,16 +17,23 @@ const cardVariants = {
 
 export default function Main({ onStart }: { onStart?: () => void }) {
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center bg-base-300 text-center p-4 overflow-y-auto">
-      <div className="hero-content text-center flex-col max-w-md w-full">
-        <div className="w-full rounded-lg p-6 bg-linear-to-br from-primary/6 to-secondary/6 mb-4">
-          <h1 className="text-3xl md:text-5xl font-bold text-primary mb-2 md:mb-3">
-            PicMe
-          </h1>
-          <p className="text-md md:text-lg mb-0 text-base-content/80">
-            Play quick rounds to learn animal names — no sign-in required.
-          </p>
-        </div>
+    <div className="relative h-full w-full flex flex-col items-center justify-center text-center p-4 overflow-y-auto">
+      <div className="absolute inset-0 z-0">
+        <img
+          src={backgroundImage}
+          alt=""
+          className="h-full w-full object-cover scale-110"
+        />
+      </div>
+      <div className="absolute inset-0 z-10 bg-base-100/40 backdrop-blur-sm" />
+
+      <div className="relative z-20 hero-content text-center flex-col max-w-md w-full">
+        <h1 className="text-3xl md:text-5xl font-bold text-primary mb-2 md:mb-3">
+          PicMe
+        </h1>
+        <p className="text-md md:text-lg mb-0 text-base-content/80">
+          Play quick rounds to learn animal names — no sign-in required.
+        </p>
 
         <MotionDiv
           className="grid gap-3 md:gap-6 mb-6 md:mb-8 w-full"
