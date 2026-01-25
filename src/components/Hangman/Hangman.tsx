@@ -535,24 +535,29 @@ export default function Hangman({
         {renderLetterBoxes()}
 
         {/* Game State Messages */}
-        {gameState === "won" && (
-          <div className="text-center">
-            <p className="text-2xl font-bold text-success mb-4">
-              🎉 Correct! It's {currentAnimal?.commonName}!
-            </p>
-            <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
-              <button
-                ref={nextButtonRef}
-                onClick={handleNextRound}
-                disabled={allRoundsCompleted}
-                aria-disabled={allRoundsCompleted}
-                className={`btn btn-success ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
-              >
-                Next Animal
-              </button>
-            </div>
+        <div
+          className={`text-center overflow-hidden transition-[opacity,transform,max-height] duration-300 ease-out p-0 ${
+            gameState === "won"
+              ? "opacity-100 translate-y-0 max-h-56 p-3 sm:p-4"
+              : "opacity-0 -translate-y-2 max-h-0 pointer-events-none"
+          }`}
+          aria-hidden={gameState !== "won"}
+        >
+          <p className="text-2xl font-bold text-success mb-4">
+            🎉 Correct! It's {currentAnimal?.commonName}!
+          </p>
+          <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+            <button
+              ref={nextButtonRef}
+              onClick={handleNextRound}
+              disabled={allRoundsCompleted}
+              aria-disabled={allRoundsCompleted}
+              className={`btn btn-success ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              Next Animal
+            </button>
           </div>
-        )}
+        </div>
 
         {gameState === "lost" && (
           <div className="text-center">
