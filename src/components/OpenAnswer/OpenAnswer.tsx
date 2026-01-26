@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { FaArrowRight } from "react-icons/fa";
 import type { Animal } from "../../types/Animal";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
@@ -25,6 +26,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     null,
   );
   const [showBackModal, setShowBackModal] = useState(false);
+
   const flashTimeoutRef = useRef<number | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -40,7 +42,6 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
 
   const triggerFlash = (state: "correct" | "wrong") => {
     clearFlash();
-    setFlashState(null);
     requestAnimationFrame(() => {
       setFlashState(state);
       flashTimeoutRef.current = window.setTimeout(() => {
@@ -63,10 +64,9 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     if (!animals || animals.length === 0) return;
 
     setIsImageLoading(true);
+    setInputValue("");
     setFeedback(null);
     setIsCorrect(false);
-    setInputValue("");
-    clearFlash();
 
     const next = pickRandomAnimal(animals);
     if (!next) {
@@ -79,31 +79,26 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
       setCurrentAnimal(next);
       setCurrentImage("");
       setIsImageLoading(false);
-      return;
+    } else {
+      const img = new Image();
+      img.src = imgUrl;
+      img.onload = () => {
+        setCurrentAnimal(next);
+        setCurrentImage(imgUrl);
+        setIsImageLoading(false);
+      };
+      img.onerror = () => {
+        setCurrentAnimal(next);
+        setCurrentImage("");
+        setIsImageLoading(false);
+      };
     }
 
-    const img = new Image();
-    img.src = imgUrl;
-    img.onload = () => {
-      setCurrentAnimal(next);
-      setCurrentImage(imgUrl);
-      setIsImageLoading(false);
-      try {
-        sessionStorage.setItem("openAnswer.currentId", next.id);
-      } catch (error) {
-        console.log(error, "Failed to save current animal ID");
-      }
-    };
-    img.onerror = () => {
-      setCurrentAnimal(next);
-      setCurrentImage("");
-      setIsImageLoading(false);
-      try {
-        sessionStorage.setItem("openAnswer.currentId", next.id);
-      } catch (error) {
-        console.log(error, "Failed to save current animal ID");
-      }
-    };
+    try {
+      sessionStorage.setItem("openAnswer.currentId", next.id);
+    } catch (error) {
+      console.log(error, "Failed to save current animal ID to sessionStorage");
+    }
   }, []);
 
   useEffect(() => {
@@ -121,11 +116,11 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             Array.isArray((mod as { default?: unknown }).default)
           )
             return (mod as { default: Animal[] }).default;
-          console.warn("Unexpected data module format:", r);
           return [] as Animal[];
         });
         allAnimalsRef.current = combined;
-        // If a current animal is persisted in sessionStorage, restore it
+
+        // restore persisted current animal if present
         try {
           const savedId = sessionStorage.getItem("openAnswer.currentId");
           if (savedId) {
@@ -154,7 +149,10 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             }
           }
         } catch (error) {
-          console.log(error, "Failed to restore current animal ID");
+          console.log(
+            error,
+            "Failed to restore current animal from sessionStorage",
+          );
         }
 
         loadNewAnimal(combined);
@@ -184,28 +182,22 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     if (isCorrect) return; // don't focus when answer is locked
 
     try {
-      // Try immediate focus with preventScroll first
-      if (typeof el.focus === "function") {
-        // Some mobile browsers may ignore immediate focus; fallback to timeout below
-        // use focus with options when supported
-        try {
-          // @ts-ignore - some browsers support options
-          el.focus({ preventScroll: true });
-        } catch (err) {
-          el.focus();
-        }
+      try {
+        el.focus({ preventScroll: true });
+      } catch (error) {
+        console.log(error, "Failed to focus input with preventScroll");
+        el.focus();
       }
-    } catch (err) {
-      // ignore
+    } catch (error) {
+      console.log(error, "Failed to focus input");
     }
 
-    // Fallback: ensure focus after a short delay to handle mobile browser quirks
     const t = window.setTimeout(() => {
       try {
         el.focus();
         el.scrollIntoView({ behavior: "smooth", block: "center" });
-      } catch (e) {
-        // ignore
+      } catch (error) {
+        console.log(error, "Failed to scroll input into view");
       }
     }, 100);
 
@@ -243,8 +235,10 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     try {
       sessionStorage.removeItem("openAnswer.currentId");
     } catch (error) {
-      console.log(error, "Failed to clear current animal ID");
-      // ignore storage errors
+      console.log(
+        error,
+        "Failed to remove current animal ID from sessionStorage",
+      );
     }
     setScore(0);
     setCurrentAnimal(null);
@@ -266,7 +260,9 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     "border-base-content/20",
     "rounded-md",
     "px-3",
-    "py-2",
+    "pr-12",
+    "py-0",
+    "h-8",
     "focus:border-primary",
     "focus:ring-0",
     flashState === "correct" ? "flash-correct" : "",
@@ -304,26 +300,32 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             className="flex flex-col gap-4 items-center"
             onSubmit={(e) => {
               e.preventDefault();
-              if (isCorrect) {
-                handleNext();
-              } else {
-                handleSubmit();
-              }
+              if (isCorrect) handleNext();
+              else handleSubmit();
             }}
           >
             <label className="text-sm font-semibold text-center w-full">
               Your answer
             </label>
-            <input
-              ref={inputRef}
-              autoFocus
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className={inputClass}
-              placeholder="Type the animal name"
-              disabled={isCorrect}
-              aria-invalid={feedback?.startsWith("Incorrect") || false}
-            />
+
+            <div className="relative w-full">
+              <input
+                ref={inputRef}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className={inputClass}
+                placeholder="Type the animal name"
+                disabled={isCorrect}
+                aria-invalid={feedback?.startsWith("Incorrect") || false}
+              />
+              <button
+                type="submit"
+                aria-label={isCorrect ? "Next animal" : "Submit answer"}
+                className="absolute right-0 top-0 bottom-0 btn btn-success btn-xs w-12 p-0 h-8 rounded-l-none rounded-r-md border-l-0"
+              >
+                <FaArrowRight className="text-white" />
+              </button>
+            </div>
 
             {feedback && (
               <motion.div
@@ -349,8 +351,9 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             {isCorrect && (
               <button
                 ref={nextButtonRef}
-                type="submit"
-                className="btn btn-success self-center"
+                type="button"
+                onClick={handleNext}
+                className="btn btn-success"
               >
                 Next Animal
               </button>
@@ -368,18 +371,19 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             isOpen={showBackModal}
             onClose={() => setShowBackModal(false)}
             onHome={() => {
-              // On home: clear persisted id and navigate home if provided
               try {
                 sessionStorage.removeItem("openAnswer.currentId");
               } catch (error) {
-                console.log(error, "Failed to clear current animal ID");
+                console.log(
+                  error,
+                  "Failed to remove current animal ID from sessionStorage",
+                );
               }
               setShowBackModal(false);
               if (onHome) onHome();
               else onBack?.();
             }}
             onSettings={() => {
-              // Treat Settings as 'back' here: reset state then navigate back
               handleBack();
               setShowBackModal(false);
             }}
