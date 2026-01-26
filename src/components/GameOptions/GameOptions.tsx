@@ -160,14 +160,14 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
       <div className="w-full max-w-3xl text-center mb-8">
-        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
+        <h1 className="text-3xl md:text-4xl font-bold leading-tight">
           Pick a game mode!
         </h1>
       </div>
       <div className="max-w-3xl w-full bg-base-100 rounded-lg border overflow-hidden">
         {/* Menu Header */}
         <div className="border-b bg-base-200 overflow-x-auto overscroll-x-contain scrollbar-hidden">
-          <div className="flex min-w-full gap-2 px-2 sm:px-3 py-1 touch-pan-x">
+          <div className="flex min-w-full gap-2 pl-0 pr-2 sm:px-3 py-1 touch-pan-x">
             {OPTIONS.map((o) => (
               <button
                 key={o.id}
