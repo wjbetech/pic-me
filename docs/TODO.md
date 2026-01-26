@@ -45,13 +45,13 @@
 
 ### Mobile responsiveness TODOs
 
-- [X] Reduce mobile button sizes in Multiple Choice
+- [x] Reduce mobile button sizes in Multiple Choice
   - Adjust Next/Back button sizes, spacing, and layout in `src/components/MultiChoice/MultiChoice.tsx` for small screens. Reduce font-size and padding for mobile, stack buttons compactly, and scale down `Multiple Choice` title and `Score` text at small breakpoints.
 
-- [X] Auto-focus Open Answer input on load
+- [x] Auto-focus Open Answer input on load
   - When `OpenAnswer` mounts, focus the input (use `useRef` + `autoFocus` fallback) so users can start typing immediately. Ensure this works across iOS and Android browsers.
 
-- [ ] Ensure mobile keyboard doesn't impede UI in Open Answer
+- [x] Ensure mobile keyboard doesn't impede UI in Open Answer
   - When keyboard opens on mobile, ensure layout keeps the input visible: use viewport-safe-height container, avoid fixed-position elements overlapping input, and consider `scrollIntoView({behavior:'smooth'})` when input receives focus.
 
 - [ ] Make mode picker horizontally scrollable
@@ -59,6 +59,18 @@
 
 - [ ] Scale Hangman keyboard for small screens
   - Reduce per-letter button size on small screens: update keyboard CSS (responsive `w-` classes and `btn-sm`) and ensure layout wraps without clipping when vertical space is limited. Test portrait mobile in common heights.
+
+- [ ] [Mobile] Hangman containment + padding
+  - Scale down Hangman UI slightly on small viewports, increase letter-button padding for fat-finger safety, ensure the Menu/Back button remains visible after the first animal loads, and reduce/eliminate vertical scroll on common phone sizes. Edit `src/components/Hangman/Hangman.tsx` responsive classes and keyDims calculation.
+
+- [ ] Add Try/Go button to Open Answer
+  - Add a visible `Try` (or `Go`) button adjacent to the Open Answer input in `src/components/OpenAnswer/OpenAnswer.tsx` so mobile users can submit answers without relying on the keyboard action key.
+
+- [ ] Scale down 'Pick a game mode!' title for mobile
+  - Reduce mode-picker title size and add bottom margin so the mode picker fits without vertical scrolling on phones. Update `src/components/Main/Main.tsx` styling to compact spacing and scale text on small breakpoints.
+
+- [ ] Show all four MultiChoice options on mobile
+  - Fix `src/components/MultiChoice/*` responsive CSS so all four answer options display on small screens. Reduce option font-size/padding, adjust grid/wrap behavior, and avoid clipping or overflow so users always see four choices.
 
 - [ ] Responsive QA & verification
   - Run manual QA on common breakpoints (360x800, 375x812, 412x915, 768x1024, 1366x768, 1920x1080). Verify keyboard visibility, scrolling, and spacing; update styles as needed and commit fixes.
