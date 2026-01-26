@@ -50,6 +50,16 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Hide scrollbars while preserving scroll (used for horizontal tab scrollers) */
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 /* Pulsing ring that animates multi-layer RGB box-shadow only (does not affect child opacity) */
 .ring-glow {
   /* Slow the RGB cycle for a calmer effect */

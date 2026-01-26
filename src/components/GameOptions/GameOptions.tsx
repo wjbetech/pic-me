@@ -166,22 +166,24 @@ export default function GameOptions({ onBack, onConfirm }: Props) {
       </div>
       <div className="max-w-3xl w-full bg-base-100 rounded-lg border overflow-hidden">
         {/* Menu Header */}
-        <div className="flex border-b bg-base-200">
-          {OPTIONS.map((o) => (
-            <button
-              key={o.id}
-              type="button"
-              onClick={() => setSelected(o.id)}
-              className={`flex-1 px-4 py-3 font-semibold transition-colors whitespace-nowrap ${
-                selected === o.id
-                  ? "bg-accent border-b-2 border-primary"
-                  : "hover:bg-base-100/50"
-              }`}
-              aria-pressed={selected === o.id}
-            >
-              {o.title}
-            </button>
-          ))}
+        <div className="border-b bg-base-200 overflow-x-auto overscroll-x-contain scrollbar-hidden">
+          <div className="flex min-w-full gap-2 px-2 sm:px-3 py-1 touch-pan-x">
+            {OPTIONS.map((o) => (
+              <button
+                key={o.id}
+                type="button"
+                onClick={() => setSelected(o.id)}
+                className={`flex-none sm:flex-1 px-4 py-3 font-semibold transition-colors whitespace-nowrap ${
+                  selected === o.id
+                    ? "bg-accent border-b-2 border-primary"
+                    : "hover:bg-base-100/50"
+                }`}
+                aria-pressed={selected === o.id}
+              >
+                {o.title}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Content Area */}
