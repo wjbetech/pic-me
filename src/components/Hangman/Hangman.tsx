@@ -25,14 +25,15 @@ export default function Hangman({
   const [showBackModal, setShowBackModal] = useState(false);
   const [allAnimals, setAllAnimals] = useState<Animal[]>([]);
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
+  const [wonAnimalName, setWonAnimalName] = useState<string | null>(null);
   const [guessedLetters, setGuessedLetters] = useState<Set<string>>(new Set());
   const [wrongLetters, setWrongLetters] = useState<Set<string>>(new Set());
   const [livesRemaining, setLivesRemaining] = useState(settings.lives ?? 6);
   const [score, setScore] = useState(0);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
-  const [gameState, setGameState] = useState<"playing" | "won" | "lost">(
-    "playing",
-  );
+  const [gameState, setGameState] = useState<
+    "playing" | "won" | "lost" | "transition"
+  >("playing");
 
   const [roundsTotal, setRoundsTotal] = useState<number | "all" | undefined>(
     settings.rounds ?? "all",
@@ -42,6 +43,7 @@ export default function Hangman({
   const animalQueueRef = useRef<Animal[]>([]);
   const queueIndexRef = useRef(0);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const nextRoundTimeoutRef = useRef<number | null>(null);
   const [keyDims, setKeyDims] = useState<{ width: number; height: number }>({
     width: 30,
     height: 36,
@@ -149,6 +151,9 @@ export default function Hangman({
 
               const found = shuffled[foundIndex];
               setCurrentAnimal(found);
+              setWonAnimalName(
+                savedGameState === "won" ? found.commonName : null,
+              );
               setGuessedLetters(
                 new Set((savedGuessed || []).map((s) => s.toUpperCase())),
               );
@@ -235,11 +240,11 @@ export default function Hangman({
       const nextAnimal = source[idx];
       queueIndexRef.current = idx + 1;
 
+      setGameState("playing");
       setCurrentAnimal(nextAnimal);
       setGuessedLetters(new Set());
       setWrongLetters(new Set());
       setLivesRemaining(settings.lives ?? 6);
-      setGameState("playing");
       setRoundsPlayed((p) => p + 1);
     },
     [allAnimals, roundsTotal, roundsPlayed, settings.lives],
@@ -273,6 +278,7 @@ export default function Hangman({
         const allGuessed = allLetters.every((c) => newGuessed.has(c));
 
         if (allGuessed) {
+          setWonAnimalName(currentAnimal?.commonName ?? null);
           setGameState("won");
           setScore((s) => s + 1);
         }
@@ -282,7 +288,16 @@ export default function Hangman({
   );
 
   const handleNextRound = useCallback(() => {
-    loadNewAnimal();
+    if (nextRoundTimeoutRef.current) {
+      window.clearTimeout(nextRoundTimeoutRef.current);
+      nextRoundTimeoutRef.current = null;
+    }
+
+    setGameState("transition");
+    nextRoundTimeoutRef.current = window.setTimeout(() => {
+      loadNewAnimal();
+      nextRoundTimeoutRef.current = null;
+    }, 180);
   }, [loadNewAnimal]);
 
   // Allow pressing Enter to advance when the round is won
@@ -296,6 +311,32 @@ export default function Hangman({
     window.addEventListener("keydown", onEnter);
     return () => window.removeEventListener("keydown", onEnter);
   }, [gameState, handleNextRound]);
+
+  // Cleanup any pending next-round timer on unmount
+  useEffect(() => {
+    return () => {
+      if (nextRoundTimeoutRef.current) {
+        window.clearTimeout(nextRoundTimeoutRef.current);
+        nextRoundTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
+  // Keep the won animal name stable while the win message animates out
+  useEffect(() => {
+    if (gameState === "won" && currentAnimal && !wonAnimalName) {
+      setWonAnimalName(currentAnimal.commonName);
+      return;
+    }
+
+    if (gameState !== "won" && wonAnimalName) {
+      const timeout = window.setTimeout(() => {
+        setWonAnimalName(null);
+      }, 320);
+
+      return () => window.clearTimeout(timeout);
+    }
+  }, [gameState, currentAnimal, wonAnimalName]);
 
   // Focus the Next button when round is won
   useEffect(() => {
@@ -449,7 +490,7 @@ export default function Hangman({
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className={`flex justify-center gap-1 w-full flex-nowrap`}
+            className={`flex justify-center gap-2 w-full flex-nowrap sm:px-4`}
           >
             {row.map((letter) => {
               const isGuessed = guessedLetters.has(letter);
@@ -463,13 +504,13 @@ export default function Hangman({
               const showAsCorrect =
                 isGuessed || (gameState !== "playing" && appearsInName);
 
-              const keyBorderClass = "border-base-content/20";
+              const keyBorderClass = "border-1 border-base-content/20";
 
               return (
                 <button
                   key={letter}
                   onClick={() => handleLetterGuess(letter)}
-                  className={`inline-flex items-center justify-center rounded-md text-sm leading-none border-2 ${keyBorderClass} ${
+                  className={`inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-semibold leading-none border-2 ${keyBorderClass} ${
                     showAsWrong
                       ? "bg-error text-error-content"
                       : showAsCorrect
@@ -544,7 +585,7 @@ export default function Hangman({
           aria-hidden={gameState !== "won"}
         >
           <p className="text-2xl font-bold text-success mb-4">
-            🎉 Correct! It's {currentAnimal?.commonName}!
+            🎉 Correct! It's {wonAnimalName ?? ""}!
           </p>
           <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
             <button

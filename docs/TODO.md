@@ -54,7 +54,7 @@
 - [x] Ensure mobile keyboard doesn't impede UI in Open Answer
   - When keyboard opens on mobile, ensure layout keeps the input visible: use viewport-safe-height container, avoid fixed-position elements overlapping input, and consider `scrollIntoView({behavior:'smooth'})` when input receives focus.
 
-- [ ] Make mode picker horizontally scrollable
+- [x] Make mode picker horizontally scrollable
   - Make the Pick-a-mode mini-menu horizontally scrollable on narrow screens (use `overflow-x-auto` with `-mx-4` paddings and `whitespace-nowrap` on the item container). Add touch-friendly `scroll-snap` optional enhancement.
 
 - [ ] Scale Hangman keyboard for small screens
