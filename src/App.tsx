@@ -67,7 +67,7 @@ function App() {
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden bg-base-300 text-base-content">
       <Navbar onHome={() => setRoute("home")} />
-      <div className="flex-1 overflow-hidden relative">
+      <div className="flex-1 min-h-0 overflow-hidden relative">
         {route === "home" && <Main onStart={() => setRoute("options")} />}
         {route === "options" && (
           <GameOptions

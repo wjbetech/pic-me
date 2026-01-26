@@ -538,7 +538,7 @@ export default function Hangman({
   };
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
+    <div className="h-full w-full flex items-start md:items-center justify-center p-4 overflow-y-auto">
       <div className="max-w-4xl w-full flex flex-col gap-6">
         {/* Header */}
         <div className="text-center">
