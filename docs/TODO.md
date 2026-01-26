@@ -45,10 +45,10 @@
 
 ### Mobile responsiveness TODOs
 
-- [ ] Reduce mobile button sizes in Multiple Choice
+- [X] Reduce mobile button sizes in Multiple Choice
   - Adjust Next/Back button sizes, spacing, and layout in `src/components/MultiChoice/MultiChoice.tsx` for small screens. Reduce font-size and padding for mobile, stack buttons compactly, and scale down `Multiple Choice` title and `Score` text at small breakpoints.
 
-- [ ] Auto-focus Open Answer input on load
+- [X] Auto-focus Open Answer input on load
   - When `OpenAnswer` mounts, focus the input (use `useRef` + `autoFocus` fallback) so users can start typing immediately. Ensure this works across iOS and Android browsers.
 
 - [ ] Ensure mobile keyboard doesn't impede UI in Open Answer

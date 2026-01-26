@@ -27,6 +27,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   const [showBackModal, setShowBackModal] = useState(false);
   const flashTimeoutRef = useRef<number | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const allAnimalsRef = useRef<Animal[]>([]);
 
   const clearFlash = () => {
@@ -176,6 +177,41 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     }
   }, [isCorrect]);
 
+  // Auto-focus the input when a new animal loads (or on mount).
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    if (isCorrect) return; // don't focus when answer is locked
+
+    try {
+      // Try immediate focus with preventScroll first
+      if (typeof el.focus === "function") {
+        // Some mobile browsers may ignore immediate focus; fallback to timeout below
+        // use focus with options when supported
+        try {
+          // @ts-ignore - some browsers support options
+          el.focus({ preventScroll: true });
+        } catch (err) {
+          el.focus();
+        }
+      }
+    } catch (err) {
+      // ignore
+    }
+
+    // Fallback: ensure focus after a short delay to handle mobile browser quirks
+    const t = window.setTimeout(() => {
+      try {
+        el.focus();
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (e) {
+        // ignore
+      }
+    }, 100);
+
+    return () => window.clearTimeout(t);
+  }, [currentAnimal, isCorrect]);
+
   const handleSubmit = () => {
     if (!currentAnimal || isCorrect) return;
     const expected = normalizeAnswer(currentAnimal.commonName);
@@ -279,6 +315,8 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
               Your answer
             </label>
             <input
+              ref={inputRef}
+              autoFocus
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className={inputClass}
