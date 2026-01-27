@@ -110,7 +110,7 @@ export default function Main({ onStart }: { onStart?: () => void }) {
           </MotionDiv>
 
           <button
-            className="btn btn-primary btn-wide text-xl shadow-lg"
+            className="btn btn-primary btn-wide text-lg shadow-lg"
             onClick={() => onStart && onStart()}
           >
             Start Playing
