@@ -41,35 +41,6 @@ export default function Hangman({
   const queueIndexRef = useRef(0);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextRoundTimeoutRef = useRef<number | null>(null);
-  const [keyDims, setKeyDims] = useState<{ width: number; height: number }>({
-    width: 30,
-    height: 36,
-  });
-
-  // Update keyboard key dimensions responsively based on viewport width
-  useEffect(() => {
-    const computeKeyDims = () => {
-      const viewport = typeof window !== "undefined" ? window.innerWidth : 640;
-      const maxContainer = Math.min(viewport, 1024);
-      const reserved = 64; // padding/margins
-      const gapPx = 6; // gap-1 ~ 4-6px
-      const numKeys = 10; // largest row length
-
-      const available = Math.max(200, maxContainer - reserved);
-      const proposed = Math.floor(
-        (available - (numKeys - 1) * gapPx) / numKeys,
-      );
-
-      const width = Math.max(22, Math.min(52, proposed));
-      const height = Math.max(28, Math.round(width * 1.2));
-
-      setKeyDims({ width, height });
-    };
-
-    computeKeyDims();
-    window.addEventListener("resize", computeKeyDims);
-    return () => window.removeEventListener("resize", computeKeyDims);
-  }, []);
 
   // Load all animals from JSON files
   useEffect(() => {
@@ -447,7 +418,6 @@ export default function Hangman({
           <Keyboard
             guessedLetters={guessedLetters}
             wrongLetters={wrongLetters}
-            keyDims={keyDims}
             onGuess={handleLetterGuess}
             currentAnimal={currentAnimal}
             gameState={gameState}

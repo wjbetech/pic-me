@@ -8,7 +8,7 @@ export default function Header({
   round: number;
 }) {
   return (
-    <div className="text-center">
+    <div className="text-center mt-4">
       <h2 className="text-2xl md:text-3xl font-bold mb-2">Hangman</h2>
       <div className="flex justify-center gap-6 text-lg">
         <p className="font-semibold">

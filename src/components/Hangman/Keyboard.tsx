@@ -6,14 +6,12 @@ const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 export default function Keyboard({
   guessedLetters,
   wrongLetters,
-  keyDims,
   onGuess,
   currentAnimal,
   gameState,
 }: {
   guessedLetters: Set<string>;
   wrongLetters: Set<string>;
-  keyDims: { width: number; height: number };
   onGuess: (letter: string) => void;
   currentAnimal: Animal | null;
   gameState: GameState;
@@ -49,22 +47,13 @@ export default function Keyboard({
               <button
                 key={letter}
                 onClick={() => onGuess(letter)}
-                className={`inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-semibold leading-none border-2 ${keyBorderClass} ${
+                className={`inline-flex cursor-pointer items-center justify-center rounded-md font-semibold leading-none border-2 w-10 h-14 max-w-7.5 md:max-w-8.5 lg:max-w-10${keyBorderClass} ${
                   showAsWrong
                     ? "bg-error text-error-content"
                     : showAsCorrect
                       ? "bg-success text-success-content"
                       : "bg-transparent text-base-content"
                 }`}
-                style={{
-                  minWidth: 0,
-                  width: keyDims.width,
-                  height: keyDims.height,
-                  padding: 0,
-                  margin: 0,
-                  fontSize: Math.max(12, Math.round(keyDims.width * 0.45)),
-                  lineHeight: `${keyDims.height}px`,
-                }}
               >
                 {letter}
               </button>

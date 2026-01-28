@@ -1,5 +1,4 @@
 import type { Animal } from "../../types/Animal";
-import computeLetterBoxDimensions from "../../utils/letterBox";
 import type { GameState } from "../../types/Hangman";
 
 export default function LetterBoxes({
@@ -16,17 +15,10 @@ export default function LetterBoxes({
   const raw = currentAnimal.commonName.toUpperCase();
   const words = raw.split(/\s+/).filter((w) => w.length > 0);
 
-  const longest = Math.max(
-    1,
-    ...words.map((w) => w.replace(/[^A-Z]/g, "").length),
-  );
-
-  const { boxWidth, boxHeight, fontSize } = computeLetterBoxDimensions(longest);
-
   return (
-    <div className="flex flex-col gap-2 mb-8 items-center">
+    <div className="flex flex-col gap-2 items-center">
       {words.map((word, wi) => (
-        <div key={wi} className="flex gap-2 justify-center">
+        <div key={wi} className="flex gap-2 justify-center max-w-[99%]">
           {word.split("").map((char, idx) => {
             const isLetter = /[A-Z]/.test(char);
             const isGuessed = guessedLetters.has(char);
@@ -36,7 +28,7 @@ export default function LetterBoxes({
             let boxClasses = "";
             if (isLetter) {
               boxClasses = shouldShow
-                ? "bg-base-100 text-primary"
+                ? "bg-success text-success-content"
                 : "bg-base-200";
             } else {
               boxClasses = "bg-transparent";
@@ -49,13 +41,7 @@ export default function LetterBoxes({
             return (
               <div
                 key={idx}
-                style={{
-                  width: `${boxWidth}px`,
-                  height: `${boxHeight}px`,
-                  fontSize: `${fontSize}px`,
-                  lineHeight: `${boxHeight}px`,
-                }}
-                className={`flex items-center justify-center border-2 rounded font-bold ${boxClasses} ${borderClass}`}
+                className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 border-2 rounded font-bold text-lg ${boxClasses} ${borderClass}`}
               >
                 {shouldShow ? char : ""}
               </div>
