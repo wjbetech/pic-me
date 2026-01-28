@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { FaArrowRight } from "react-icons/fa";
 import type { Animal } from "../../types/Animal";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import "./OpenAnswer.css";
+import normalizeAnswer from "../../utils/normalizeAnswer";
+import { pickRandomAnimal, preloadImage } from "../../utils/openAnswer";
+import useFlash from "../../hooks/useFlash";
+import OpenAnswerForm from "./OpenAnswerForm";
 
 interface OpenAnswerProps {
   onBack?: () => void;
   onHome?: () => void;
 }
-
-const normalizeAnswer = (value: string) =>
-  value.trim().toLowerCase().replace(/\s+/g, " ");
 
 export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
@@ -22,44 +21,14 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
-  const [flashState, setFlashState] = useState<"correct" | "wrong" | null>(
-    null,
-  );
+  const { flashState, triggerFlash, clearFlash } = useFlash(null);
   const [showBackModal, setShowBackModal] = useState(false);
 
-  const flashTimeoutRef = useRef<number | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const allAnimalsRef = useRef<Animal[]>([]);
 
-  const clearFlash = () => {
-    if (flashTimeoutRef.current) {
-      window.clearTimeout(flashTimeoutRef.current);
-      flashTimeoutRef.current = null;
-    }
-    setFlashState(null);
-  };
-
-  const triggerFlash = (state: "correct" | "wrong") => {
-    clearFlash();
-    requestAnimationFrame(() => {
-      setFlashState(state);
-      flashTimeoutRef.current = window.setTimeout(() => {
-        setFlashState(null);
-        flashTimeoutRef.current = null;
-      }, 1200);
-    });
-  };
-
-  const pickRandomAnimal = (animals: Animal[]) => {
-    if (!animals || animals.length === 0) return null;
-    const withImages = animals.filter((a) => a.images && a.images.length > 0);
-    const source = withImages.length > 0 ? withImages : animals;
-    const index = Math.floor(Math.random() * source.length);
-    return source[index];
-  };
-
-  const loadNewAnimal = useCallback((animalsParam?: Animal[]) => {
+  const loadNewAnimal = useCallback(async (animalsParam?: Animal[]) => {
     const animals = animalsParam ?? allAnimalsRef.current;
     if (!animals || animals.length === 0) return;
 
@@ -80,18 +49,10 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
       setCurrentImage("");
       setIsImageLoading(false);
     } else {
-      const img = new Image();
-      img.src = imgUrl;
-      img.onload = () => {
-        setCurrentAnimal(next);
-        setCurrentImage(imgUrl);
-        setIsImageLoading(false);
-      };
-      img.onerror = () => {
-        setCurrentAnimal(next);
-        setCurrentImage("");
-        setIsImageLoading(false);
-      };
+      const ok = await preloadImage(imgUrl);
+      setCurrentAnimal(next);
+      setCurrentImage(ok ? imgUrl : "");
+      setIsImageLoading(false);
     }
 
     try {
@@ -250,26 +211,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     if (onBack) onBack();
   };
 
-  const inputClass = [
-    "input",
-    "w-full",
-    "text-lg",
-    "text-center",
-    "open-answer-input",
-    "border-2",
-    "border-base-content/20",
-    "rounded-md",
-    "px-3",
-    "pr-12",
-    "py-0",
-    "h-8",
-    "focus:border-primary",
-    "focus:ring-0",
-    flashState === "correct" ? "flash-correct" : "",
-    flashState === "wrong" ? "flash-wrong" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  // input classes moved into OpenAnswerForm to keep styling colocated with the input element
 
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
@@ -295,71 +237,17 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
           )}
         </div>
 
-        <div className="bg-base-100 rounded-lg p-6">
-          <form
-            className="flex flex-col gap-4 items-center"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (isCorrect) handleNext();
-              else handleSubmit();
-            }}
-          >
-            <label className="text-sm font-semibold text-center w-full">
-              Your answer
-            </label>
-
-            <div className="relative w-full">
-              <input
-                ref={inputRef}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                className={inputClass}
-                placeholder="Type the animal name"
-                disabled={isCorrect}
-                aria-invalid={feedback?.startsWith("Incorrect") || false}
-              />
-              <button
-                type="submit"
-                aria-label={isCorrect ? "Next animal" : "Submit answer"}
-                className="absolute right-0 top-0 bottom-0 btn btn-success btn-xs w-12 p-0 h-8 rounded-l-none rounded-r-md border-l-0"
-              >
-                <FaArrowRight className="text-white" />
-              </button>
-            </div>
-
-            {feedback && (
-              <motion.div
-                key={feedback}
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              >
-                <p
-                  className={`text-sm font-semibold text-center w-full ${
-                    feedback.startsWith("Correct")
-                      ? "text-success"
-                      : feedback.startsWith("Incorrect")
-                        ? "text-error"
-                        : "text-warning"
-                  }`}
-                >
-                  {feedback}
-                </p>
-              </motion.div>
-            )}
-
-            {isCorrect && (
-              <button
-                ref={nextButtonRef}
-                type="button"
-                onClick={handleNext}
-                className="btn btn-success"
-              >
-                Next Animal
-              </button>
-            )}
-          </form>
-        </div>
+        <OpenAnswerForm
+          inputRef={inputRef}
+          nextButtonRef={nextButtonRef}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          flashState={flashState}
+          feedback={feedback}
+          isCorrect={isCorrect}
+          onSubmit={handleSubmit}
+          onNext={handleNext}
+        />
 
         <div className="flex justify-center">
           <BackButton
