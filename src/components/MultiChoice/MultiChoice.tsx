@@ -44,6 +44,7 @@ export default function MultiChoice({
   const [disabledOptions, setDisabledOptions] = useState<string[]>([]);
   const [score, setScore] = useState(0);
   const [showBackModal, setShowBackModal] = useState(false);
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   // rounds controls how many rounds to play: 'all' for a fixed shuffled queue, or a number
   // for a limited number of rounds where each round is sampled randomly from the full dataset.
@@ -488,6 +489,33 @@ export default function MultiChoice({
     setScore((s) => s + 1);
   };
 
+  // When the answer has been marked and the Next button is rendered, allow
+  // pressing Enter to advance to the next animal. Guard against firing when
+  // focus is inside an input-like element or when rounds are completed.
+  useEffect(() => {
+    const onKey = (ev: KeyboardEvent) => {
+      if (ev.key !== "Enter") return;
+      if (!isAnswered) return;
+      const btn = nextButtonRef.current;
+      if (!btn) return;
+      if (allRoundsCompleted) return;
+      const active = document.activeElement as HTMLElement | null;
+      if (active) {
+        const tag = active.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      }
+      ev.preventDefault();
+      try {
+        btn.click();
+      } catch (error) {
+        console.log(error, "Failed to trigger Next via Enter");
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isAnswered, allRoundsCompleted]);
+
   return (
     <div className="h-full w-full flex items-center justify-center p-4 overflow-hidden">
       <div className="max-w-4xl w-full flex flex-col max-h-full overflow-hidden pb-6">
@@ -534,7 +562,7 @@ export default function MultiChoice({
         </div>
 
         {/* Footer Buttons (stacked) */}
-        <div className="flex flex-col items-center mt-4 md:mt-6 shrink-0 pb-3 md:pb-4 gap-2 md:gap-3">
+        <div className="flex flex-col items-center shrink-0 pb-3 md:pb-4 gap-2 md:gap-3">
           <AnimatePresence>
             {isAnswered && (
               <motion.div
@@ -546,6 +574,7 @@ export default function MultiChoice({
               >
                 <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
                   <button
+                    ref={nextButtonRef}
                     onClick={() => loadNewAnimal()}
                     disabled={allRoundsCompleted}
                     aria-disabled={allRoundsCompleted}
