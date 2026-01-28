@@ -18,7 +18,7 @@ export default function ModeTabs({ options, selected, onSelect }: Props) {
               key={o.id}
               type="button"
               onClick={() => onSelect(o.id)}
-              className={`flex-none sm:flex-1 px-4 py-3 font-semibold transition-colors whitespace-nowrap cursor-pointer ${
+              className={`flex-1 px-4 py-3 font-semibold transition-colors whitespace-nowrap cursor-pointer ${
                 selected === o.id ? "bg-accent" : "hover:bg-base-100/50"
               } ${isFirst ? "rounded-tl-lg" : ""} ${isLast ? "rounded-tr-lg" : ""}`}
               aria-pressed={selected === o.id}
