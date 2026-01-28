@@ -2,14 +2,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import type { Animal } from "../../types/Animal";
-import computeLetterBoxDimensions from "../../utils/letterBox";
+import type { HangmanSettings, GameState } from "../../types/Hangman";
+import LetterBoxes from "./LetterBoxes";
+import Keyboard from "./Keyboard";
+import Header from "./Header";
+import GameMessages from "./GameMessages";
+import AnimalImage from "./AnimalImage";
 
-interface HangmanSettings {
-  lives?: number;
-  rounds?: number | "all";
-}
-
-const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 // local storage key for Hangman progress/settings (versioned)
 const STORAGE_KEY = "picme-hangman-state-v1";
 
@@ -31,9 +30,7 @@ export default function Hangman({
   const [livesRemaining, setLivesRemaining] = useState(settings.lives ?? 6);
   const [score, setScore] = useState(0);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
-  const [gameState, setGameState] = useState<
-    "playing" | "won" | "lost" | "transition"
-  >("playing");
+  const [gameState, setGameState] = useState<GameState>("playing");
 
   const [roundsTotal, setRoundsTotal] = useState<number | "all" | undefined>(
     settings.rounds ?? "all",
@@ -413,230 +410,49 @@ export default function Hangman({
     gameState,
   ]);
 
-  const renderLetterBoxes = () => {
-    if (!currentAnimal) return null;
-
-    // Split the common name into words so multi-word names render on separate lines
-    const raw = currentAnimal.commonName.toUpperCase();
-    const words = raw.split(/\s+/).filter((w) => w.length > 0);
-
-    // Determine longest word length (letters only) to scale box sizes
-    const longest = Math.max(
-      1,
-      ...words.map((w) => w.replace(/[^A-Z]/g, "").length),
-    );
-
-    // Compute box dimensions using utility that only shrinks when
-    // the longest word is 6 letters or longer and progressively more
-    // for longer names.
-    const { boxWidth, boxHeight, fontSize } =
-      computeLetterBoxDimensions(longest);
-
-    return (
-      <div className="flex flex-col gap-2 mb-8 items-center">
-        {words.map((word, wi) => (
-          <div key={wi} className="flex gap-2 justify-center">
-            {word.split("").map((char, idx) => {
-              const isLetter = /[A-Z]/.test(char);
-              const isGuessed = guessedLetters.has(char);
-              const shouldShow =
-                !isLetter || isGuessed || gameState !== "playing";
-
-              let boxClasses = "";
-              if (isLetter) {
-                boxClasses = shouldShow
-                  ? "bg-base-100 text-primary"
-                  : "bg-base-200";
-              } else {
-                boxClasses = "bg-transparent";
-              }
-
-              const borderClass = isLetter
-                ? "border-base-content/20"
-                : "border-transparent";
-
-              return (
-                <div
-                  key={idx}
-                  style={{
-                    width: `${boxWidth}px`,
-                    height: `${boxHeight}px`,
-                    fontSize: `${fontSize}px`,
-                    lineHeight: `${boxHeight}px`,
-                  }}
-                  className={`flex items-center justify-center border-2 rounded font-bold ${boxClasses} ${borderClass}`}
-                >
-                  {shouldShow ? char : ""}
-                </div>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const renderKeyboard = () => {
-    // Create three rows that mimic keyboard staggering while keeping
-    // alphabetical order: 10, 9, 7 letters (A-J, K-S, T-Z).
-    const rows: string[][] = [
-      ALPHABET.slice(0, 10),
-      ALPHABET.slice(10, 19),
-      ALPHABET.slice(19, 26),
-    ];
-
-    return (
-      <div className="flex flex-col items-center gap-1 max-w-full mx-auto w-full px-3 sm:px-4">
-        {rows.map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className={`flex justify-center gap-2 w-full flex-nowrap sm:px-4`}
-          >
-            {row.map((letter) => {
-              const isGuessed = guessedLetters.has(letter);
-              const isWrong = wrongLetters.has(letter);
-              const appearsInName = currentAnimal
-                ? currentAnimal.commonName.toUpperCase().includes(letter)
-                : false;
-
-              const showAsWrong =
-                isWrong || (gameState !== "playing" && !appearsInName);
-              const showAsCorrect =
-                isGuessed || (gameState !== "playing" && appearsInName);
-
-              const keyBorderClass = "border-1 border-base-content/20";
-
-              return (
-                <button
-                  key={letter}
-                  onClick={() => handleLetterGuess(letter)}
-                  className={`inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-semibold leading-none border-2 ${keyBorderClass} ${
-                    showAsWrong
-                      ? "bg-error text-error-content"
-                      : showAsCorrect
-                        ? "bg-success text-success-content"
-                        : "bg-transparent text-base-content"
-                  }`}
-                  style={{
-                    minWidth: 0,
-                    width: keyDims.width,
-                    height: keyDims.height,
-                    padding: 0,
-                    margin: 0,
-                    fontSize: Math.max(12, Math.round(keyDims.width * 0.45)),
-                    lineHeight: `${keyDims.height}px`,
-                  }}
-                >
-                  {letter}
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // render helpers moved to separate components in ./
 
   return (
     <div className="h-full w-full flex items-start md:items-center justify-center p-4 overflow-y-auto">
       <div className="max-w-4xl w-full flex flex-col gap-6">
-        {/* Header */}
-        <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Hangman</h2>
-          <div className="flex justify-center gap-6 text-lg">
-            <p className="font-semibold">
-              Lives: <span className="text-error">{livesRemaining}</span>
-            </p>
-            <p className="font-semibold">
-              Score: <span className="text-success">{score}</span>
-            </p>
-            <p className="font-semibold opacity-70">Round: {roundsPlayed}</p>
-          </div>
-        </div>
+        <Header lives={livesRemaining} score={score} round={roundsPlayed} />
 
-        {/* Animal Image */}
-        {currentAnimal && currentAnimal.images && currentAnimal.images[0] && (
-          <div className="flex justify-center">
-            <img
-              src={currentAnimal.images[0].url}
-              alt="Animal"
-              className="w-64 h-48 md:w-80 md:h-60 object-cover rounded-lg shadow-lg"
-            />
-          </div>
-        )}
+        <AnimalImage animal={currentAnimal} />
 
-        {/* Hint */}
         {currentAnimal && (
           <p className="text-center opacity-60 text-sm">
             Hint: Lives in {currentAnimal.habitat.join(", ")}
           </p>
         )}
 
-        {/* Letter Boxes */}
-        {renderLetterBoxes()}
+        <LetterBoxes
+          currentAnimal={currentAnimal}
+          guessedLetters={guessedLetters}
+          gameState={gameState}
+        />
 
-        {/* Game State Messages */}
-        <div
-          className={`text-center overflow-hidden transition-[opacity,transform,max-height] duration-300 ease-out p-0 ${
-            gameState === "won"
-              ? "opacity-100 translate-y-0 max-h-56 p-3 sm:p-4"
-              : "opacity-0 -translate-y-2 max-h-0 pointer-events-none"
-          }`}
-          aria-hidden={gameState !== "won"}
-        >
-          <p className="text-2xl font-bold text-success mb-4">
-            🎉 Correct! It's {wonAnimalName ?? ""}!
-          </p>
-          <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
-            <button
-              ref={nextButtonRef}
-              onClick={handleNextRound}
-              disabled={allRoundsCompleted}
-              aria-disabled={allRoundsCompleted}
-              className={`btn btn-success ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
-            >
-              Next Animal
-            </button>
-          </div>
-        </div>
-
-        {gameState === "lost" && (
-          <div className="text-center">
-            <p className="text-2xl font-bold text-error mb-4">
-              💀 Game Over! The answer was {currentAnimal?.commonName}
-            </p>
-            <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
-              <button onClick={handleNextRound} className="btn btn-error">
-                Try Again
-              </button>
-            </div>
-          </div>
-        )}
-
-        {allRoundsCompleted && (
-          <div className="text-center">
-            <p className="text-2xl font-bold mb-4">All rounds completed!</p>
-            <p className="mb-4">
-              Final score: <span className="font-semibold">{score}</span>
-            </p>
-            <div className="flex justify-center gap-3">
-              <BackButton
-                label="Back to Menu"
-                onBack={() => {
-                  try {
-                    localStorage.removeItem(STORAGE_KEY);
-                  } catch (error) {
-                    console.debug("Failed to clear Hangman storage:", error);
-                  }
-                  if (onBack) onBack();
-                }}
-              />
-            </div>
-          </div>
-        )}
+        <GameMessages
+          gameState={gameState}
+          wonAnimalName={wonAnimalName}
+          allRoundsCompleted={allRoundsCompleted}
+          score={score}
+          currentAnimal={currentAnimal}
+          nextButtonRef={nextButtonRef}
+          onNext={handleNextRound}
+          onBack={onBack}
+        />
 
         {/* Keyboard */}
-        {gameState === "playing" && renderKeyboard()}
+        {gameState === "playing" && (
+          <Keyboard
+            guessedLetters={guessedLetters}
+            wrongLetters={wrongLetters}
+            keyDims={keyDims}
+            onGuess={handleLetterGuess}
+            currentAnimal={currentAnimal}
+            gameState={gameState}
+          />
+        )}
 
         {/* Back Button */}
         {!allRoundsCompleted && (
