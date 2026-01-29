@@ -17,17 +17,24 @@ export default function Keyboard({
   gameState: GameState;
 }) {
   const rows: string[][] = [
-    ALPHABET.slice(0, 10),
-    ALPHABET.slice(10, 19),
-    ALPHABET.slice(19, 26),
+    ALPHABET.slice(0, 9),
+    ALPHABET.slice(9, 18),
+    ALPHABET.slice(18, 26),
   ];
+  const maxCols = Math.max(...rows.map((row) => row.length));
+  const rowStyle = {
+    "--key-cols": maxCols,
+    "--key-gap": "0.5rem",
+    gap: "var(--key-gap)",
+  } as React.CSSProperties;
 
   return (
-    <div className="flex flex-col items-center gap-1 max-w-full mx-auto w-full px-3 sm:px-4">
+    <div className="flex flex-col items-center gap-2 max-w-full mx-auto w-full px-3 sm:px-4">
       {rows.map((row, rowIndex) => (
         <div
           key={rowIndex}
-          className={`flex justify-center gap-2 w-full flex-nowrap sm:px-4`}
+          className="flex w-full max-w-md mx-auto justify-center px-1 sm:px-2"
+          style={rowStyle}
         >
           {row.map((letter) => {
             const isGuessed = guessedLetters.has(letter);
@@ -47,7 +54,11 @@ export default function Keyboard({
               <button
                 key={letter}
                 onClick={() => onGuess(letter)}
-                className={`inline-flex cursor-pointer items-center justify-center rounded-md font-semibold leading-none border-2 w-10 h-14 max-w-7.5 md:max-w-8.5 lg:max-w-10${keyBorderClass} ${
+                style={{
+                  width:
+                    "calc((100% - (var(--key-cols) - 1) * var(--key-gap)) / var(--key-cols))",
+                }}
+                className={`inline-flex h-10 sm:h-12 md:h-12 lg:h-10 cursor-pointer items-center justify-center rounded-md font-semibold leading-none border-2 text-sm sm:text-base lg:text-sm ${keyBorderClass} ${
                   showAsWrong
                     ? "bg-error text-error-content"
                     : showAsCorrect
