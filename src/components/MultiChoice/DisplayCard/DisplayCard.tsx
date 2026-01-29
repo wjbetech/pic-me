@@ -17,7 +17,7 @@ export default function DisplayCard({
 }) {
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
   return (
-    <div className="shrink-4 min-w-0 place-self-center justify-center mb-6">
+    <div className="shrink-4 min-w-0 place-self-center justify-center mb-4">
       <div
         className={`swipe-container ${isImageLoading ? "swipe-out" : "swipe-in"}`}
       >
@@ -40,7 +40,7 @@ export default function DisplayCard({
             )}
           </div>
         ) : (
-          <div className="relative w-full h-64 md:h-72">
+          <div className="relative w-full h-56 md:h-64">
             {isImageLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-base-200 rounded-lg">
                 <div className="mc-spinner" aria-hidden />
@@ -59,7 +59,7 @@ export default function DisplayCard({
                     setIsPortrait(null);
                   }
                 }}
-                className={`w-full h-48 md:h-64 rounded-lg shadow-lg ${
+                className={`w-full h-44 md:h-56 rounded-lg shadow-lg ${
                   isImageLoading ? "opacity-0" : "opacity-100"
                 } ${isPortrait ? "object-contain" : "object-cover"}`}
                 style={{

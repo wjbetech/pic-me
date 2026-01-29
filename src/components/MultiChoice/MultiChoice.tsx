@@ -517,8 +517,8 @@ export default function MultiChoice({
   }, [isAnswered, allRoundsCompleted]);
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4 overflow-hidden">
-      <div className="max-w-4xl w-full flex flex-col max-h-full overflow-hidden pb-6">
+    <div className="h-full w-full flex items-center justify-center pt-6 md:pt-8 px-4 pb-4 overflow-hidden">
+      <div className="max-w-6xl w-full flex flex-col max-h-full overflow-hidden pb-6">
         {/* Header */}
         <div className="mb-2 md:mb-4 text-center shrink-0">
           <h2 className="text-xl md:text-3xl font-bold mb-1">
@@ -562,30 +562,35 @@ export default function MultiChoice({
         </div>
 
         {/* Footer Buttons (stacked) */}
-        <div className="flex flex-col items-center shrink-0 pb-3 md:pb-4 gap-2 md:gap-3">
-          <AnimatePresence>
-            {isAnswered && (
-              <motion.div
-                key="next-animal"
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ type: "spring", stiffness: 400, damping: 28 }}
-              >
-                <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
-                  <button
-                    ref={nextButtonRef}
-                    onClick={() => loadNewAnimal()}
-                    disabled={allRoundsCompleted}
-                    aria-disabled={allRoundsCompleted}
-                    className={`btn btn-success btn-sm md:btn-md text-sm md:text-base ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
+        <div className="flex flex-col items-center shrink-0 pb-12 md:pb-14 gap-4 md:gap-6">
+          {/* Reserve space for Next button so it doesn't shift layout when it appears */}
+          <div className="w-full flex items-center justify-center mb-2">
+            <div className="w-full flex items-center justify-center min-h-10 md:min-h-12">
+              <AnimatePresence>
+                {isAnswered && (
+                  <motion.div
+                    key="next-animal"
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   >
-                    Next Animal
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                    <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+                      <button
+                        ref={nextButtonRef}
+                        onClick={() => loadNewAnimal()}
+                        disabled={allRoundsCompleted}
+                        aria-disabled={allRoundsCompleted}
+                        className={`btn btn-success btn-sm md:btn-md text-sm md:text-base ${allRoundsCompleted ? "opacity-50 cursor-not-allowed" : ""}`}
+                      >
+                        Next Animal
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
 
           <div className="flex items-center gap-3">
             <BackButton

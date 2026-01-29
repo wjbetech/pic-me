@@ -16,14 +16,14 @@ export default function AnswerGrid({
   disabledOptions?: string[];
 }) {
   return (
-    <div className="flex-1 min-w-0 flex flex-col min-h-0 w-100 place-self-center overflow-hidden">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full p-2 md:p-4">
+    <div className="flex-1 min-w-0 flex flex-col min-h-0 w-full place-self-center overflow-visible">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4 w-full p-2 md:p-4">
         {answerOptions.map((option, index) => (
           <button
             key={index}
             onClick={() => handleAnswerClick(option)}
             disabled={isAnswered || disabledOptions.includes(option)}
-            className={`btn btn-md justify-center text-center px-4 py-3 border-2 border-base-content/20 bg-base-200 text-base-content w-full overflow-hidden ${(() => {
+            className={`btn btn-md md:btn-lg justify-center text-center px-4 md:px-5 py-3 border-2 border-base-content/20 bg-base-200 text-base-content text-base md:text-sm w-full md:min-w-44 lg:min-w-48 overflow-hidden whitespace-nowrap ${(() => {
               const isSelected = selectedAnswer === option;
               const isDisabled = disabledOptions.includes(option);
               if (isAnswered) {
@@ -43,7 +43,7 @@ export default function AnswerGrid({
               return "border-base-300 hover:border-base-400";
             })()}`}
           >
-            <span className="line-clamp-2">{option}</span>
+            <span className="truncate">{option}</span>
             {option === correctAnswer && isAnswered && (
               <span className="text-lg">✓</span>
             )}
