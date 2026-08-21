@@ -9,9 +9,6 @@ import DisplayCard from "./DisplayCard/DisplayCard";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 
-// Toggle debug logging for selection tracing
-const DEBUG_SELECTION = true; // temporarily enabled to trace repeated A selection
-
 interface GameSettings {
   blur: number;
   showDescription: boolean;
@@ -113,10 +110,8 @@ export default function MultiChoice({
       typeof roundsTotal === "number" &&
       roundsPlayed >= roundsTotal
     ) {
-      console.log("All rounds completed.");
       return;
     }
-
     // Increment the load request id and schedule the actual pick after the swipe delay.
     loadRequestIdRef.current += 1;
     const requestId = loadRequestIdRef.current;
@@ -134,11 +129,6 @@ export default function MultiChoice({
 
       // If this callback is stale (a newer request was started), ignore it
       if (requestId !== loadRequestIdRef.current) {
-        if (DEBUG_SELECTION) {
-          console.info(
-            `Ignoring stale load callback (id ${requestId}), current id ${loadRequestIdRef.current}`,
-          );
-        }
         return;
       }
 
@@ -156,16 +146,6 @@ export default function MultiChoice({
 
       // advance index in the shared queue index so we don't repeat too soon
       queueIndexRef.current = (idx + 1) % sourceQueue.length;
-
-      if (DEBUG_SELECTION) {
-        console.info(
-          `Selecting (request ${requestId}): ${randomAnimal?.id || "none"} - ${
-            randomAnimal?.commonName || ""
-          } | queue index: ${idx} / ${
-            animalQueue.length
-          } | roundsPlayed: ${roundsPlayed} / ${roundsTotal}`,
-        );
-      }
 
       // Pick a random image from that animal if available
       let imageUrl = "";
@@ -189,10 +169,6 @@ export default function MultiChoice({
         img.onload = () => {
           // Ensure the request is still current before applying
           if (requestId !== loadRequestIdRef.current) {
-            if (DEBUG_SELECTION)
-              console.info(
-                `Ignoring image onload for stale request ${requestId}`,
-              );
             return;
           }
           setCurrentAnimal(randomAnimal);
@@ -202,18 +178,10 @@ export default function MultiChoice({
           persistence.progress.save("multichoice.current", randomAnimal.id);
           // Count this loaded round (for numeric rounds)
           setRoundsPlayed((p) => p + 1);
-          if (DEBUG_SELECTION)
-            console.info(
-              `Applied animal (request ${requestId}): ${randomAnimal?.id}`,
-            );
         };
         img.onerror = () => {
           // Ensure the request is still current before reacting
           if (requestId !== loadRequestIdRef.current) {
-            if (DEBUG_SELECTION)
-              console.info(
-                `Ignoring image onerror for stale request ${requestId}`,
-              );
             return;
           }
           console.warn("Failed to load image, picking another.", imageUrl);
@@ -234,10 +202,6 @@ export default function MultiChoice({
         // No image available for this animal: still select it so sampling covers all animals
         // Ensure request is still current
         if (requestId !== loadRequestIdRef.current) {
-          if (DEBUG_SELECTION)
-            console.info(
-              `Ignoring no-image apply for stale request ${requestId}`,
-            );
           return;
         }
         setCurrentAnimal(randomAnimal);
@@ -245,10 +209,6 @@ export default function MultiChoice({
         setCorrectAnswer(randomAnimal.commonName);
         setIsImageLoading(false);
         setRoundsPlayed((p) => p + 1);
-        if (DEBUG_SELECTION)
-          console.info(
-            `Applied (no-image) animal (request ${requestId}): ${randomAnimal?.id}`,
-          );
       }
 
       // Generate up to 3 random different animal names (not the current one)
@@ -350,9 +310,6 @@ export default function MultiChoice({
         // that as our authoritative list for sampling.
         const shuffledCombined = createRotation(combined, "all");
         setAllAnimals(shuffledCombined);
-        console.log(
-          `Loaded ${shuffledCombined.length} animals (shuffled) from data/*.json`,
-        );
         // Build queue using provided settings.rounds if available
         // Cast settings to a minimal shape that may include `rounds` when provided
         const roundsSetting = (
@@ -486,11 +443,7 @@ export default function MultiChoice({
         if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       }
       ev.preventDefault();
-      try {
-        btn.click();
-      } catch (error) {
-        console.log(error, "Failed to trigger Next via Enter");
-      }
+      btn.click();
     };
 
     window.addEventListener("keydown", onKey);

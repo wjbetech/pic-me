@@ -66,7 +66,6 @@ function App() {
           <GameOptions
             onBack={() => setRoute("home")}
             onConfirm={(selected, settings) => {
-              console.log("GameOptions onConfirm called:", selected, settings);
               setMode(selected);
               if (settings) {
                 setGameSettings((prev) => ({
@@ -106,17 +105,6 @@ function App() {
             onHome={() => setRoute("home")}
           />
         )}
-
-        {route === "play" &&
-          (() => {
-            console.log(
-              "Play route - mode:",
-              mode,
-              "gameSettings:",
-              gameSettings,
-            );
-            return null;
-          })()}
 
         {route === "play" &&
           mode !== "multiple-choice" &&
