@@ -1,76 +1,44 @@
-## To-do List
+# PicMe — Active Work
 
-- [x] Restore `MultiChoice.tsx` and fix errors
-  - Restore the full implementation to `src/components/MultiChoice/MultiChoice.tsx` (replacing the temporary stub) and ensure imports/state hooks compile without errors. Verify `BackButton` usage remains intact.
+Concise actionable checklist. Architectural context, phase details, and acceptance criteria live in [`HANDOFF.md`](./HANDOFF.md) (§9 roadmap). Completed work is logged in [`MILESTONES.md`](./MILESTONES.md), not here.
 
-- [x] Sync local branches with remotes
-  - Fetch all remotes and fast-forward local branches where possible.
+Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 
-- [ ] Implement homepage collage (deferred)
-  - Create a responsive image collage on the main page using remote thumbnails or a hosted image service. Deferred until core gameplay features are prioritized.
+## Phase 0 — Stabilize & truth-up
 
-- [x] Implement Open Answer game mode
-  - Add the Open Answer mode: present a random animal, accept typed input, validate answers ignoring case/punctuation, do not show letter placeholders or hints, handle scoring and rounds, and persist progress.
+- [ ] (P0) Prune obsolete branches locally + on origin: `backup-before-mass-reset/*`, `backup-before-rollback-*` (all merged into master)
+- [ ] (P0) Create `src/game-core/persistence.ts`: namespaced load/save/clear over sessionStorage, JSON encoding, 10-min TTL for progress namespaces, durable namespaces for settings/theme — with unit tests
+- [ ] (P0) Migrate all raw storage call-sites onto the persistence module (inventory: HANDOFF §3) — route/mode/progress session-scoped+TTL, settings/theme durable
+- [ ] (P0) Collapse `src/store/themeStore.js` + `themeStore.ts` into one TS module (the `.js` copy currently shadows the `.ts` at runtime)
+- [ ] (P0) Fix 3 lint errors: `GameMessages.tsx:74` (no-empty), `useLocalJSON.ts:8,17` (unused params)
+- [ ] (P0) Remove `DEBUG_SELECTION` flag and leftover debug logging (~45 console.* sites)
+- [ ] (P0) Delete dead files: `store/picMeStore.ts`, `context/ThemeContext.js`, `utils/letterBox.ts`
+- [ ] (P0) Seed `.github/workflows/ci.yml`: lint → tsc → `vitest run --passWithNoTests`
+- [ ] (P0) Manual QA matrix: refresh <10 min resumes each mode incl. Hangman; >10 min or tab close → Home; settings/theme survive restarts; mode-tab no longer resets after playing
 
-- [ ] Fix MultiChoice scrolling on new-load
-  - Investigate and resolve odd scrolling behavior in `MultiChoice` when loading a new animal (unexpected scroll jumps or focus issues). Add smooth scroll/placeholder sizing or cancel in-flight layout shifts.
+## Phase 1 — One game core
 
-### Existing homepage & theme TODOs (legacy items)
+- [ ] (P1) Build `src/game-core/`: injected RNG, rotation, rounds, scoring — zero React/bundler/storage imports
+- [ ] (P1) Migrate games smallest-first: OpenAnswer → MultiChoice → Hangman (preserve MultiChoice stale-request guard semantics)
+- [ ] (P1) Test suites: game-core units (injected RNG), mode-key contract regression, restore-flow per mode w/ mocked storage, App routing state machine incl. >10-min fallback
 
-1. Fix the home page to be more relevant to the actual app
-   - [x] Audit content to identify outdated copy and links
-   - [ ] Update hero section with concise app description and CTA
-     - [x] Small tweaks but unfinished
-   - [ ] Add a scrolling(?) animal collage SVG/PNG with object-cover and mix-blend-mode for visual depth.
-   - [ ] Add a hero gradient + stronger headline copy (implement)
-   - [ ] Add Framer Motion entry animation and card hover polish
-   - [ ] Add screenshots or animated GIFs of gameplay
-   - [ ] Ensure responsive layout and accessibility (aria labels)
-   - [ ] Run visual tests in both light and dark themes
+## Phase 2 — Real settings + finish Open Answer
 
-   Branch suggestion: `feat/homepage-update`
+- [ ] (P2) Make hints real: per-mode toggles rendering habitat/diet/description from the data schema
+- [ ] (P2) Open Answer: rounds + session-scoped persisted score; receive its settings from GameOptions
+- [ ] (P2) Unify lives default (5, clamp 5–15) across HangmanSettings/Hangman
+- [ ] (P2) Disable Hangman letter/Enter listeners while ConfirmBackModal is open
+- [ ] (P2) Port `OpenAnswer.css` off dead daisyUI v3/v4 vars (`--b3/--su/--er`) onto v5 tokens
+- [ ] (P2) Settings-wiring tests proving hint toggles affect rendered hints
 
-2. Fix styling errors between light and dark
-   - [ ] Create a theme checklist (colors, borders, shadows, contrast)
-     - [ ] Consider a /src/styles directory for handling app-wide styling
-       - [ ] --color-surface, --color-on-surface, --color-accent
-     - [ ] Update `tailwind.config.js` to reflect those changes
-   - [ ] Inspect components in both themes and list mismatches
-   - [ ] Update Tailwind/DaisyUI theme overrides as needed
-   - [ ] Add CSS variables for problematic tokens if required
-   - [ ] Verify contrast ratios and fix failing elements
-   - [ ] QA interactions and visual styling across themes
+## Phase 3 — Content curation + responsive/a11y
 
-   Branch suggestion: `fix/theme-styling`
+- [ ] (P3) Work through `src/data/appendix.md` image-quality list (links verified healthy; this is curation, not repair) — timeboxed
+- [ ] (P3) Responsive QA matrix: 360×800, 375×812, 412×915, 768×1024, 1366×768, 1920×1080 — incl. Hangman keyboard scaling and "all four MC options visible on mobile"
+- [ ] (P3) Investigate MultiChoice scroll-jump on new animal load (open question, not yet reproduced)
+- [ ] (P3) ConfirmBackModal: focus trap + focus return
+- [ ] (P3) Navbar: replace hardcoded `text-amber-500` with a theme token
 
-### Mobile responsiveness TODOs
+## Deferred (do not start without owner approval)
 
-- [x] Reduce mobile button sizes in Multiple Choice
-  - Adjust Next/Back button sizes, spacing, and layout in `src/components/MultiChoice/MultiChoice.tsx` for small screens. Reduce font-size and padding for mobile, stack buttons compactly, and scale down `Multiple Choice` title and `Score` text at small breakpoints.
-
-- [x] Auto-focus Open Answer input on load
-  - When `OpenAnswer` mounts, focus the input (use `useRef` + `autoFocus` fallback) so users can start typing immediately. Ensure this works across iOS and Android browsers.
-
-- [x] Ensure mobile keyboard doesn't impede UI in Open Answer
-  - When keyboard opens on mobile, ensure layout keeps the input visible: use viewport-safe-height container, avoid fixed-position elements overlapping input, and consider `scrollIntoView({behavior:'smooth'})` when input receives focus.
-
-- [x] Make mode picker horizontally scrollable
-  - Make the Pick-a-mode mini-menu horizontally scrollable on narrow screens (use `overflow-x-auto` with `-mx-4` paddings and `whitespace-nowrap` on the item container). Add touch-friendly `scroll-snap` optional enhancement.
-
-- [ ] Scale Hangman keyboard for small screens
-  - Reduce per-letter button size on small screens: update keyboard CSS (responsive `w-` classes and `btn-sm`) and ensure layout wraps without clipping when vertical space is limited. Test portrait mobile in common heights.
-
-- [ ] [Mobile] Hangman containment + padding
-  - Scale down Hangman UI slightly on small viewports, increase letter-button padding for fat-finger safety, ensure the Menu/Back button remains visible after the first animal loads, and reduce/eliminate vertical scroll on common phone sizes. Edit `src/components/Hangman/Hangman.tsx` responsive classes and keyDims calculation.
-
-- [ ] Add Try/Go button to Open Answer
-  - Add a visible `Try` (or `Go`) button adjacent to the Open Answer input in `src/components/OpenAnswer/OpenAnswer.tsx` so mobile users can submit answers without relying on the keyboard action key.
-
-- [ ] Scale down 'Pick a game mode!' title for mobile
-  - Reduce mode-picker title size and add bottom margin so the mode picker fits without vertical scrolling on phones. Update `src/components/Main/Main.tsx` styling to compact spacing and scale text on small breakpoints.
-
-- [ ] Show all four MultiChoice options on mobile
-  - Fix `src/components/MultiChoice/*` responsive CSS so all four answer options display on small screens. Reduce option font-size/padding, adjust grid/wrap behavior, and avoid clipping or overflow so users always see four choices.
-
-- [ ] Responsive QA & verification
-  - Run manual QA on common breakpoints (360x800, 375x812, 412x915, 768x1024, 1366x768, 1920x1080). Verify keyboard visibility, scrolling, and spacing; update styles as needed and commit fixes.
+See HANDOFF §11: monorepo split · highscores/API/auth · sounds feature · homepage redesign · framer-motion upgrade & PWA (Phase 4 gate only).
