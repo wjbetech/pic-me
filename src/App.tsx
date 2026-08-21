@@ -5,6 +5,7 @@ import GameOptions from "./components/GameOptions/GameOptions";
 import MultiChoice from "./components/MultiChoice/MultiChoice";
 import Hangman from "./components/Hangman/Hangman";
 import OpenAnswer from "./components/OpenAnswer/OpenAnswer";
+import { persistence } from "./game-core/persistence";
 
 type Route = "home" | "options" | "play";
 
@@ -17,51 +18,43 @@ interface GameSettings {
   lives?: number;
 }
 
-const STORAGE_KEYS = {
-  route: "pic-me:route",
-  mode: "pic-me:mode",
-  settings: "pic-me:settings",
-};
+interface NavigationState {
+  route: Route;
+  mode: string | null;
+}
+
+const DEFAULT_SETTINGS: GameSettings = { blur: 0, showDescription: false };
+const VALID_ROUTES: readonly Route[] = ["home", "options", "play"];
 
 function App() {
-  const [route, setRoute] = useState<Route>(() => {
-    const savedRoute = localStorage.getItem(STORAGE_KEYS.route);
-    return (savedRoute as Route) || "home";
-  });
-
-  const [mode, setMode] = useState<string | null>(() => {
-    return localStorage.getItem(STORAGE_KEYS.mode);
-  });
-
-  const [gameSettings, setGameSettings] = useState<GameSettings>(() => {
-    const saved = localStorage.getItem(STORAGE_KEYS.settings);
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return { blur: 0, showDescription: false };
-      }
+  // Session-scoped navigation: shares the progress TTL, so a stale route/mode
+  // falls back to Home exactly like expired game state (HANDOFF §3).
+  const [{ route, mode }, setNavigation] = useState<NavigationState>(() => {
+    const saved = persistence.progress.load<NavigationState>("navigation");
+    if (saved && VALID_ROUTES.includes(saved.route)) {
+      return { route: saved.route, mode: saved.mode ?? null };
     }
-    return { blur: 0, showDescription: false };
+    return { route: "home", mode: null };
   });
 
-  // Persist route to localStorage
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.route, route);
-  }, [route]);
+  const setRoute = (next: Route) =>
+    setNavigation((prev) => ({ ...prev, route: next }));
+  const setMode = (next: string | null) =>
+    setNavigation((prev) => ({ ...prev, mode: next }));
 
-  // Persist mode to localStorage
-  useEffect(() => {
-    if (mode) {
-      localStorage.setItem(STORAGE_KEYS.mode, mode);
-    } else {
-      localStorage.removeItem(STORAGE_KEYS.mode);
-    }
-  }, [mode]);
+  // Durable user preferences: never expires (HANDOFF §3).
+  const [gameSettings, setGameSettings] = useState<GameSettings>(
+    () => persistence.config.load<GameSettings>("settings") ?? DEFAULT_SETTINGS,
+  );
 
-  // Persist settings to localStorage
+  // Session-scoped navigation: expires with game progress after the TTL.
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(gameSettings));
+    persistence.progress.save("navigation", { route, mode });
+  }, [route, mode]);
+
+  // Durable user preferences.
+  useEffect(() => {
+    persistence.config.save("settings", gameSettings);
   }, [gameSettings]);
 
   return (

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Animal } from "../../types/Animal";
 import "./MultiChoice.css";
 import { createRotation } from "../../utils/rotation";
+import { persistence } from "../../game-core/persistence";
 import AnswerGrid from "./AnswerGrid/AnswerGrid";
 import DisplayCard from "./DisplayCard/DisplayCard";
 import BackButton from "../BackButton/BackButton";
@@ -198,14 +199,7 @@ export default function MultiChoice({
           setCurrentImage(imageUrl);
           setCorrectAnswer(randomAnimal.commonName);
           setIsImageLoading(false);
-          try {
-            sessionStorage.setItem("multiChoice.currentId", randomAnimal.id);
-          } catch (error) {
-            console.log(
-              error,
-              "Error setting sessionStorage for multiChoice.currentId",
-            );
-          }
+          persistence.progress.save("multichoice.current", randomAnimal.id);
           // Count this loaded round (for numeric rounds)
           setRoundsPlayed((p) => p + 1);
           if (DEBUG_SELECTION)
@@ -224,14 +218,7 @@ export default function MultiChoice({
           }
           console.warn("Failed to load image, picking another.", imageUrl);
           setIsImageLoading(false);
-          try {
-            sessionStorage.setItem("multiChoice.currentId", randomAnimal.id);
-          } catch (error) {
-            console.log(
-              error,
-              "Error setting sessionStorage for multiChoice.currentId",
-            );
-          }
+          persistence.progress.save("multichoice.current", randomAnimal.id);
           // If image fails, try next in queue (if any)
           // remove the failing animal from queue to avoid infinite loop
           if (animalQueue && animalQueue.length > 0) {
@@ -318,14 +305,7 @@ export default function MultiChoice({
 
   // Reset the MultiChoice game state (used when leaving the game)
   const resetMultiChoice = () => {
-    try {
-      sessionStorage.removeItem("multiChoice.currentId");
-    } catch (error) {
-      console.log(
-        error,
-        "Error removing sessionStorage for multiChoice.currentId",
-      );
-    }
+    persistence.progress.clear("multichoice.current");
     // Reset visible state
     setCurrentAnimal(null);
     setCurrentImage("");
@@ -383,7 +363,8 @@ export default function MultiChoice({
         buildQueue(shuffledCombined, roundsSetting);
         // Try to restore a persisted current animal so refresh/HMR don't load a new one
         try {
-          const savedId = sessionStorage.getItem("multiChoice.currentId");
+          const savedId =
+            persistence.progress.load<string>("multichoice.current");
           if (savedId) {
             const foundIndex = shuffledCombined.findIndex(
               (a) => a.id === savedId,
