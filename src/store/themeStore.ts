@@ -1,17 +1,21 @@
 import { create } from "zustand";
+import { persistence } from "../game-core/persistence";
 
 type ThemeSchemes = "light" | "dark";
 type ThemeToken = "cmyk" | "dracula";
 
 interface ThemeState {
-  theme: ThemeToken; // <- fixed: store holds daisyUI token values
+  theme: ThemeToken;
   setTheme: (theme: ThemeSchemes | ThemeToken) => void;
   toggle: () => void;
 }
 
+// Legacy key/format contract: index.html's anti-FOUC script reads this exact
+// key (bare token string) from localStorage before React mounts. The module's
+// raw methods preserve those exact bytes. Do not change one without the other.
 const THEME_STORAGE_KEY = "picme.theme";
 
-const toToken = (v?: ThemeSchemes | ThemeToken | null): ThemeToken => {
+const toToken = (v?: string | null): ThemeToken => {
   if (!v) return "cmyk";
   if (v === "light" || v === "cmyk") return "cmyk";
   if (v === "dark" || v === "dracula") return "dracula";
@@ -21,7 +25,7 @@ const toToken = (v?: ThemeSchemes | ThemeToken | null): ThemeToken => {
 const applyTheme = (token: ThemeToken) => {
   try {
     // Map stored token (palette) to the daisyUI theme name used in CSS
-    const themeName = token === "dracula" ? "dark" : "light";
+    const themeName: ThemeSchemes = token === "dracula" ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", themeName);
     // Keep Tailwind's `dark` class in sync for any `dark:` styles
     if (themeName === "dark") {
@@ -35,47 +39,37 @@ const applyTheme = (token: ThemeToken) => {
 };
 
 export const useUIStore = create<ThemeState>((set) => {
-  // determine initial token
-  let initial: ThemeToken = "cmyk";
-  try {
-    const stored =
-      typeof window !== "undefined"
-        ? localStorage.getItem(THEME_STORAGE_KEY)
-        : null;
-    if (stored) {
-      initial = toToken(stored as ThemeToken | ThemeSchemes);
-    } else if (
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      initial = "dracula";
+  let initial: ThemeToken = toToken(persistence.config.loadRaw(THEME_STORAGE_KEY));
+  if (!persistence.config.loadRaw(THEME_STORAGE_KEY)) {
+    try {
+      if (
+        typeof window !== "undefined" &&
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        initial = "dracula";
+      }
+    } catch {
+      /* matchMedia unavailable */
     }
-    applyTheme(initial);
-  } catch {
-    initial = "cmyk";
   }
+  applyTheme(initial);
+
+  const persist = (token: ThemeToken) =>
+    persistence.config.saveRaw(THEME_STORAGE_KEY, token);
 
   return {
     theme: initial,
     setTheme: (t) => {
       const token = toToken(t);
-      try {
-        localStorage.setItem(THEME_STORAGE_KEY, token);
-      } catch {
-        console.log("failed to persist theme");
-      }
+      persist(token);
       applyTheme(token);
       set({ theme: token });
     },
     toggle: () => {
       set((state) => {
         const next: ThemeToken = state.theme === "cmyk" ? "dracula" : "cmyk";
-        try {
-          localStorage.setItem(THEME_STORAGE_KEY, next);
-        } catch {
-          console.log("failed to persist theme");
-        }
+        persist(next);
         applyTheme(next);
         return { theme: next };
       });
