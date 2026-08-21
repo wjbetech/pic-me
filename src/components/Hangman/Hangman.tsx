@@ -73,7 +73,6 @@ export default function Hangman({
 
         // Shuffle the animals
         const shuffled = combined.sort(() => Math.random() - 0.5);
-        console.log(`Loaded ${shuffled.length} animals for Hangman`);
 
         // Attempt to restore saved state so reloads preserve progress
         let didRestore = false;
@@ -110,8 +109,6 @@ export default function Hangman({
             // Prefer restoring the full saved animal object if present
             const savedAnimal = parsed.currentAnimal as Animal | undefined;
             if (savedAnimal) {
-              console.log("Restoring saved animal:", savedAnimal.commonName);
-
               // Ensure the saved animal exists in the shuffled list; if not, put it at the front.
               let foundIndex = shuffled.findIndex(
                 (a) => a.commonName === savedAnimal.commonName,
@@ -119,9 +116,6 @@ export default function Hangman({
               if (foundIndex < 0) {
                 shuffled.unshift(savedAnimal);
                 foundIndex = 0;
-                console.log(
-                  "Saved animal not in shuffled list, added at front",
-                );
               }
 
               // Update refs and state with modified shuffled array
@@ -149,7 +143,6 @@ export default function Hangman({
               queueIndexRef.current = (foundIndex + 1) % shuffled.length;
 
               didRestore = true;
-              console.log("Successfully restored game state:", savedGameState);
             }
           }
         } catch (err) {
@@ -171,7 +164,6 @@ export default function Hangman({
             setRoundsPlayed(1);
             const roundsSetting = settings.rounds ?? "all";
             setRoundsTotal(roundsSetting);
-            console.log("Started new game with:", first.commonName);
           }
         }
       } catch (err) {
@@ -181,14 +173,6 @@ export default function Hangman({
 
     loadAllData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Read any persisted Hangman data (debug visibility only)
-  useEffect(() => {
-    const saved = persistence.progress.load<Record<string, unknown>>("hangman");
-    if (saved) {
-      console.debug("Loaded persisted Hangman data:", saved);
-    }
   }, []);
 
   const loadNewAnimal = useCallback(
@@ -364,14 +348,6 @@ export default function Hangman({
         gameState,
       } as const;
       persistence.progress.save("hangman", toSave);
-      console.log(
-        "Persisted game state:",
-        currentAnimal.commonName,
-        "guessed:",
-        guessedLetters.size,
-        "wrong:",
-        wrongLetters.size,
-      );
     } catch (err) {
       console.error("Failed to persist state:", err);
     }

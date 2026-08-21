@@ -106,11 +106,8 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
               return;
             }
           }
-        } catch (error) {
-          console.log(
-            error,
-            "Failed to restore current animal from sessionStorage",
-          );
+        } catch {
+          // restore is best-effort; fall through to a fresh load
         }
 
         loadNewAnimal(combined);
@@ -125,11 +122,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
 
   useEffect(() => {
     if (isCorrect && nextButtonRef.current) {
-      try {
-        nextButtonRef.current.focus();
-      } catch (error) {
-        console.log(error, "Failed to focus Next button");
-      }
+      nextButtonRef.current.focus();
     }
   }, [isCorrect]);
 
@@ -140,22 +133,17 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     if (isCorrect) return; // don't focus when answer is locked
 
     try {
-      try {
-        el.focus({ preventScroll: true });
-      } catch (error) {
-        console.log(error, "Failed to focus input with preventScroll");
-        el.focus();
-      }
-    } catch (error) {
-      console.log(error, "Failed to focus input");
+      el.focus({ preventScroll: true });
+    } catch {
+      el.focus();
     }
 
     const t = window.setTimeout(() => {
       try {
         el.focus();
         el.scrollIntoView({ behavior: "smooth", block: "center" });
-      } catch (error) {
-        console.log(error, "Failed to scroll input into view");
+      } catch {
+        // focus/scroll are best-effort enhancements
       }
     }, 100);
 
