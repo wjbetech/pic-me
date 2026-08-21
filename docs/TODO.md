@@ -6,15 +6,15 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 
 ## Phase 0 — Stabilize & truth-up
 
-- [ ] (P0) Prune obsolete branches locally + on origin: `backup-before-mass-reset/*`, `backup-before-rollback-*` (all merged into master)
-- [ ] (P0) Create `src/game-core/persistence.ts`: namespaced load/save/clear over sessionStorage, JSON encoding, 10-min TTL for progress namespaces, durable namespaces for settings/theme — with unit tests
-- [ ] (P0) Migrate all raw storage call-sites onto the persistence module (inventory: HANDOFF §3) — route/mode/progress session-scoped+TTL, settings/theme durable
-- [ ] (P0) Collapse `src/store/themeStore.js` + `themeStore.ts` into one TS module (the `.js` copy currently shadows the `.ts` at runtime)
-- [ ] (P0) Fix 3 lint errors: `GameMessages.tsx:74` (no-empty), `useLocalJSON.ts:8,17` (unused params)
-- [ ] (P0) Remove `DEBUG_SELECTION` flag and leftover debug logging (~45 console.* sites)
-- [ ] (P0) Delete dead files: `store/picMeStore.ts`, `context/ThemeContext.js`, `utils/letterBox.ts`
-- [ ] (P0) Seed `.github/workflows/ci.yml`: lint → tsc → `vitest run --passWithNoTests`
-- [ ] (P0) Manual QA matrix: refresh <10 min resumes each mode incl. Hangman; >10 min or tab close → Home; settings/theme survive restarts; mode-tab no longer resets after playing
+- [x] (P0) Prune obsolete branches locally + on origin: `backup-before-mass-reset/*`, `backup-before-rollback-*` (all merged into master) — 33 local refs deleted; origin had none
+- [x] (P0) Create `src/game-core/persistence.ts`: namespaced load/save/clear over sessionStorage, JSON encoding, 10-min TTL for progress namespaces, durable namespaces for settings/theme — with unit tests (12 tests, PR #1)
+- [x] (P0) Migrate all raw storage call-sites onto the persistence module — route/mode/progress session-scoped+TTL, settings/theme durable (PR #2; also resolved all 3 lint errors as a side effect)
+- [x] (P0) Collapse `src/store/themeStore.js` + `themeStore.ts` into one TS module routed through persistence (PR #3)
+- [x] (P0) Fix 3 lint errors — resolved via PR #2 (`useLocalJSON` deleted, `GameMessages` empty catch replaced); lint now exits 0
+- [x] (P0) Remove `DEBUG_SELECTION` flag and leftover debug logging (~45 console.* sites); error-path warns kept (PR #4)
+- [x] (P0) Delete dead files: `store/picMeStore.ts`, `context/ThemeContext.js`, `utils/letterBox.ts` (PR #5)
+- [x] (P0) Seed `.github/workflows/ci.yml`: lint → tsc → vitest — green on first run (PR #6)
+- [ ] (P0) Manual QA matrix: refresh <10 min resumes each mode incl. Hangman; >10 min or tab close → Home; settings/theme survive restarts; mode-tab no longer resets after playing — **needs a browser pass (Vercel preview deploys on every PR make this easy)**
 
 ## Phase 1 — One game core
 

@@ -71,28 +71,21 @@ Theming model: exactly two themes exist in emitted CSS — `[data-theme=light]` 
 
 ## 3. Current state-management & persistence architecture
 
-### Where state lives today [CURRENT]
+### Where state lives today [CURRENT — since Phase 0]
 
-Component-local `useState` everywhere; zustand only for theme; browser storage as the persistence layer. Raw storage calls are scattered across **8 files** (~30 call-sites; 39 grep matches incl. comments):
+One owner: `src/game-core/persistence.ts` (PR #1/#2). Two groups: **`progress`** = sessionStorage, JSON envelope with `savedAt`, 10-minute TTL refreshed on every save; expired/corrupt entries self-heal. **`config`** = durable localStorage.
 
-| File | Storage | Keys written/read | Encoding |
-|---|---|---|---|
-| `src/App.tsx` | localStorage | `pic-me:route`, `pic-me:mode`, `pic-me:settings` | raw string / raw string / JSON |
-| `src/utils/useLocalJSON.ts` | localStorage | generic (used by GameOptions for `pic-me:mode`, `pic-me:settings`) | JSON |
-| `src/store/themeStore.js` (+ inert `.ts` twin) | localStorage | `picme.theme` | token string `'cmyk'\|'dracula'` |
-| `src/components/Hangman/Hangman.tsx` | localStorage | `picme-hangman-state-v1` | full state JSON blob |
-| `src/components/Hangman/GameMessages.tsx` | localStorage | removes `picme-hangman-state-v1` | — |
-| `src/components/MultiChoice/MultiChoice.tsx` | sessionStorage | `multiChoice.currentId` | raw id |
-| `src/components/OpenAnswer/OpenAnswer.tsx` | sessionStorage | `openAnswer.currentId` | raw id |
+| Namespace | Group | Contents |
+|---|---|---|
+| `navigation` | progress | `{route, mode}` — validated on load; stale → Home |
+| `hangman` | progress | full round state blob |
+| `multichoice.current`, `openanswer.current` | progress | current animal id |
+| `settings` | config | game settings (durable) |
+| `picme.theme` (raw byte-exact legacy key) | config | theme token; read by index.html FOUC script |
 
-### What is wrong with it [CURRENT]
+Legacy `pic-me:*` keys and `picme-hangman-state-v1` are swept/ignored on load. The former mode-key raw-vs-JSON bug is structurally impossible now (single encoding). Theme store (`src/store/themeStore.ts`) routes through the module's raw methods; no other file touches storage directly.
 
-1. **Mode-key format bug:** `App.tsx` writes `pic-me:mode` as a raw string (`hangman`); `GameOptions` reads the same key through `useLocalJSON`, which `JSON.parse`s. Parsing a raw string throws → silent catch → selection falls back to Multiple Choice. Net effect: after playing Hangman/Open Answer once and returning to Options, the highlighted tab resets. Traced through both code paths; not yet reproduced live in a browser.
-2. **Inconsistent lifetimes:** Hangman progress survives for weeks (localStorage); MC/OA resume only within a tab session; route/mode/settings survive forever.
-3. **Three encodings, three key prefixes, two storage backends** — every new feature must re-decide these.
-4. No expiry concept at all.
-
-### Intended persistence model [PLANNED — Phase 0/1] [DECIDED]
+### Intended persistence model [CURRENT — implemented in Phase 0; manual QA matrix pending] [DECIDED]
 
 One module owns all app persistence. Semantics:
 
@@ -102,7 +95,7 @@ One module owns all app persistence. Semantics:
 - The mode-key bug disappears structurally: one writer, one encoding, one namespace scheme.
 - Interface shape: small `load/save/clear` per namespace so a future API-backed adapter can replace the implementation without touching callers.
 
-Placement note: Phase 0 seeds this as `src/game-core/persistence.ts` — the first inhabitant of game-core (it must be dependency-free anyway). Phase 1 grows the rest of game-core around it.
+Placement note: seeded as `src/game-core/persistence.ts` in Phase 0 — the first inhabitant of game-core. Phase 1 grows the rest of the core around it.
 
 ## 4. Current game architecture
 
@@ -121,11 +114,11 @@ Migration order: smallest-first — OpenAnswer → MultiChoice → Hangman. Port
 
 ## 5. Current testing state
 
-**No tests exist. No test runner is installed.** [CURRENT]
+**Vitest is installed; 12 unit tests exist** for the persistence module (`src/game-core/persistence.test.ts`: TTL round-trip/expiry/refresh, corrupt-envelope self-heal, custom ttl, key isolation, config durability, raw-key byte preservation). [CURRENT]
 
-Toolchain baseline at HEAD: `npm.cmd run build` (= `tsc -b && vite build`) passes under full strict TS; `npm.cmd run lint` fails with exactly 3 pre-existing errors — `GameMessages.tsx:74` (no-empty), `useLocalJSON.ts:8` and `:17` (unused catch params). [CURRENT, verified 2026-08-21]
+Toolchain baseline since Phase 0: `npm.cmd run build` (= `tsc -b && vite build`) passes strict · `npm.cmd run lint` exits **0** (all 3 pre-existing errors resolved in PR #2) · `npm.cmd test` 12/12 green. [CURRENT, verified 2026-08-21]
 
-Intended strategy [PLANNED] [DECIDED]: **Vitest + Testing Library**, targeted high-value suites rather than exhaustive coverage:
+Suites still to come [PLANNED — Phases 1–2] [DECIDED]:
 
 - **(a)** game-core unit tests with injected RNG — rotation, rounds, scoring, TTL expiry
 - **(b)** regression test locking the mode/route persistence contract (so the format-bug class cannot return)
@@ -133,30 +126,35 @@ Intended strategy [PLANNED] [DECIDED]: **Vitest + Testing Library**, targeted hi
 - **(d)** App routing state machine incl. stale-route (>10 min) fallback to Home
 - **(e)** after Phase 2: settings-wiring tests proving hint toggles actually affect rendered hints
 
-Phase 0 ships suite (a) limited to the new persistence module; Phases 1–2 add the rest.
+Phase 0 delivered its slice of suite (a) — the persistence module tests (PR #1); Phases 1–2 add the rest.
 
 ## 6. Current CI/deployment state
 
-**No CI exists** (no `.github/` directory). No test config of any kind. Deployment is **Vercel, zero-config** (no `vercel.json` in repo; framework auto-detected). Owner position: Vercel is sufficient "for now or forever" — no migration planned. [CURRENT] + [DECIDED]
+**CI exists since Phase 0** (PR #6): `.github/workflows/ci.yml` runs on pushes to `development`/`master` and PRs into `development` — npm ci → lint → `tsc -b` → vitest. Green on its first run. [CURRENT]
 
-Intended [PLANNED — Phase 0]: minimal GitHub Actions workflow running lint → TypeScript check → tests on push/PR. Until Phase 1 adds real suites, the test step must be green with zero tests (e.g., `vitest run --passWithNoTests`). Do not describe CI as existing until the workflow file lands.
+Deployment is **Vercel** with per-PR preview deployments wired up; production deploys from `master`. Owner position: Vercel is sufficient "for now or forever" — no migration planned. [CURRENT] + [DECIDED]
 
-## 7. Known bugs & technical debt (all [CURRENT], verified)
+## 7. Known bugs & technical debt
 
-1. **Store shadow landmine:** `src/store/themeStore.js` (contains `// @ts-nocheck`) shadows `themeStore.ts` — proven by bundle forensics (a log string unique to the `.ts` file is absent from `dist/assets/index-*.js`). Editing the `.ts` file silently does nothing at runtime. Collapse to one TS module.
-2. **Mode-key format conflict:** see §3. Eliminated structurally by the Phase 0 persistence module; locked by a Phase 1 regression test.
-3. **Lint fails (3 errors):** listed in §5. Fix in Phase 0.
-4. **Dead daisyUI-v3/v4 CSS:** `src/components/OpenAnswer/OpenAnswer.css` keyframes use `hsl(var(--b3))`, `--su`, `--er` — none are defined in daisyUI 5 output (verified: zero definitions in built CSS). Correct/wrong flash animations are visually inert. Port to v5 tokens (`--color-base-300`, `--color-success`, `--color-error`).
+Resolved in Phase 0 (kept for history):
+
+1. ~~**Store shadow landmine**~~ [RESOLVED — PR #3]: `themeStore.js` shadowed `themeStore.ts`; collapsed into one typed module.
+2. ~~**Mode-key format conflict**~~ [RESOLVED structurally — PR #2]: single encoding via the persistence module; live browser confirmation pending in the Phase 0 QA matrix.
+3. ~~**Lint fails (3 errors)**~~ [RESOLVED — PR #2 side effect]: lint exits 0.
+10. ~~**Debug residue**~~ [RESOLVED — PR #4]: `DEBUG_SELECTION` and ~45 debug sites removed; failure-path warns kept.
+11. ~~**Dead files**~~ [RESOLVED — PR #5]: `picMeStore.ts`, `ThemeContext.js`, `letterBox.ts` deleted.
+
+Still open:
+
+4. **Dead daisyUI-v3/v4 CSS:** `src/components/OpenAnswer/OpenAnswer.css` keyframes use `hsl(var(--b3))`, `--su`, `--er` — none are defined in daisyUI 5 output (verified: zero definitions in built CSS). Correct/wrong flash animations are visually inert. Port to v5 tokens (`--color-base-300`, `--color-success`, `--color-error`). (Phase 2)
 5. **Inert/junk styling config:** root `tailwind.config.js` never loaded; `src/index.css` line `themes: light --cymk, dark --dracula;` contains ignored flags and a misspelled comment ("cymk"). Emitted themes are literally light/dark only.
 6. **Hints are theater:** `hintsEnabled`/`hintType` (habitat/diet/description options in `MultipleChoiceSettings.tsx`) persist and flow to `App.tsx` but no game consumes them; MultiChoice and Hangman render the habitat hint unconditionally. [DECIDED] hints stay per-mode toggles inside pre-game settings; they must actually work (Phase 2).
-7. **Open Answer gaps:** receives no settings object at all (`GameOptions.handleConfirm` else-branch passes none); score is memory-only; no round limit; TODO history overstated this mode as done-with-persistence.
-8. **Lives default mismatch:** `HangmanSettings.tsx` clamps 5–15 default 5; `Hangman.tsx` falls back to `settings.lives ?? 6`.
-9. **Keyboard leaks through modal:** Hangman's window-level letter-guess listener stays active while ConfirmBackModal is open (gameState still `"playing"`); typing behind the modal guesses letters. Same class of issue for Enter-to-advance when won.
-10. **Debug residue:** `DEBUG_SELECTION = true` (`MultiChoice.tsx:12`); ~45 console.* sites across App/Hangman/MultiChoice/OpenAnswer; render-path debug IIFE in `App.tsx`.
-11. **Dead files:** `store/picMeStore.ts`, `context/ThemeContext.js`, `utils/letterBox.ts`, plus shadowed `store/themeStore.ts`. Zero importers each (grep-verified).
-12. **Deprecation warnings:** `import.meta.glob(..., { as: "json" })` ×3 components → migrate to `{ query: '?json', import: 'default' }`.
+7. **Open Answer gaps:** receives no settings object at all (`GameOptions.handleConfirm` else-branch passes none); score is memory-only; no round limit. (Phase 2)
+8. **Lives default mismatch:** `HangmanSettings.tsx` clamps 5–15 default 5; `Hangman.tsx` falls back to `settings.lives ?? 6`. (Phase 2)
+9. **Keyboard leaks through modal:** Hangman's window-level letter-guess listener stays active while ConfirmBackModal is open (gameState still `"playing"`); typing behind the modal guesses letters. Same class of issue for Enter-to-advance when won. (Phase 2)
+12. **Deprecation warnings:** `import.meta.glob(..., { as: "json" })` ×3 components → migrate to `{ query: '?json', import: 'default' }`. (Phase 1, alongside game-core loader extraction)
 13. **Dependency pin oddity:** framer-motion ^10 predates React 19 peer support; installs only because `.npmrc` sets `legacy-peer-deps=true`. Upgrade deliberately (Phase 4 gate), not casually.
-14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); hardcoded `text-amber-500` in Navbar amid otherwise semantic-token styling; daisyUI sits in devDependencies despite being runtime-critical.
+14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); hardcoded `text-amber-500` in Navbar amid otherwise semantic-token styling; daisyUI sits in devDependencies despite being runtime-critical. (Phase 3 sweep)
 
 Security baseline [CURRENT]: grep-verified **no** `dangerouslySetInnerHTML`, `innerHTML`, `eval`, `new Function`, or `document.write` anywhere in `src/`; no auth; no user input stored or reflected into HTML contexts. Dependency freshness and optional CSP headers via Vercel remain future considerations — this is not a security-heavy application; keep it that way.
 
@@ -177,7 +175,7 @@ Conventions for every phase below: **Objective / Current-state problem / Intende
 
 ---
 
-### Phase 0 — Stabilize & truth-up
+### Phase 0 — Stabilize & truth-up  [DONE — PRs #1–#6; manual QA matrix still pending owner browser pass]
 
 - **Objective:** trustworthy baseline; centralized persistence seam lands; docs and git are true.
 - **Current-state problem:** §7 items 1, 2, 3, 11 partially; scattered storage (§3); no CI; misleading README; 51 local branches cluttered with merged `backup-before-mass-reset/*` and `backup-before-rollback-*` refs.
