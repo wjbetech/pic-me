@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
+import { persistence } from "../../game-core/persistence";
 import type { Animal } from "../../types/Animal";
 import type { HangmanSettings, GameState } from "../../types/Hangman";
 import LetterBoxes from "./LetterBoxes";
@@ -9,8 +10,9 @@ import Header from "./Header";
 import GameMessages from "./GameMessages";
 import AnimalImage from "./AnimalImage";
 
-// local storage key for Hangman progress/settings (versioned)
-const STORAGE_KEY = "picme-hangman-state-v1";
+// Hangman progress now lives in the session persistence module (TTL'd, key: "hangman").
+// LEGACY_STORAGE_KEY is the pre-module localStorage blob, swept once on load below.
+const LEGACY_STORAGE_KEY = "picme-hangman-state-v1";
 
 export default function Hangman({
   onBack,
@@ -48,6 +50,15 @@ export default function Hangman({
       const modules = import.meta.glob("../../data/*.json", { as: "json" });
       const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
       try {
+        // One-time cleanup of the legacy (pre-persistence-module) localStorage blob.
+        try {
+          if (window.localStorage.getItem(LEGACY_STORAGE_KEY) !== null) {
+            window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+          }
+        } catch (error) {
+          console.debug("Skipped legacy Hangman storage cleanup:", error);
+        }
+
         const results = await Promise.all(loaders.map((fn) => fn()));
         const combined: Animal[] = results.flatMap((r) => {
           if (Array.isArray(r)) return r as Animal[];
@@ -67,9 +78,9 @@ export default function Hangman({
         // Attempt to restore saved state so reloads preserve progress
         let didRestore = false;
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (raw) {
-            const parsed = JSON.parse(raw) as Record<string, unknown>;
+          const parsed =
+            persistence.progress.load<Record<string, unknown>>("hangman");
+          if (parsed) {
             const savedGuessed = Array.isArray(parsed.guessed)
               ? (parsed.guessed as string[])
               : [];
@@ -172,16 +183,11 @@ export default function Hangman({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Read any persisted Hangman data (keeps STORAGE_KEY referenced so TS doesn't warn)
+  // Read any persisted Hangman data (debug visibility only)
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        // For now, just log persisted data; future work can restore state from this.
-        console.debug("Loaded persisted Hangman data:", saved);
-      }
-    } catch (error) {
-      console.debug("Failed to read persisted Hangman data:", error);
+    const saved = persistence.progress.load<Record<string, unknown>>("hangman");
+    if (saved) {
+      console.debug("Loaded persisted Hangman data:", saved);
     }
   }, []);
 
@@ -357,7 +363,7 @@ export default function Hangman({
         allRoundsCompleted,
         gameState,
       } as const;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+      persistence.progress.save("hangman", toSave);
       console.log(
         "Persisted game state:",
         currentAnimal.commonName,
@@ -438,20 +444,12 @@ export default function Hangman({
                 isOpen={showBackModal}
                 onClose={() => setShowBackModal(false)}
                 onHome={() => {
-                  try {
-                    localStorage.removeItem(STORAGE_KEY);
-                  } catch (error) {
-                    console.debug("Failed to clear Hangman storage:", error);
-                  }
+                  persistence.progress.clear("hangman");
                   if (onHome) onHome();
                   else if (onBack) onBack();
                 }}
                 onSettings={() => {
-                  try {
-                    localStorage.removeItem(STORAGE_KEY);
-                  } catch (error) {
-                    console.debug("Failed to clear Hangman storage:", error);
-                  }
+                  persistence.progress.clear("hangman");
                   if (onBack) onBack();
                 }}
                 title="Leave this game?"

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import ModeTabs from "./ModeTabs";
 import OptionHeader from "./OptionHeader";
@@ -5,28 +6,37 @@ import MultipleChoiceSettings from "./MultipleChoiceSettings";
 import HangmanSettings from "./HangmanSettings";
 import OpenAnswerSettings from "./OpenAnswerSettings";
 import ActionRow from "./ActionRow";
-import useLocalJSON from "../../utils/useLocalJSON";
 import MotionDiv from "../common/MotionDiv";
 import OPTIONS from "../../constants/gameModes";
 import type { GameOptionsProps, Settings } from "../../types/GameOptions";
+import { persistence } from "../../game-core/persistence";
+
+const DEFAULT_SETTINGS: Settings = {
+  blur: 0,
+  showDescription: false,
+  hintsEnabled: false,
+  hintType: "habitat",
+  rounds: 10,
+  lives: 5,
+};
 
 export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
-  const STORAGE_MODE = "pic-me:mode";
-  const STORAGE_SETTINGS = "pic-me:settings";
-
-  const [selected, setSelected] = useLocalJSON<string>(
-    STORAGE_MODE,
-    OPTIONS[0].id,
+  // Same 'mode' progress key App reads — one encoding everywhere (mode-key bug fixed).
+  const [selected, setSelected] = useState<string>(
+    () => persistence.progress.load<string>("mode") ?? OPTIONS[0].id,
   );
 
-  const [settings, setSettings] = useLocalJSON<Settings>(STORAGE_SETTINGS, {
-    blur: 0,
-    showDescription: false,
-    hintsEnabled: false,
-    hintType: "habitat",
-    rounds: 10,
-    lives: 5,
-  });
+  const [settings, setSettings] = useState<Settings>(
+    () => persistence.config.load<Settings>("settings") ?? DEFAULT_SETTINGS,
+  );
+
+  useEffect(() => {
+    persistence.progress.save("mode", selected);
+  }, [selected]);
+
+  useEffect(() => {
+    persistence.config.save("settings", settings);
+  }, [settings]);
 
   const handleConfirm = () => {
     if (selected === "multiple-choice") {

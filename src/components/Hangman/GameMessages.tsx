@@ -1,4 +1,5 @@
 import BackButton from "../BackButton/BackButton";
+import { persistence } from "../../game-core/persistence";
 import type { Animal } from "../../types/Animal";
 import type { GameState } from "../../types/Hangman";
 import type { MutableRefObject } from "react";
@@ -69,9 +70,7 @@ export default function GameMessages({
             <BackButton
               label="Back to Menu"
               onBack={() => {
-                try {
-                  localStorage.removeItem("picme-hangman-state-v1");
-                } catch {}
+                persistence.progress.clear("hangman");
                 if (onBack) onBack();
               }}
             />

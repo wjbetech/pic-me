@@ -5,6 +5,7 @@ import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import "./OpenAnswer.css";
 import normalizeAnswer from "../../utils/normalizeAnswer";
 import { pickRandomAnimal, preloadImage } from "../../utils/openAnswer";
+import { persistence } from "../../game-core/persistence";
 import useFlash from "../../hooks/useFlash";
 import OpenAnswerForm from "./OpenAnswerForm";
 
@@ -55,11 +56,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
       setIsImageLoading(false);
     }
 
-    try {
-      sessionStorage.setItem("openAnswer.currentId", next.id);
-    } catch (error) {
-      console.log(error, "Failed to save current animal ID to sessionStorage");
-    }
+    persistence.progress.save("openanswer.current", next.id);
   }, []);
 
   useEffect(() => {
@@ -83,7 +80,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
 
         // restore persisted current animal if present
         try {
-          const savedId = sessionStorage.getItem("openAnswer.currentId");
+          const savedId = persistence.progress.load<string>("openanswer.current");
           if (savedId) {
             const found = combined.find((a) => a.id === savedId);
             if (found) {
@@ -193,14 +190,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   };
 
   const handleBack = () => {
-    try {
-      sessionStorage.removeItem("openAnswer.currentId");
-    } catch (error) {
-      console.log(
-        error,
-        "Failed to remove current animal ID from sessionStorage",
-      );
-    }
+    persistence.progress.clear("openanswer.current");
     setScore(0);
     setCurrentAnimal(null);
     setCurrentImage("");
@@ -259,14 +249,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             isOpen={showBackModal}
             onClose={() => setShowBackModal(false)}
             onHome={() => {
-              try {
-                sessionStorage.removeItem("openAnswer.currentId");
-              } catch (error) {
-                console.log(
-                  error,
-                  "Failed to remove current animal ID from sessionStorage",
-                );
-              }
+              persistence.progress.clear("openanswer.current");
               setShowBackModal(false);
               if (onHome) onHome();
               else onBack?.();
