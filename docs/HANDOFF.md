@@ -123,7 +123,7 @@ Migration order: smallest-first — OpenAnswer → MultiChoice → Hangman. Port
 
 Infra: Vitest 4 + @testing-library/react/jest-dom; default env is node, component suites opt into jsdom via per-file docblock; `FakeImage` stub keeps image-dependent restore paths deterministic.
 
-Toolchain baseline since Phase 0: `npm.cmd run build` (= `tsc -b && vite build`) passes strict · `npm.cmd run lint` exits **0** · `npm.cmd test` green. [CURRENT]
+Toolchain baseline: `pnpm run build` (= `tsc -b && vite build`) passes strict · `pnpm run lint` exits **0** · `pnpm test` green (61 tests). [CURRENT]
 
 - **(a)** game-core unit tests with injected RNG — rotation, rounds, scoring, TTL expiry
 - **(b)** regression test locking the mode/route persistence contract (so the format-bug class cannot return)
@@ -135,9 +135,11 @@ Phase 1 delivered the remainder of (a) plus all of (b), (c), (d) — see the sui
 
 ## 6. Current CI/deployment state
 
-**CI exists since Phase 0** (PR #6): `.github/workflows/ci.yml` runs on pushes to `development`/`master` and PRs into `development` — npm ci → lint → `tsc -b` → vitest. Green on its first run. [CURRENT]
+**CI exists since Phase 0, pnpm-based since the tooling decision (2026-08-22)**: `.github/workflows/ci.yml` runs on pushes to `development`/`master` and PRs into `development` — `pnpm install --frozen-lockfile` → lint → `tsc -b` → vitest. The pnpm version is pinned via the `packageManager` field in package.json; caching flows through setup-node's `cache: pnpm`. [CURRENT]
 
 Deployment is **Vercel** with per-PR preview deployments wired up; production deploys from `master`. Owner position: Vercel is sufficient "for now or forever" — no migration planned. [CURRENT] + [DECIDED]
+
+**Package manager [DECIDED 2026-08-22]: pnpm is canonical.** `pnpm-lock.yaml` + `pnpm-workspace.yaml` are committed; `package-lock.json` and `.npmrc` were deleted (PR #30 removed the legacy-peer-deps crutch, PR #32 made the switch). Do not introduce npm/yarn lockfiles or raw `npm install` workflows — they clobber the pnpm store layout and break local dev (this exact collision broke `pnpm run dev` once already).
 
 ## 7. Known bugs & technical debt
 
@@ -266,7 +268,9 @@ None blocking Phase 0. Two recorded judgment calls an owner may revisit:
 
 ## Agent quickstart notes
 
-- Shell on this machine: plain `npm` is blocked by PowerShell execution policy — use `npm.cmd`. Chain with `;` / `if ($?) { }`, not `&&`.
-- Commands: `npm.cmd run dev` · `npm.cmd run build` (includes `tsc -b`) · `npm.cmd run lint` · `npm.cmd run preview`.
-- Conventions: strict TS, no new `any`; daisyUI semantic tokens first; storage keys only via the persistence module; version storage keys if shape changes (precedent: `-v1`); PascalCase component folders, colocated subcomponents.
+- **Package manager: pnpm only.** `pnpm-lock.yaml` is the committed lockfile; never run `npm install`/`yarn` here or commit their lockfiles — mixing managers corrupts `node_modules` and has broken local dev before (see §6 decision).
+- Shell on this machine: plain `npm`/`pnpm` may be blocked by PowerShell execution policy when invoked as bare scripts — use `pnpm.cmd` (or `cmd /c pnpm …`) when Start-Process/script contexts need it. Chain commands with `;` / `if ($?) { }`, not `&&`.
+- Commands: `pnpm run dev` · `pnpm run build` (includes `tsc -b`) · `pnpm run lint` · `pnpm test` · `pnpm exec <tool>` for one-off binaries.
+- Conventions: strict TS, no new `any`; daisyUI semantic tokens first; storage keys only via the persistence module; version storage keys if shape changes (precedent: `-v1`); PascalCase component folders, colocated subcomponents; game-core stays dependency-free.
+- Roadmap phases 0–4 are complete — the "do not change yet" list now maps to §11 non-goals instead.
 - **Do not change yet** (wait for their phase): game engines' internal logic (Phase 1), settings/hint behavior (Phase 2), data image URLs (Phase 3), framer-motion (Phase 4), anything tagged DEFERRED in §11.

@@ -47,6 +47,7 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 - [x] (P4) framer-motion ^10.18 → 13.1.1 — native React 19 peers, all animation APIs unchanged (PR #29)
 - [x] (P4) Delete `.npmrc` legacy-peer-deps flag; fresh strict-peer install verified; CI installs flag-free (PR #30)
 - [ ] (P4) Animation-parity eyeball check rides along with the pending owner browser pass
+- [x] (P4) pnpm made canonical: pnpm-lock.yaml + pnpm-workspace.yaml committed, package-lock.json deleted, CI switched to `pnpm install --frozen-lockfile` with version pinned via package.json `packageManager` field
 - [ ] (P4) PWA manifest + CSP headers: **deferred by design** until the companion-app direction (or a security requirement) justifies them
 
 ## Deferred (do not start without owner approval)
