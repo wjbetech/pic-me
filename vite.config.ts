@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [tailwindcss()],
   test: {
-    include: ["src/game-core/**/*.test.ts"],
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
     environment: "node",
   },
 });
