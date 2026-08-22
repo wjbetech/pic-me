@@ -2,8 +2,6 @@ import { FaGamepad, FaVolumeUp, FaGraduationCap } from "react-icons/fa";
 import { motion } from "framer-motion";
 import backgroundImage from "../../assets/background-wallpaper.avif";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const MotionDiv: any = motion.div;
 
 const containerVariants = {
   hidden: {},
@@ -36,13 +34,13 @@ export default function Main({ onStart }: { onStart?: () => void }) {
             Play quick rounds to learn animal names — no sign-in required.
           </p>
 
-          <MotionDiv
+          <motion.div
             className="grid gap-3 md:gap-6 mb-6 md:mb-8 w-full"
             variants={containerVariants}
             initial="hidden"
             animate="show"
           >
-            <MotionDiv
+            <motion.div
               className="card bg-base-100 shadow-lg md:shadow-xl border border-base-content/10 transform transition-shadow duration-200 hover:shadow-xl"
               variants={cardVariants}
               whileHover={{ y: -6, scale: 1.02 }}
@@ -61,9 +59,9 @@ export default function Main({ onStart }: { onStart?: () => void }) {
                   </p>
                 </div>
               </div>
-            </MotionDiv>
+            </motion.div>
 
-            <MotionDiv
+            <motion.div
               className="card bg-base-100 shadow-lg md:shadow-xl border border-base-content/10 transform transition-shadow duration-200 hover:shadow-xl"
               variants={cardVariants}
               whileHover={{ y: -6, scale: 1.02 }}
@@ -82,9 +80,9 @@ export default function Main({ onStart }: { onStart?: () => void }) {
                   </p>
                 </div>
               </div>
-            </MotionDiv>
+            </motion.div>
 
-            <MotionDiv
+            <motion.div
               className="card bg-base-100 shadow-lg md:shadow-xl border border-base-content/10 opacity-60 transform transition-shadow duration-200"
               variants={cardVariants}
               whileHover={{ y: -6, scale: 1.02 }}
@@ -106,8 +104,8 @@ export default function Main({ onStart }: { onStart?: () => void }) {
                   </p>
                 </div>
               </div>
-            </MotionDiv>
-          </MotionDiv>
+            </motion.div>
+          </motion.div>
 
           <button
             className="btn btn-primary btn-wide text-lg shadow-lg"
