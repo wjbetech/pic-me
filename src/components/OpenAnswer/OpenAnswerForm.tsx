@@ -7,6 +7,7 @@ export default function OpenAnswerForm({
   nextButtonRef,
   inputValue,
   setInputValue,
+  flashState,
   feedback,
   isCorrect,
   completed = false,
@@ -17,6 +18,8 @@ export default function OpenAnswerForm({
   nextButtonRef: MutableRefObject<HTMLButtonElement | null>;
   inputValue: string;
   setInputValue: (v: string) => void;
+  /** Drives the correct/wrong border-flash animation on the input. */
+  flashState: "correct" | "wrong" | null;
   feedback: string | null;
   isCorrect: boolean;
   /** All rounds played — locks the input and hides the Next control. */
@@ -44,7 +47,9 @@ export default function OpenAnswerForm({
             ref={inputRef}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            className="input w-full text-lg text-center open-answer-input border-2 border-base-content/20 rounded-md px-3 py-0 h-8 focus:border-primary focus:ring-0"
+            className={`input w-full text-lg text-center open-answer-input border-2 border-base-content/20 rounded-md px-3 py-0 h-8 focus:border-primary focus:ring-0 ${
+              flashState ? `flash-${flashState}` : ""
+            }`}
             placeholder="Type the animal name"
             disabled={isCorrect || completed}
             aria-invalid={feedback?.startsWith("Incorrect") || false}
