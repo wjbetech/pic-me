@@ -266,21 +266,19 @@ export default function Hangman({
     };
   }, []);
 
-  // Keep the won animal name stable while the win message animates out
+  // Keep the won animal name stable while the win message animates out.
+  // Capture during render (React's sanctioned "adjust state on state change"
+  // pattern — no setState inside effect bodies), then clear on a timer once
+  // the round leaves the won state.
+  if (gameState === "won" && currentAnimal && !wonAnimalName) {
+    setWonAnimalName(currentAnimal.commonName);
+  }
+
   useEffect(() => {
-    if (gameState === "won" && currentAnimal && !wonAnimalName) {
-      setWonAnimalName(currentAnimal.commonName);
-      return;
-    }
-
-    if (gameState !== "won" && wonAnimalName) {
-      const timeout = window.setTimeout(() => {
-        setWonAnimalName(null);
-      }, 320);
-
-      return () => window.clearTimeout(timeout);
-    }
-  }, [gameState, currentAnimal, wonAnimalName]);
+    if (gameState === "won" || !wonAnimalName) return;
+    const timeout = window.setTimeout(() => setWonAnimalName(null), 320);
+    return () => window.clearTimeout(timeout);
+  }, [gameState, wonAnimalName]);
 
   // Focus the Next button when round is won
   useEffect(() => {
