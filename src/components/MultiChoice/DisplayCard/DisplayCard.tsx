@@ -1,20 +1,23 @@
 import { useState } from "react";
-import type { Animal } from "../../../types/Animal";
+import type { Animal } from "../../../game-core/animal";
+import type { HintPreference } from "../../../game-core/hints";
+import HintLine from "../../common/HintLine";
 import "./DisplayCard.css";
 
 export default function DisplayCard({
   currentAnimal,
   currentImage,
   isImageLoading,
-  showDescription,
-  settings,
+  showDescription = false,
+  settings = {},
 }: {
   currentAnimal: Animal | null;
   currentImage: string;
   isImageLoading: boolean;
-  showDescription: boolean;
-  settings: { blur: number };
+  showDescription?: boolean;
+  settings?: { blur?: number; mcHints?: HintPreference };
 }) {
+  const blur = settings.blur ?? 0;
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
   return (
     <div className="shrink-4 min-w-0 place-self-center justify-center mb-4">
@@ -63,8 +66,7 @@ export default function DisplayCard({
                   isImageLoading ? "opacity-0" : "opacity-100"
                 } ${isPortrait ? "object-contain" : "object-cover"}`}
                 style={{
-                  filter:
-                    settings.blur > 0 ? `blur(${settings.blur * 2}px)` : "none",
+                  filter: blur > 0 ? `blur(${blur * 2}px)` : "none",
                   transition: "opacity 200ms ease-in-out",
                 }}
               />
@@ -73,11 +75,7 @@ export default function DisplayCard({
         )}
       </div>
 
-      {currentAnimal && (
-        <p className="text-center opacity-60 text-sm">
-          Hint: {currentAnimal.habitat.join(", ")}
-        </p>
-      )}
+      <HintLine animal={currentAnimal} pref={settings.mcHints} />
     </div>
   );
 }

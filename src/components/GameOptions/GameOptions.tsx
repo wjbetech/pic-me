@@ -14,10 +14,10 @@ import { persistence } from "../../game-core/persistence";
 const DEFAULT_SETTINGS: Settings = {
   blur: 0,
   showDescription: false,
-  hintsEnabled: false,
-  hintType: "habitat",
   rounds: 10,
   lives: 5,
+  mcHints: { enabled: false, type: "habitat" },
+  hangmanHints: { enabled: false, type: "habitat" },
 };
 
 export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
@@ -38,23 +38,11 @@ export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
     persistence.config.save("settings", settings);
   }, [settings]);
 
+  // Panels own the canonical settings object; hand the whole thing over so
+  // every mode receives exactly what the UI shows.
   const handleConfirm = () => {
-    if (selected === "multiple-choice") {
-      onConfirm?.(selected, {
-        blur: settings.blur,
-        showDescription: settings.showDescription,
-        hintsEnabled: settings.hintsEnabled,
-        hintType: settings.hintsEnabled ? settings.hintType : undefined,
-        rounds: settings.rounds,
-      });
-    } else if (selected === "hangman") {
-      onConfirm?.(selected, {
-        lives: Number(settings.lives),
-        rounds: settings.rounds,
-      });
-    } else {
-      onConfirm?.(selected);
-    }
+    if (!selected) return;
+    onConfirm?.(selected, settings);
   };
 
   const selectedOption = OPTIONS.find((o) => o.id === selected);

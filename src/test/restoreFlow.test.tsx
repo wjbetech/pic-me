@@ -113,14 +113,26 @@ describe("MultiChoice restore", () => {
   it("restores the persisted animal with four answer options", async () => {
     seedProgress("multichoice.current", specimen.id);
 
-    render(
+    const { rerender } = render(
       <MultiChoice settings={{ blur: 0, showDescription: false }} />,
     );
 
     // The correct answer must appear among the rendered options.
     expect(await screen.findByText(specimen.commonName)).toBeInTheDocument();
 
-    // Habitat hint line renders alongside the restored card.
-    expect(screen.getByText(/Hint:/i)).toBeInTheDocument();
+    // Per-mode hints default OFF — no hint line may render (settings honesty).
+    expect(screen.queryByText(/Hint:/i)).toBeNull();
+
+    // Enabling MC hints surfaces the line without remounting the game.
+    rerender(
+      <MultiChoice
+        settings={{
+          blur: 0,
+          showDescription: false,
+          mcHints: { enabled: true, type: "habitat" },
+        }}
+      />,
+    );
+    expect(await screen.findByText(/Hint:/i)).toBeInTheDocument();
   });
 });

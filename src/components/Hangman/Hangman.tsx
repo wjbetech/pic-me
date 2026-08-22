@@ -7,6 +7,7 @@ import { MathRandom } from "../../game-core/random";
 import { createRotation } from "../../game-core/rotation";
 import { isExhausted } from "../../game-core/rounds";
 import { useAnimals } from "../../hooks/useAnimals";
+import HintLine from "../common/HintLine";
 import type { HangmanSettings, GameState } from "../../types/Hangman";
 import LetterBoxes from "./LetterBoxes";
 import Keyboard from "./Keyboard";
@@ -355,11 +356,7 @@ export default function Hangman({
 
         <AnimalImage animal={currentAnimal} />
 
-        {currentAnimal && (
-          <p className="text-center opacity-60 text-sm">
-            Hint: Lives in {currentAnimal.habitat.join(", ")}
-          </p>
-        )}
+        <HintLine animal={currentAnimal} pref={settings.hangmanHints} />
 
         <LetterBoxes
           currentAnimal={currentAnimal}
