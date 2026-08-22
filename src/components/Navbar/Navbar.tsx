@@ -6,7 +6,7 @@ export default function Navbar({ onHome }: { onHome?: () => void }) {
       <div className="flex-1">
         <button
           onClick={() => onHome && onHome()}
-          className="btn btn-ghost text-amber-500 p-0"
+          className="btn btn-ghost text-warning p-0"
           aria-label="PicMe Home"
         >
           <h3 className="text-2xl">PicMe</h3>
