@@ -7,16 +7,11 @@ import { createRotation } from "../../game-core/rotation";
 import { isExhausted } from "../../game-core/rounds";
 import { persistence } from "../../game-core/persistence";
 import { useAnimals } from "../../hooks/useAnimals";
+import type { Settings } from "../../types/GameOptions";
 import AnswerGrid from "./AnswerGrid/AnswerGrid";
 import DisplayCard from "./DisplayCard/DisplayCard";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
-
-interface GameSettings {
-  blur: number;
-  showDescription: boolean;
-  rounds?: number | "all";
-}
 
 export default function MultiChoice({
   onBack,
@@ -25,7 +20,7 @@ export default function MultiChoice({
 }: {
   onBack?: () => void;
   onHome?: () => void;
-  settings?: GameSettings;
+  settings?: Settings;
 }) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
   const [currentImage, setCurrentImage] = useState<string>("");

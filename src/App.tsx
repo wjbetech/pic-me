@@ -6,24 +6,16 @@ import MultiChoice from "./components/MultiChoice/MultiChoice";
 import Hangman from "./components/Hangman/Hangman";
 import OpenAnswer from "./components/OpenAnswer/OpenAnswer";
 import { persistence } from "./game-core/persistence";
+import type { Settings } from "./types/GameOptions";
 
 type Route = "home" | "options" | "play";
-
-interface GameSettings {
-  blur: number;
-  showDescription: boolean;
-  hintsEnabled?: boolean;
-  hintType?: string;
-  rounds?: number | "all";
-  lives?: number;
-}
 
 interface NavigationState {
   route: Route;
   mode: string | null;
 }
 
-const DEFAULT_SETTINGS: GameSettings = { blur: 0, showDescription: false };
+const DEFAULT_SETTINGS: Settings = { blur: 0, showDescription: false };
 const VALID_ROUTES: readonly Route[] = ["home", "options", "play"];
 
 function App() {
@@ -43,8 +35,8 @@ function App() {
     setNavigation((prev) => ({ ...prev, mode: next }));
 
   // Durable user preferences: never expires (HANDOFF §3).
-  const [gameSettings, setGameSettings] = useState<GameSettings>(
-    () => persistence.config.load<GameSettings>("settings") ?? DEFAULT_SETTINGS,
+  const [gameSettings, setGameSettings] = useState<Settings>(
+    () => persistence.config.load<Settings>("settings") ?? DEFAULT_SETTINGS,
   );
 
   // Session-scoped navigation: expires with game progress after the TTL.
@@ -65,19 +57,11 @@ function App() {
         {route === "options" && (
           <GameOptions
             onBack={() => setRoute("home")}
-            onConfirm={(selected, settings) => {
+            onConfirm={(selected, next) => {
+              // GameOptions owns the canonical settings object (persisted
+              // durably there); App just mirrors it for prop passing.
               setMode(selected);
-              if (settings) {
-                setGameSettings((prev) => ({
-                  blur: settings.blur ?? prev.blur,
-                  showDescription:
-                    settings.showDescription ?? prev.showDescription,
-                  hintsEnabled: settings.hintsEnabled ?? prev.hintsEnabled,
-                  hintType: settings.hintType ?? prev.hintType,
-                  rounds: settings.rounds ?? prev.rounds,
-                  lives: settings.lives ?? prev.lives,
-                }));
-              }
+              if (next) setGameSettings(next);
               setRoute("play");
             }}
           />

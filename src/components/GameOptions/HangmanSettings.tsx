@@ -1,4 +1,5 @@
 import type { Settings } from "../../types/GameOptions";
+import HintControls from "./HintControls";
 
 interface Props {
   settings: Settings;
@@ -9,6 +10,12 @@ export default function HangmanSettings({ settings, onChange }: Props) {
   return (
     <div>
       <h3 className="font-semibold mb-4">Game Settings</h3>
+
+      <HintControls
+        idPrefix="hangman"
+        pref={settings.hangmanHints}
+        onChange={(hangmanHints) => onChange({ ...settings, hangmanHints })}
+      />
 
       <div className="mb-4">
         <label className="text-sm font-medium">Starting Lives</label>
