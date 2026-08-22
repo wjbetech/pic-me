@@ -2,7 +2,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import { persistence } from "../../game-core/persistence";
-import type { Animal } from "../../types/Animal";
+import type { Animal } from "../../game-core/animal";
+import { MathRandom } from "../../game-core/random";
+import { createRotation } from "../../game-core/rotation";
+import { isExhausted } from "../../game-core/rounds";
+import { useAnimals } from "../../hooks/useAnimals";
 import type { HangmanSettings, GameState } from "../../types/Hangman";
 import LetterBoxes from "./LetterBoxes";
 import Keyboard from "./Keyboard";
@@ -24,7 +28,6 @@ export default function Hangman({
   settings?: HangmanSettings;
 }) {
   const [showBackModal, setShowBackModal] = useState(false);
-  const [allAnimals, setAllAnimals] = useState<Animal[]>([]);
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
   const [wonAnimalName, setWonAnimalName] = useState<string | null>(null);
   const [guessedLetters, setGuessedLetters] = useState<Set<string>>(new Set());
@@ -44,169 +47,149 @@ export default function Hangman({
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextRoundTimeoutRef = useRef<number | null>(null);
 
-  // Load all animals from JSON files
+  // Dataset arrives via the shared loader (cached app-wide).
+  const animals = useAnimals();
+
+  // Bootstrap when the dataset arrives: sweep the legacy blob, build the
+  // rotation queue, then restore persisted progress or start fresh.
+  // Deferred to a microtask so no state updates land synchronously in the
+  // effect flush (react-hooks/set-state-in-effect), with a cancel guard for
+  // StrictMode's double-invoked effects.
   useEffect(() => {
-    const loadAllData = async () => {
-      const modules = import.meta.glob("../../data/*.json", { as: "json" });
-      const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
+    if (!animals) return;
+
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+
       try {
-        // One-time cleanup of the legacy (pre-persistence-module) localStorage blob.
-        try {
-          if (window.localStorage.getItem(LEGACY_STORAGE_KEY) !== null) {
-            window.localStorage.removeItem(LEGACY_STORAGE_KEY);
-          }
-        } catch (error) {
-          console.debug("Skipped legacy Hangman storage cleanup:", error);
+        if (window.localStorage.getItem(LEGACY_STORAGE_KEY) !== null) {
+          window.localStorage.removeItem(LEGACY_STORAGE_KEY);
         }
+      } catch (error) {
+        console.debug("Skipped legacy Hangman storage cleanup:", error);
+      }
 
-        const results = await Promise.all(loaders.map((fn) => fn()));
-        const combined: Animal[] = results.flatMap((r) => {
-          if (Array.isArray(r)) return r as Animal[];
-          if (
-            r &&
-            typeof r === "object" &&
-            Array.isArray((r as Record<string, unknown>).default)
-          )
-            return (r as Record<string, unknown>).default as Animal[];
-          return [] as Animal[];
-        });
+      // Session rotation queue: shuffled once, no repeats until exhausted.
+      const queue = createRotation(animals, "all", MathRandom);
 
-        // Shuffle the animals
-        const shuffled = combined.sort(() => Math.random() - 0.5);
+      // Attempt to restore saved state so reloads preserve progress
+      let didRestore = false;
+      try {
+        const parsed =
+          persistence.progress.load<Record<string, unknown>>("hangman");
+        if (parsed) {
+          const savedGuessed = Array.isArray(parsed.guessed)
+            ? (parsed.guessed as string[])
+            : [];
+          const savedWrong = Array.isArray(parsed.wrong)
+            ? (parsed.wrong as string[])
+            : [];
+          const savedLives =
+            typeof parsed.livesRemaining === "number"
+              ? parsed.livesRemaining
+              : (settings.lives ?? 6);
+          const savedScore =
+            typeof parsed.score === "number" ? parsed.score : 0;
+          const savedRoundsPlayed =
+            typeof parsed.roundsPlayed === "number"
+              ? parsed.roundsPlayed
+              : undefined;
+          const savedRoundsTotal =
+            parsed.roundsTotal ?? settings.rounds ?? "all";
+          const savedAllCompleted = Boolean(parsed.allRoundsCompleted);
+          const savedGameState =
+            parsed.gameState === "won" ||
+            parsed.gameState === "lost" ||
+            parsed.gameState === "playing"
+              ? (parsed.gameState as "won" | "lost" | "playing")
+              : "playing";
 
-        // Attempt to restore saved state so reloads preserve progress
-        let didRestore = false;
-        try {
-          const parsed =
-            persistence.progress.load<Record<string, unknown>>("hangman");
-          if (parsed) {
-            const savedGuessed = Array.isArray(parsed.guessed)
-              ? (parsed.guessed as string[])
-              : [];
-            const savedWrong = Array.isArray(parsed.wrong)
-              ? (parsed.wrong as string[])
-              : [];
-            const savedLives =
-              typeof parsed.livesRemaining === "number"
-                ? parsed.livesRemaining
-                : (settings.lives ?? 6);
-            const savedScore =
-              typeof parsed.score === "number" ? parsed.score : 0;
-            const savedRoundsPlayed =
-              typeof parsed.roundsPlayed === "number"
-                ? parsed.roundsPlayed
-                : undefined;
-            const savedRoundsTotal =
-              parsed.roundsTotal ?? settings.rounds ?? "all";
-            const savedAllCompleted = Boolean(parsed.allRoundsCompleted);
-            const savedGameState =
-              parsed.gameState === "won" ||
-              parsed.gameState === "lost" ||
-              parsed.gameState === "playing"
-                ? (parsed.gameState as "won" | "lost" | "playing")
-                : "playing";
-
-            // Prefer restoring the full saved animal object if present
-            const savedAnimal = parsed.currentAnimal as Animal | undefined;
-            if (savedAnimal) {
-              // Ensure the saved animal exists in the shuffled list; if not, put it at the front.
-              let foundIndex = shuffled.findIndex(
-                (a) => a.commonName === savedAnimal.commonName,
-              );
-              if (foundIndex < 0) {
-                shuffled.unshift(savedAnimal);
-                foundIndex = 0;
-              }
-
-              // Update refs and state with modified shuffled array
-              setAllAnimals(shuffled);
-              animalQueueRef.current = shuffled;
-
-              const found = shuffled[foundIndex];
-              setCurrentAnimal(found);
-              setWonAnimalName(
-                savedGameState === "won" ? found.commonName : null,
-              );
-              setGuessedLetters(
-                new Set((savedGuessed || []).map((s) => s.toUpperCase())),
-              );
-              setWrongLetters(
-                new Set((savedWrong || []).map((s) => s.toUpperCase())),
-              );
-              setLivesRemaining(savedLives);
-              setScore(savedScore);
-              setGameState(savedGameState);
-              if (typeof savedRoundsPlayed === "number")
-                setRoundsPlayed(savedRoundsPlayed);
-              setRoundsTotal(savedRoundsTotal as number | "all" | undefined);
-              setAllRoundsCompleted(savedAllCompleted);
-              queueIndexRef.current = (foundIndex + 1) % shuffled.length;
-
-              didRestore = true;
+          // Prefer restoring the full saved animal object if present
+          const savedAnimal = parsed.currentAnimal as Animal | undefined;
+          if (savedAnimal) {
+            // Ensure the saved animal exists in the queue; if not, put it at the front.
+            let foundIndex = queue.findIndex(
+              (a) => a.commonName === savedAnimal.commonName,
+            );
+            if (foundIndex < 0) {
+              queue.unshift(savedAnimal);
+              foundIndex = 0;
             }
-          }
-        } catch (err) {
-          console.warn("Failed to restore Hangman state:", err);
-        }
 
-        // Only initialize first animal if we didn't restore saved state
-        if (!didRestore) {
-          setAllAnimals(shuffled);
+            animalQueueRef.current = queue;
 
-          if (shuffled.length > 0) {
-            queueIndexRef.current = 1; // next index to use
-            const first = shuffled[0];
-            setCurrentAnimal(first);
-            setGuessedLetters(new Set());
-            setWrongLetters(new Set());
-            setLivesRemaining(settings.lives ?? 6);
-            setGameState("playing");
-            setRoundsPlayed(1);
-            const roundsSetting = settings.rounds ?? "all";
-            setRoundsTotal(roundsSetting);
+            const found = queue[foundIndex];
+            setCurrentAnimal(found);
+            setWonAnimalName(
+              savedGameState === "won" ? found.commonName : null,
+            );
+            setGuessedLetters(
+              new Set((savedGuessed || []).map((s) => s.toUpperCase())),
+            );
+            setWrongLetters(
+              new Set((savedWrong || []).map((s) => s.toUpperCase())),
+            );
+            setLivesRemaining(savedLives);
+            setScore(savedScore);
+            setGameState(savedGameState);
+            if (typeof savedRoundsPlayed === "number")
+              setRoundsPlayed(savedRoundsPlayed);
+            setRoundsTotal(savedRoundsTotal as number | "all" | undefined);
+            setAllRoundsCompleted(savedAllCompleted);
+            queueIndexRef.current = (foundIndex + 1) % queue.length;
+
+            didRestore = true;
           }
         }
       } catch (err) {
-        console.error("Failed to load animal data:", err);
+        console.warn("Failed to restore Hangman state:", err);
       }
+
+      // Only initialize first animal if we didn't restore saved state
+      if (!didRestore && queue.length > 0) {
+        animalQueueRef.current = queue;
+        queueIndexRef.current = 1; // next index to use
+        setCurrentAnimal(queue[0]);
+        setGuessedLetters(new Set());
+        setWrongLetters(new Set());
+        setLivesRemaining(settings.lives ?? 6);
+        setGameState("playing");
+        setRoundsPlayed(1);
+        setRoundsTotal(settings.rounds ?? "all");
+      }
+    });
+
+    return () => {
+      cancelled = true;
     };
-
-    loadAllData();
+    // Bootstrap intentionally runs once per dataset arrival; live settings
+    // changes are applied by loadNewAnimal, not by re-bootstrapping mid-game.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [animals]);
 
-  const loadNewAnimal = useCallback(
-    (animals?: Animal[]) => {
-      const source = animals ?? allAnimals;
-      if (!source || source.length === 0) {
-        setTimeout(() => loadNewAnimal(), 200);
-        return;
-      }
+  const loadNewAnimal = useCallback(() => {
+    const source = animalQueueRef.current;
+    if (!source || source.length === 0) return;
 
-      // If rounds is a number and we've already completed the requested rounds, stop here
-      if (
-        roundsTotal !== "all" &&
-        typeof roundsTotal === "number" &&
-        roundsPlayed >= roundsTotal
-      ) {
-        setAllRoundsCompleted(true);
-        return;
-      }
+    // If rounds is a number and we've already completed the requested rounds, stop here
+    if (isExhausted(roundsTotal, roundsPlayed)) {
+      setAllRoundsCompleted(true);
+      return;
+    }
 
-      // Get next animal from queue
-      const idx = queueIndexRef.current % source.length;
-      const nextAnimal = source[idx];
-      queueIndexRef.current = idx + 1;
+    // Get next animal from queue
+    const idx = queueIndexRef.current % source.length;
+    const nextAnimal = source[idx];
+    queueIndexRef.current = idx + 1;
 
-      setGameState("playing");
-      setCurrentAnimal(nextAnimal);
-      setGuessedLetters(new Set());
-      setWrongLetters(new Set());
-      setLivesRemaining(settings.lives ?? 6);
-      setRoundsPlayed((p) => p + 1);
-    },
-    [allAnimals, roundsTotal, roundsPlayed, settings.lives],
-  );
+    setGameState("playing");
+    setCurrentAnimal(nextAnimal);
+    setGuessedLetters(new Set());
+    setWrongLetters(new Set());
+    setLivesRemaining(settings.lives ?? 6);
+    setRoundsPlayed((p) => p + 1);
+  }, [roundsTotal, roundsPlayed, settings.lives]);
 
   const handleLetterGuess = useCallback(
     (letter: string) => {
