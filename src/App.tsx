@@ -87,6 +87,7 @@ function App() {
           <OpenAnswer
             onBack={() => setRoute("options")}
             onHome={() => setRoute("home")}
+            settings={gameSettings}
           />
         )}
 

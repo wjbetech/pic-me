@@ -9,6 +9,7 @@ export default function OpenAnswerForm({
   setInputValue,
   feedback,
   isCorrect,
+  completed = false,
   onSubmit,
   onNext,
 }: {
@@ -18,7 +19,8 @@ export default function OpenAnswerForm({
   setInputValue: (v: string) => void;
   feedback: string | null;
   isCorrect: boolean;
-  flashState: "correct" | "wrong" | null;
+  /** All rounds played — locks the input and hides the Next control. */
+  completed?: boolean;
   onSubmit: () => void;
   onNext: () => void;
 }) {
@@ -28,6 +30,7 @@ export default function OpenAnswerForm({
         className="flex flex-col gap-4 items-center"
         onSubmit={(e) => {
           e.preventDefault();
+          if (completed) return;
           if (isCorrect) onNext();
           else onSubmit();
         }}
@@ -43,16 +46,18 @@ export default function OpenAnswerForm({
             onChange={(e) => setInputValue(e.target.value)}
             className="input w-full text-lg text-center open-answer-input border-2 border-base-content/20 rounded-md px-3 py-0 h-8 focus:border-primary focus:ring-0"
             placeholder="Type the animal name"
-            disabled={isCorrect}
+            disabled={isCorrect || completed}
             aria-invalid={feedback?.startsWith("Incorrect") || false}
           />
-          <button
-            type="submit"
-            aria-label={isCorrect ? "Next animal" : "Submit answer"}
-            className="absolute right-0 top-0 bottom-0 btn btn-success btn-xs w-12 p-0 h-8 rounded-l-none rounded-r-md border-l-0"
-          >
-            <FaArrowRight className="text-white" />
-          </button>
+          {!completed && (
+            <button
+              type="submit"
+              aria-label={isCorrect ? "Next animal" : "Submit answer"}
+              className="absolute right-0 top-0 bottom-0 btn btn-success btn-xs w-12 p-0 h-8 rounded-l-none rounded-r-md border-l-0"
+            >
+              <FaArrowRight className="text-white" />
+            </button>
+          )}
         </div>
 
         {feedback && (
@@ -76,7 +81,7 @@ export default function OpenAnswerForm({
           </motion.div>
         )}
 
-        {isCorrect && (
+        {isCorrect && !completed && (
           <button
             ref={nextButtonRef}
             type="button"
