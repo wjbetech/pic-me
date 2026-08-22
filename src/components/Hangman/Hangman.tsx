@@ -242,9 +242,11 @@ export default function Hangman({
     }, 180);
   }, [loadNewAnimal]);
 
-  // Allow pressing Enter to advance when the round is won
+  // Allow pressing Enter to advance when the round is won.
+  // Inert while the exit modal is open so dialog keystrokes never advance rounds.
   useEffect(() => {
     const onEnter = (e: KeyboardEvent) => {
+      if (showBackModal) return;
       if (gameState === "won" && (e.key === "Enter" || e.key === "Return")) {
         e.preventDefault();
         handleNextRound();
@@ -252,7 +254,7 @@ export default function Hangman({
     };
     window.addEventListener("keydown", onEnter);
     return () => window.removeEventListener("keydown", onEnter);
-  }, [gameState, handleNextRound]);
+  }, [gameState, handleNextRound, showBackModal]);
 
   // Cleanup any pending next-round timer on unmount
   useEffect(() => {
@@ -291,9 +293,12 @@ export default function Hangman({
     }
   }, [gameState]);
 
-  // Keyboard input: allow players to type letters to guess
+  // Keyboard input: allow players to type letters to guess.
+  // Inert while the exit modal is open — typing behind the dialog must not
+  // burn guesses (HANDOFF debt #9).
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
+      if (showBackModal) return;
       // Ignore if game is not playing or modifier keys are pressed
       if (gameState !== "playing") return;
       if (e.ctrlKey || e.altKey || e.metaKey) return;
@@ -308,7 +313,7 @@ export default function Hangman({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [gameState, handleLetterGuess]);
+  }, [gameState, handleLetterGuess, showBackModal]);
 
   // Persist relevant game state so reloads don't lose progress
   useEffect(() => {
