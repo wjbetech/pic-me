@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Animal } from "../../types/Animal";
+import type { Animal } from "../../game-core/animal";
+import { MathRandom } from "../../game-core/random";
+import { pickRandomAnimal } from "../../game-core/pick";
 import BackButton from "../BackButton/BackButton";
 import ConfirmBackModal from "../ConfirmBackModal/ConfirmBackModal";
 import "./OpenAnswer.css";
 import normalizeAnswer from "../../utils/normalizeAnswer";
-import { pickRandomAnimal, preloadImage } from "../../utils/openAnswer";
+import preloadImage from "../../utils/openAnswer";
 import { persistence } from "../../game-core/persistence";
+import { useAnimals } from "../../hooks/useAnimals";
 import useFlash from "../../hooks/useFlash";
 import OpenAnswerForm from "./OpenAnswerForm";
 
@@ -29,20 +32,17 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const allAnimalsRef = useRef<Animal[]>([]);
 
-  const loadNewAnimal = useCallback(async (animalsParam?: Animal[]) => {
-    const animals = animalsParam ?? allAnimalsRef.current;
-    if (!animals || animals.length === 0) return;
+  // Dataset arrives via the shared loader (cached app-wide).
+  const animals = useAnimals();
+
+  const loadNewAnimal = useCallback(async () => {
+    const next = pickRandomAnimal(allAnimalsRef.current, MathRandom);
+    if (!next) return;
 
     setIsImageLoading(true);
     setInputValue("");
     setFeedback(null);
     setIsCorrect(false);
-
-    const next = pickRandomAnimal(animals);
-    if (!next) {
-      setIsImageLoading(false);
-      return;
-    }
 
     const imgUrl = next.images?.[0]?.url ?? "";
     if (!imgUrl) {
@@ -59,66 +59,43 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     persistence.progress.save("openanswer.current", next.id);
   }, []);
 
+  // Resume a persisted animal (session TTL applies). Re-saving refreshes the
+  // TTL clock, so arriving within the window restarts it — matching the
+  // documented "refresh resumes; >10 min away resets" semantics.
+  const restoreAnimal = useCallback(async (found: Animal) => {
+    const imgUrl = found.images?.[0]?.url ?? "";
+    const ok = imgUrl ? await preloadImage(imgUrl) : false;
+    setCurrentAnimal(found);
+    setCurrentImage(ok ? imgUrl : "");
+    setIsImageLoading(false);
+    persistence.progress.save("openanswer.current", found.id);
+  }, []);
+
+  // Bootstrap once the dataset arrives: restore persisted animal, or load fresh.
+  // Deferred to a microtask so no state updates land synchronously in the
+  // effect flush (react-hooks/set-state-in-effect), with a cancel guard for
+  // StrictMode's double-invoked effects.
   useEffect(() => {
-    const loadAllData = async () => {
-      const modules = import.meta.glob("../../data/*.json", { as: "json" });
-      const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
-      try {
-        const results = await Promise.all(loaders.map((fn) => fn()));
-        const combined: Animal[] = results.flatMap((r) => {
-          const mod = r as unknown;
-          if (Array.isArray(mod)) return mod as Animal[];
-          if (
-            mod &&
-            typeof mod === "object" &&
-            Array.isArray((mod as { default?: unknown }).default)
-          )
-            return (mod as { default: Animal[] }).default;
-          return [] as Animal[];
-        });
-        allAnimalsRef.current = combined;
+    if (!animals) return;
+    allAnimalsRef.current = animals;
 
-        // restore persisted current animal if present
-        try {
-          const savedId = persistence.progress.load<string>("openanswer.current");
-          if (savedId) {
-            const found = combined.find((a) => a.id === savedId);
-            if (found) {
-              const imgUrl = found.images?.[0]?.url ?? "";
-              if (!imgUrl) {
-                setCurrentAnimal(found);
-                setCurrentImage("");
-                setIsImageLoading(false);
-              } else {
-                const img = new Image();
-                img.src = imgUrl;
-                img.onload = () => {
-                  setCurrentAnimal(found);
-                  setCurrentImage(imgUrl);
-                  setIsImageLoading(false);
-                };
-                img.onerror = () => {
-                  setCurrentAnimal(found);
-                  setCurrentImage("");
-                  setIsImageLoading(false);
-                };
-              }
-              return;
-            }
-          }
-        } catch {
-          // restore is best-effort; fall through to a fresh load
-        }
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+      const savedId = persistence.progress.load<string>("openanswer.current");
+      const found = savedId ? animals.find((a) => a.id === savedId) : undefined;
 
-        loadNewAnimal(combined);
-      } catch (err) {
-        console.error("Failed to load animal data:", err);
-        setIsImageLoading(false);
+      if (found) {
+        void restoreAnimal(found);
+      } else {
+        void loadNewAnimal();
       }
-    };
+    });
 
-    loadAllData();
-  }, [loadNewAnimal]);
+    return () => {
+      cancelled = true;
+    };
+  }, [animals, loadNewAnimal, restoreAnimal]);
 
   useEffect(() => {
     if (isCorrect && nextButtonRef.current) {
