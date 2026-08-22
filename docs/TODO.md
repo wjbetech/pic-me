@@ -18,9 +18,10 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 
 ## Phase 1 — One game core
 
-- [ ] (P1) Build `src/game-core/`: injected RNG, rotation, rounds, scoring — zero React/bundler/storage imports
-- [ ] (P1) Migrate games smallest-first: OpenAnswer → MultiChoice → Hangman (preserve MultiChoice stale-request guard semantics)
-- [ ] (P1) Test suites: game-core units (injected RNG), mode-key contract regression, restore-flow per mode w/ mocked storage, App routing state machine incl. >10-min fallback
+- [x] (P1) Build `src/game-core/`: injected RNG, rotation, rounds — zero React/bundler/storage imports (PRs #8, #9; purity enforced via eslint no-restricted-imports)
+- [x] (P1) Migrate games smallest-first: OpenAnswer (#10) → MultiChoice (#12) → Hangman (#11); stale-request guard semantics preserved; `utils/rotation.ts` deleted
+- [x] (P1) Test suites: game-core units w/ injected RNG (a), mode-key contract regression (b), restore-flow per mode (c), App routing state machine incl. >10-min fallback (d) — 46 tests across 8 files (PRs #8/#13/#14)
+- [ ] (P1) Browser parity pass: one round of each mode + refresh-resume check (Vercel preview deploys available per PR)
 
 ## Phase 2 — Real settings + finish Open Answer
 

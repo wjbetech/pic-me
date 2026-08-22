@@ -114,11 +114,16 @@ Migration order: smallest-first — OpenAnswer → MultiChoice → Hangman. Port
 
 ## 5. Current testing state
 
-**Vitest is installed; 12 unit tests exist** for the persistence module (`src/game-core/persistence.test.ts`: TTL round-trip/expiry/refresh, corrupt-envelope self-heal, custom ttl, key isolation, config durability, raw-key byte preservation). [CURRENT]
+**46 tests across 8 files, all green** [CURRENT]:
 
-Toolchain baseline since Phase 0: `npm.cmd run build` (= `tsc -b && vite build`) passes strict · `npm.cmd run lint` exits **0** (all 3 pre-existing errors resolved in PR #2) · `npm.cmd test` 12/12 green. [CURRENT, verified 2026-08-21]
+- **(a) game-core units** — persistence module (TTL round-trip/expiry/refresh, corrupt-envelope self-heal, raw-key byte preservation), rotation/shuffle with seeded LCG, rounds `isExhausted` truth table, `pickRandomAnimal`, `combineAnimalModules`
+- **(b) persistence contract** — namespace whitelist (any raw storage write outside the module fails CI), mode-selection single-encoding round-trip through real GameOptions renders, durable-settings shape, theme byte-exactness for the FOUC script
+- **(c) restore-flow per mode** — Open Answer (proves restored animal by answering it correctly), Hangman (restored lives/score/guesses), MultiChoice (persisted animal among four options)
+- **(d) App routing state machine** — fresh→Home; stale navigation (>10 min) discarded → Home fallback with game progress gone; valid navigation resumes mid-game; Options restores selected mode tab; Start Playing advances Home→Options
 
-Suites still to come [PLANNED — Phases 1–2] [DECIDED]:
+Infra: Vitest 4 + @testing-library/react/jest-dom; default env is node, component suites opt into jsdom via per-file docblock; `FakeImage` stub keeps image-dependent restore paths deterministic.
+
+Toolchain baseline since Phase 0: `npm.cmd run build` (= `tsc -b && vite build`) passes strict · `npm.cmd run lint` exits **0** · `npm.cmd test` green. [CURRENT]
 
 - **(a)** game-core unit tests with injected RNG — rotation, rounds, scoring, TTL expiry
 - **(b)** regression test locking the mode/route persistence contract (so the format-bug class cannot return)
@@ -126,7 +131,7 @@ Suites still to come [PLANNED — Phases 1–2] [DECIDED]:
 - **(d)** App routing state machine incl. stale-route (>10 min) fallback to Home
 - **(e)** after Phase 2: settings-wiring tests proving hint toggles actually affect rendered hints
 
-Phase 0 delivered its slice of suite (a) — the persistence module tests (PR #1); Phases 1–2 add the rest.
+Phase 1 delivered the remainder of (a) plus all of (b), (c), (d) — see the suite inventory above. Only (e) remains, by design.
 
 ## 6. Current CI/deployment state
 
@@ -152,7 +157,7 @@ Still open:
 7. **Open Answer gaps:** receives no settings object at all (`GameOptions.handleConfirm` else-branch passes none); score is memory-only; no round limit. (Phase 2)
 8. **Lives default mismatch:** `HangmanSettings.tsx` clamps 5–15 default 5; `Hangman.tsx` falls back to `settings.lives ?? 6`. (Phase 2)
 9. **Keyboard leaks through modal:** Hangman's window-level letter-guess listener stays active while ConfirmBackModal is open (gameState still `"playing"`); typing behind the modal guesses letters. Same class of issue for Enter-to-advance when won. (Phase 2)
-12. **Deprecation warnings:** `import.meta.glob(..., { as: "json" })` ×3 components → migrate to `{ query: '?json', import: 'default' }`. (Phase 1, alongside game-core loader extraction)
+12. ~~**Deprecation warnings:** `import.meta.glob(..., { as: "json" })` ×3 components~~ [RESOLVED — PRs #9–#12]: all data loading now flows through `src/hooks/useAnimals.ts` using `{ query: '?json', import: 'default' }`; zero deprecated glob calls remain.
 13. **Dependency pin oddity:** framer-motion ^10 predates React 19 peer support; installs only because `.npmrc` sets `legacy-peer-deps=true`. Upgrade deliberately (Phase 4 gate), not casually.
 14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); hardcoded `text-amber-500` in Navbar amid otherwise semantic-token styling; daisyUI sits in devDependencies despite being runtime-critical. (Phase 3 sweep)
 
@@ -193,7 +198,7 @@ Conventions for every phase below: **Objective / Current-state problem / Intende
 - **Tests/verification:** persistence unit tests; manual matrix above; `git status` shows only intended paths.
 - **Out of scope:** engine extraction beyond persistence; hint wiring; OpenAnswer features; styling debt beyond lint; any visual changes.
 
-### Phase 1 — One game core
+### Phase 1 — One game core  [DONE — PRs #8–#14 + hotfix #15; browser parity pass still pending]
 
 - **Objective:** eliminate triplicated game scaffolding; make future features cost 1× not 3×; create the future extraction boundary.
 - **Current-state problem:** three games each implement loading/shuffle/rounds/scoring/restore independently with drift (§4); `utils/rotation.ts` used by only one mode; untestable randomness.
