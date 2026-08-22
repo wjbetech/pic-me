@@ -1,3 +1,9 @@
+/* Correct/wrong flash feedback for the Open Answer input.
+ *
+ * daisyUI 5 note: theme colors are full oklch values exposed as
+ * --color-* tokens (the v3/v4 hsl(var(--b3))-style tokens no longer exist).
+ * Alpha variants use color-mix so the ring stays readable in both themes. */
+
 .open-answer-input.flash-correct {
   animation: flash-correct 0.6s ease-in-out 3;
 }
@@ -9,23 +15,23 @@
 @keyframes flash-correct {
   0%,
   100% {
-    border-color: hsl(var(--b3));
-    box-shadow: 0 0 0 0 hsl(var(--su) / 0.35);
+    border-color: var(--color-base-300);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-success) 35%, transparent);
   }
   50% {
-    border-color: hsl(var(--su));
-    box-shadow: 0 0 0 6px hsl(var(--su) / 0.35);
+    border-color: var(--color-success);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-success) 35%, transparent);
   }
 }
 
 @keyframes flash-wrong {
   0%,
   100% {
-    border-color: hsl(var(--b3));
-    box-shadow: 0 0 0 0 hsl(var(--er) / 0.35);
+    border-color: var(--color-base-300);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-error) 35%, transparent);
   }
   50% {
-    border-color: hsl(var(--er));
-    box-shadow: 0 0 0 6px hsl(var(--er) / 0.35);
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-error) 35%, transparent);
   }
 }

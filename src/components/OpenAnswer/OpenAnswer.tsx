@@ -35,7 +35,7 @@ export default function OpenAnswer({
   const [roundsPlayed, setRoundsPlayed] = useState(0);
   const roundsTotal = settings?.rounds ?? "all";
   const allRoundsCompleted = isExhausted(roundsTotal, roundsPlayed);
-  const { triggerFlash, clearFlash } = useFlash(null);
+  const { flashState, triggerFlash, clearFlash } = useFlash(null);
   const [showBackModal, setShowBackModal] = useState(false);
 
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -249,6 +249,7 @@ export default function OpenAnswer({
           nextButtonRef={nextButtonRef}
           inputValue={inputValue}
           setInputValue={setInputValue}
+          flashState={flashState}
           feedback={feedback}
           isCorrect={isCorrect}
           completed={allRoundsCompleted}
