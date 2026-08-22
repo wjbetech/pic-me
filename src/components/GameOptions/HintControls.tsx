@@ -22,6 +22,7 @@ export default function HintControls({ idPrefix, pref, onChange }: Props) {
       <div className="flex items-center gap-3">
         <input
           id={`${idPrefix}-hints-enabled`}
+          data-testid={`${idPrefix}-hints-enabled`}
           type="checkbox"
           checked={enabled}
           onChange={(e) => onChange({ enabled: e.target.checked, type })}

@@ -34,7 +34,10 @@ export default function OpenAnswer({
   const [score, setScore] = useState(0);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
   const roundsTotal = settings?.rounds ?? "all";
-  const allRoundsCompleted = isExhausted(roundsTotal, roundsPlayed);
+  // Budget exhausted AND the final animal answered — arriving mid-final-round
+  // must still let the player finish it (HANDOFF §9 Phase 2 acceptance).
+  const sessionComplete =
+    isExhausted(roundsTotal, roundsPlayed) && isCorrect;
   const { flashState, triggerFlash, clearFlash } = useFlash(null);
   const [showBackModal, setShowBackModal] = useState(false);
 
@@ -167,7 +170,7 @@ export default function OpenAnswer({
   }, [currentAnimal, isCorrect]);
 
   const handleSubmit = () => {
-    if (!currentAnimal || isCorrect || allRoundsCompleted) return;
+    if (!currentAnimal || isCorrect) return;
     const expected = normalizeAnswer(currentAnimal.commonName);
     const actual = normalizeAnswer(inputValue);
 
@@ -252,12 +255,12 @@ export default function OpenAnswer({
           flashState={flashState}
           feedback={feedback}
           isCorrect={isCorrect}
-          completed={allRoundsCompleted}
+          completed={sessionComplete}
           onSubmit={handleSubmit}
           onNext={handleNext}
         />
 
-        {allRoundsCompleted && (
+        {sessionComplete && (
           <div className="text-center">
             <p className="text-2xl font-bold mb-2">All rounds completed!</p>
             <p>
