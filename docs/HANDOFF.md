@@ -153,7 +153,7 @@ Still open:
 
 5. **Inert/junk styling config:** root `tailwind.config.js` never loaded; `src/index.css` line `themes: light --cymk, dark --dracula;` contains ignored flags and a misspelled comment ("cymk"). Emitted themes are literally light/dark only.
 13. **Dependency pin oddity:** framer-motion ^10 predates React 19 peer support; installs only because `.npmrc` sets `legacy-peer-deps=true`. Upgrade deliberately (Phase 4 gate), not casually.
-14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); hardcoded `text-amber-500` in Navbar amid otherwise semantic-token styling; daisyUI sits in devDependencies despite being runtime-critical. (Phase 3 sweep)
+14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); daisyUI sits in devDependencies despite being runtime-critical. (Backlog sweep — the Navbar half of this item was resolved in PR #25.)
 
 Resolved in Phase 2 (kept for history):
 
@@ -223,7 +223,7 @@ Conventions for every phase below: **Objective / Current-state problem / Intende
 - **Tests/verification:** suite (e) settings-wiring tests; extend restore-flow tests to OA rounds/score.
 - **Out of scope:** new hint types beyond schema fields; sounds; difficulty tuning.
 
-### Phase 3 — Content curation + responsive/a11y pass
+### Phase 3 — Content curation + responsive/a11y pass  [DONE — PRs #24–#27; owner breakpoint sign-off still pending]
 
 - **Objective:** kid-facing polish; parity across breakpoints; accessible shared chrome.
 - **Current-state problem:** `src/data/appendix.md` lists animals whose images need quality fixes (sampled URLs return HTTP 200 — this is a curation list, not broken links); open responsive TODOs (MC scroll-jump on new load — unreproduced; Hangman keyboard scaling on small screens); ConfirmBackModal has Escape-close but no focus trap/return; Navbar amber hardcode.

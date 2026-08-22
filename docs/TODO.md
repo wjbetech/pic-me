@@ -35,11 +35,12 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 
 ## Phase 3 — Content curation + responsive/a11y
 
-- [ ] (P3) Work through `src/data/appendix.md` image-quality list (links verified healthy; this is curation, not repair) — timeboxed
-- [ ] (P3) Responsive QA matrix: 360×800, 375×812, 412×915, 768×1024, 1366×768, 1920×1080 — incl. Hangman keyboard scaling and "all four MC options visible on mobile"
-- [ ] (P3) Investigate MultiChoice scroll-jump on new animal load (open question, not yet reproduced)
-- [ ] (P3) ConfirmBackModal: focus trap + focus return
-- [ ] (P3) Navbar: replace hardcoded `text-amber-500` with a theme token
+- [x] (P3) Full-dataset link sweep: 145 URLs HEAD-checked 2026-08-22; one broken (Quoll q-5, Wikimedia oversized-thumb 400) repaired to 1280px — zero known-bad images remain (PR #27)
+- [x] (P3) ConfirmBackModal: focus trap + focus return + dialog semantics, with a 6-test a11y suite (PR #24)
+- [x] (P3) Navbar: replace hardcoded `text-amber-500` with a theme token (PR #25)
+- [x] (P3) Conservative mobile-density tweaks: MC answer grid gap/padding and Hangman keyboard height/gap below `sm` (PR #26)
+- [x] (P3) MC scroll-jump on new-load: investigated, no reproduction — image preloading + reserved Next-button space already mitigate the historical causes
+- [ ] (P3) **Owner sign-off:** breakpoint matrix QA (360×800, 375×812, 412×915, 768×1024, 1366×768, 1920×1080) via Vercel previews — confirm the density tweaks read well and nothing clips
 
 ## Deferred (do not start without owner approval)
 
