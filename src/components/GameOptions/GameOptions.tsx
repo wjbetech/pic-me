@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import ModeTabs from "./ModeTabs";
 import OptionHeader from "./OptionHeader";
 import MultipleChoiceSettings from "./MultipleChoiceSettings";
 import HangmanSettings from "./HangmanSettings";
 import OpenAnswerSettings from "./OpenAnswerSettings";
 import ActionRow from "./ActionRow";
-import MotionDiv from "../common/MotionDiv";
 import OPTIONS from "../../constants/gameModes";
 import type { GameOptionsProps, Settings } from "../../types/GameOptions";
 import { persistence } from "../../game-core/persistence";
@@ -64,7 +63,7 @@ export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
 
         {/* Content Area */}
         <AnimatePresence mode="wait">
-          <MotionDiv
+          <motion.div
             key={selected}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -86,7 +85,7 @@ export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
             )}
 
             {selected === "open-answer" && <OpenAnswerSettings />}
-          </MotionDiv>
+          </motion.div>
         </AnimatePresence>
         {/* Action Buttons */}
         <ActionRow onBack={onBack} onConfirm={handleConfirm} />
