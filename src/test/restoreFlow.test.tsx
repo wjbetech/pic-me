@@ -39,13 +39,17 @@ afterEach(() => {
 });
 
 describe("Open Answer restore", () => {
-  it("resumes the persisted animal and proves it via a correct answer", async () => {
+  it("resumes the persisted session and proves it via a correct answer", async () => {
     // Seed with an aged timestamp so we can detect restore completion: the
-    // deferred bootstrap refreshes the TTL clock via a re-save.
+    // deferred bootstrap refreshes the TTL clock via a re-save. The blob now
+    // carries the whole session (currentId + score + roundsPlayed).
     const seededAt = Date.now() - 5_000;
     window.sessionStorage.setItem(
-      "picme.progress.openanswer.current",
-      JSON.stringify({ savedAt: seededAt, value: specimen.id }),
+      "picme.progress.openanswer",
+      JSON.stringify({
+        savedAt: seededAt,
+        value: { currentId: specimen.id, score: 2, roundsPlayed: 3 },
+      }),
     );
 
     render(<OpenAnswer />);
@@ -54,22 +58,26 @@ describe("Open Answer restore", () => {
     // current animal and THEN re-saves, so a freshened savedAt proves the
     // animal is loaded and safe to interact with.
     await waitFor(() => {
-      const raw = window.sessionStorage.getItem(
-        "picme.progress.openanswer.current",
-      );
+      const raw = window.sessionStorage.getItem("picme.progress.openanswer");
       expect(raw).not.toBeNull();
       expect(JSON.parse(raw as string).savedAt).toBeGreaterThan(seededAt);
     });
+
+    // Restored score is visible (a fresh start would show 0).
+    expect(screen.getByText(/Score:/i).textContent).toContain("2");
 
     const input = screen.getByPlaceholderText(/type the animal name/i);
     fireEvent.change(input, { target: { value: specimen.commonName } });
     fireEvent.click(screen.getByRole("button", { name: /submit answer/i }));
 
     expect(await screen.findByText("Correct!")).toBeInTheDocument();
+    expect(screen.getByText(/Score:/i).textContent).toContain("3");
 
-    expect(persistence.progress.load<string>("openanswer.current")).toBe(
-      specimen.id,
-    );
+    expect(
+      persistence.progress.load<{ currentId: string; score: number }>(
+        "openanswer",
+      ),
+    ).toMatchObject({ currentId: specimen.id, score: 3 });
   });
 });
 

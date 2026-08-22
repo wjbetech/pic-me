@@ -8,16 +8,23 @@ import "./OpenAnswer.css";
 import normalizeAnswer from "../../utils/normalizeAnswer";
 import preloadImage from "../../utils/openAnswer";
 import { persistence } from "../../game-core/persistence";
+import { isExhausted } from "../../game-core/rounds";
 import { useAnimals } from "../../hooks/useAnimals";
 import useFlash from "../../hooks/useFlash";
+import type { Settings } from "../../types/GameOptions";
 import OpenAnswerForm from "./OpenAnswerForm";
 
 interface OpenAnswerProps {
   onBack?: () => void;
   onHome?: () => void;
+  settings?: Settings;
 }
 
-export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
+export default function OpenAnswer({
+  onBack,
+  onHome,
+  settings,
+}: OpenAnswerProps) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
   const [currentImage, setCurrentImage] = useState<string>("");
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -25,17 +32,27 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState(false);
   const [score, setScore] = useState(0);
-  const { flashState, triggerFlash, clearFlash } = useFlash(null);
+  const [roundsPlayed, setRoundsPlayed] = useState(0);
+  const roundsTotal = settings?.rounds ?? "all";
+  const allRoundsCompleted = isExhausted(roundsTotal, roundsPlayed);
+  const { triggerFlash, clearFlash } = useFlash(null);
   const [showBackModal, setShowBackModal] = useState(false);
 
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const allAnimalsRef = useRef<Animal[]>([]);
+  // Mirror for persistence — save() always writes the full session blob.
+  const sessionRef = useRef({ currentId: "", score: 0, roundsPlayed: 0 });
+
+  const persistSession = useCallback(() => {
+    persistence.progress.save("openanswer", { ...sessionRef.current });
+  }, []);
 
   // Dataset arrives via the shared loader (cached app-wide).
   const animals = useAnimals();
 
   const loadNewAnimal = useCallback(async () => {
+    if (isExhausted(roundsTotal, sessionRef.current.roundsPlayed)) return;
     const next = pickRandomAnimal(allAnimalsRef.current, MathRandom);
     if (!next) return;
 
@@ -56,20 +73,29 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
       setIsImageLoading(false);
     }
 
-    persistence.progress.save("openanswer.current", next.id);
-  }, []);
+    sessionRef.current.currentId = next.id;
+    sessionRef.current.roundsPlayed += 1;
+    setRoundsPlayed(sessionRef.current.roundsPlayed);
+    persistSession();
+  }, [persistSession, roundsTotal]);
 
   // Resume a persisted animal (session TTL applies). Re-saving refreshes the
   // TTL clock, so arriving within the window restarts it — matching the
   // documented "refresh resumes; >10 min away resets" semantics.
-  const restoreAnimal = useCallback(async (found: Animal) => {
+  const restoreAnimal = useCallback(async () => {
+    const found = allAnimalsRef.current.find(
+      (a) => a.id === sessionRef.current.currentId,
+    );
+    if (!found) return false;
+
     const imgUrl = found.images?.[0]?.url ?? "";
     const ok = imgUrl ? await preloadImage(imgUrl) : false;
     setCurrentAnimal(found);
     setCurrentImage(ok ? imgUrl : "");
     setIsImageLoading(false);
-    persistence.progress.save("openanswer.current", found.id);
-  }, []);
+    persistSession();
+    return true;
+  }, [persistSession]);
 
   // Bootstrap once the dataset arrives: restore persisted animal, or load fresh.
   // Deferred to a microtask so no state updates land synchronously in the
@@ -82,14 +108,27 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     let cancelled = false;
     void Promise.resolve().then(() => {
       if (cancelled) return;
-      const savedId = persistence.progress.load<string>("openanswer.current");
-      const found = savedId ? animals.find((a) => a.id === savedId) : undefined;
+      const saved = persistence.progress.load<{
+        currentId: string;
+        score: number;
+        roundsPlayed: number;
+      }>("openanswer");
 
-      if (found) {
-        void restoreAnimal(found);
-      } else {
-        void loadNewAnimal();
+      if (saved?.currentId) {
+        sessionRef.current = {
+          currentId: saved.currentId,
+          score: typeof saved.score === "number" ? saved.score : 0,
+          roundsPlayed:
+            typeof saved.roundsPlayed === "number" ? saved.roundsPlayed : 0,
+        };
+        setScore(sessionRef.current.score);
+        setRoundsPlayed(sessionRef.current.roundsPlayed);
+        void restoreAnimal();
+        return;
       }
+
+      sessionRef.current = { currentId: "", score: 0, roundsPlayed: 0 };
+      void loadNewAnimal();
     });
 
     return () => {
@@ -128,7 +167,7 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   }, [currentAnimal, isCorrect]);
 
   const handleSubmit = () => {
-    if (!currentAnimal || isCorrect) return;
+    if (!currentAnimal || isCorrect || allRoundsCompleted) return;
     const expected = normalizeAnswer(currentAnimal.commonName);
     const actual = normalizeAnswer(inputValue);
 
@@ -139,9 +178,12 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
     }
 
     if (actual === expected) {
+      const newScore = score + 1;
+      setScore(newScore);
+      sessionRef.current.score = newScore;
+      persistSession();
       setFeedback("Correct!");
       setIsCorrect(true);
-      setScore((s) => s + 1);
       triggerFlash("correct");
     } else {
       setFeedback("Incorrect! Try again.");
@@ -151,12 +193,14 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
   };
 
   const handleNext = () => {
-    loadNewAnimal();
+    void loadNewAnimal();
   };
 
   const handleBack = () => {
-    persistence.progress.clear("openanswer.current");
+    persistence.progress.clear("openanswer");
+    sessionRef.current = { currentId: "", score: 0, roundsPlayed: 0 };
     setScore(0);
+    setRoundsPlayed(0);
     setCurrentAnimal(null);
     setCurrentImage("");
     setInputValue("");
@@ -173,7 +217,15 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
       <div className="max-w-3xl w-full flex flex-col gap-6">
         <div className="text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-2">Open Answer</h2>
-          <p className="text-lg font-semibold opacity-80">Score: {score}</p>
+          <p className="text-lg font-semibold opacity-80">
+            Score: {score}
+            {roundsTotal !== "all" && (
+              <span className="opacity-70">
+                {" "}
+                · Round {roundsPlayed}/{roundsTotal}
+              </span>
+            )}
+          </p>
         </div>
 
         <div className="flex justify-center">
@@ -197,12 +249,22 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
           nextButtonRef={nextButtonRef}
           inputValue={inputValue}
           setInputValue={setInputValue}
-          flashState={flashState}
           feedback={feedback}
           isCorrect={isCorrect}
+          completed={allRoundsCompleted}
           onSubmit={handleSubmit}
           onNext={handleNext}
         />
+
+        {allRoundsCompleted && (
+          <div className="text-center">
+            <p className="text-2xl font-bold mb-2">All rounds completed!</p>
+            <p>
+              Final score:{" "}
+              <span className="font-semibold">{score}</span>
+            </p>
+          </div>
+        )}
 
         <div className="flex justify-center">
           <BackButton
@@ -214,7 +276,8 @@ export default function OpenAnswer({ onBack, onHome }: OpenAnswerProps) {
             isOpen={showBackModal}
             onClose={() => setShowBackModal(false)}
             onHome={() => {
-              persistence.progress.clear("openanswer.current");
+              persistence.progress.clear("openanswer");
+              sessionRef.current = { currentId: "", score: 0, roundsPlayed: 0 };
               setShowBackModal(false);
               if (onHome) onHome();
               else onBack?.();
