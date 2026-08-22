@@ -22,7 +22,7 @@ const LEGACY_STORAGE_KEY = "picme-hangman-state-v1";
 export default function Hangman({
   onBack,
   onHome,
-  settings = { lives: 6 },
+  settings = { lives: 5 },
 }: {
   onBack?: () => void;
   onHome?: () => void;
@@ -33,7 +33,7 @@ export default function Hangman({
   const [wonAnimalName, setWonAnimalName] = useState<string | null>(null);
   const [guessedLetters, setGuessedLetters] = useState<Set<string>>(new Set());
   const [wrongLetters, setWrongLetters] = useState<Set<string>>(new Set());
-  const [livesRemaining, setLivesRemaining] = useState(settings.lives ?? 6);
+  const [livesRemaining, setLivesRemaining] = useState(settings.lives ?? 5);
   const [score, setScore] = useState(0);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
   const [gameState, setGameState] = useState<GameState>("playing");
@@ -89,7 +89,7 @@ export default function Hangman({
           const savedLives =
             typeof parsed.livesRemaining === "number"
               ? parsed.livesRemaining
-              : (settings.lives ?? 6);
+              : (settings.lives ?? 5);
           const savedScore =
             typeof parsed.score === "number" ? parsed.score : 0;
           const savedRoundsPlayed =
@@ -154,7 +154,7 @@ export default function Hangman({
         setCurrentAnimal(queue[0]);
         setGuessedLetters(new Set());
         setWrongLetters(new Set());
-        setLivesRemaining(settings.lives ?? 6);
+        setLivesRemaining(settings.lives ?? 5);
         setGameState("playing");
         setRoundsPlayed(1);
         setRoundsTotal(settings.rounds ?? "all");
@@ -188,7 +188,7 @@ export default function Hangman({
     setCurrentAnimal(nextAnimal);
     setGuessedLetters(new Set());
     setWrongLetters(new Set());
-    setLivesRemaining(settings.lives ?? 6);
+    setLivesRemaining(settings.lives ?? 5);
     setRoundsPlayed((p) => p + 1);
   }, [roundsTotal, roundsPlayed, settings.lives]);
 
