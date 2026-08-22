@@ -114,7 +114,7 @@ Migration order: smallest-first — OpenAnswer → MultiChoice → Hangman. Port
 
 ## 5. Current testing state
 
-**46 tests across 8 files, all green** [CURRENT]:
+**55 tests across 10 files, all green** [CURRENT]:
 
 - **(a) game-core units** — persistence module (TTL round-trip/expiry/refresh, corrupt-envelope self-heal, raw-key byte preservation), rotation/shuffle with seeded LCG, rounds `isExhausted` truth table, `pickRandomAnimal`, `combineAnimalModules`
 - **(b) persistence contract** — namespace whitelist (any raw storage write outside the module fails CI), mode-selection single-encoding round-trip through real GameOptions renders, durable-settings shape, theme byte-exactness for the FOUC script
@@ -151,15 +151,18 @@ Resolved in Phase 0 (kept for history):
 
 Still open:
 
-4. **Dead daisyUI-v3/v4 CSS:** `src/components/OpenAnswer/OpenAnswer.css` keyframes use `hsl(var(--b3))`, `--su`, `--er` — none are defined in daisyUI 5 output (verified: zero definitions in built CSS). Correct/wrong flash animations are visually inert. Port to v5 tokens (`--color-base-300`, `--color-success`, `--color-error`). (Phase 2)
 5. **Inert/junk styling config:** root `tailwind.config.js` never loaded; `src/index.css` line `themes: light --cymk, dark --dracula;` contains ignored flags and a misspelled comment ("cymk"). Emitted themes are literally light/dark only.
-6. **Hints are theater:** `hintsEnabled`/`hintType` (habitat/diet/description options in `MultipleChoiceSettings.tsx`) persist and flow to `App.tsx` but no game consumes them; MultiChoice and Hangman render the habitat hint unconditionally. [DECIDED] hints stay per-mode toggles inside pre-game settings; they must actually work (Phase 2).
-7. **Open Answer gaps:** receives no settings object at all (`GameOptions.handleConfirm` else-branch passes none); score is memory-only; no round limit. (Phase 2)
-8. **Lives default mismatch:** `HangmanSettings.tsx` clamps 5–15 default 5; `Hangman.tsx` falls back to `settings.lives ?? 6`. (Phase 2)
-9. **Keyboard leaks through modal:** Hangman's window-level letter-guess listener stays active while ConfirmBackModal is open (gameState still `"playing"`); typing behind the modal guesses letters. Same class of issue for Enter-to-advance when won. (Phase 2)
-12. ~~**Deprecation warnings:** `import.meta.glob(..., { as: "json" })` ×3 components~~ [RESOLVED — PRs #9–#12]: all data loading now flows through `src/hooks/useAnimals.ts` using `{ query: '?json', import: 'default' }`; zero deprecated glob calls remain.
 13. **Dependency pin oddity:** framer-motion ^10 predates React 19 peer support; installs only because `.npmrc` sets `legacy-peer-deps=true`. Upgrade deliberately (Phase 4 gate), not casually.
 14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); hardcoded `text-amber-500` in Navbar amid otherwise semantic-token styling; daisyUI sits in devDependencies despite being runtime-critical. (Phase 3 sweep)
+
+Resolved in Phase 2 (kept for history):
+
+4. ~~**Dead daisyUI-v3/v4 CSS**~~ [RESOLVED — PR #21]: keyframes ported to `--color-*` tokens with `color-mix` alpha rings, AND the previously-missing wiring restored (flash classes now actually toggle on the input via `useFlash`).
+6. ~~**Hints are theater**~~ [RESOLVED — PR #17]: per-mode `mcHints`/`hangmanHints` preferences drive real hint content (habitat/diet/description) via core `hints.ts` + shared `HintLine`; legacy inert fields removed.
+7. ~~**Open Answer gaps**~~ [RESOLVED — PR #18]: receives settings; rounds enforced with completion lock-out; session blob `{currentId, score, roundsPlayed}` persists score across TTL-window refreshes.
+8. ~~**Lives default mismatch**~~ [RESOLVED — PR #19]: component fallbacks agree with the panel clamp (default 5).
+9. ~~**Keyboard leaks through modal**~~ [RESOLVED — PR #20]: letter-guess and Enter-to-advance listeners gate on `showBackModal`.
+12. ~~**Deprecation warnings:** `import.meta.glob(..., { as: "json" })` ×3 components~~ [RESOLVED — PRs #9–#12]: all data loading now flows through `src/hooks/useAnimals.ts` using `{ query: '?json', import: 'default' }`; zero deprecated glob calls remain.
 
 Security baseline [CURRENT]: grep-verified **no** `dangerouslySetInnerHTML`, `innerHTML`, `eval`, `new Function`, or `document.write` anywhere in `src/`; no auth; no user input stored or reflected into HTML contexts. Dependency freshness and optional CSP headers via Vercel remain future considerations — this is not a security-heavy application; keep it that way.
 
@@ -209,7 +212,7 @@ Conventions for every phase below: **Objective / Current-state problem / Intende
 - **Tests/verification:** suites (a) complete, (b), (c), (d); side-by-side manual parity pass per mode before deleting old paths.
 - **Out of scope:** any behavior change; settings/hints; visual changes; physical package extraction.
 
-### Phase 2 — Real settings + finish Open Answer
+### Phase 2 — Real settings + finish Open Answer  [DONE — PRs #17–#22; both-themes/mobile browser pass still pending]
 
 - **Objective:** no control in the options UI lies; Open Answer reaches parity.
 - **Current-state problem:** §7 items 4, 6, 7, 8, 9.

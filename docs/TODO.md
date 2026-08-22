@@ -25,12 +25,13 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 
 ## Phase 2 — Real settings + finish Open Answer
 
-- [ ] (P2) Make hints real: per-mode toggles rendering habitat/diet/description from the data schema
-- [ ] (P2) Open Answer: rounds + session-scoped persisted score; receive its settings from GameOptions
-- [ ] (P2) Unify lives default (5, clamp 5–15) across HangmanSettings/Hangman
-- [ ] (P2) Disable Hangman letter/Enter listeners while ConfirmBackModal is open
-- [ ] (P2) Port `OpenAnswer.css` off dead daisyUI v3/v4 vars (`--b3/--su/--er`) onto v5 tokens
-- [ ] (P2) Settings-wiring tests proving hint toggles affect rendered hints
+- [x] (P2) Make hints real: per-mode toggles rendering habitat/diet/description from the data schema (PR #17)
+- [x] (P2) Open Answer: rounds + session-scoped persisted score; receives its settings from GameOptions (PR #18)
+- [x] (P2) Unify lives default (5, clamp 5–15) across HangmanSettings/Hangman (PR #19)
+- [x] (P2) Disable Hangman letter/Enter listeners while ConfirmBackModal is open (PR #20)
+- [x] (P2) Port `OpenAnswer.css` off dead daisyUI v3/v4 vars (`--b3/--su/--er`) onto v5 tokens — and wire the flash classes, which were never applied to the input at all (PR #21)
+- [x] (P2) Settings-wiring tests proving hint toggles affect rendered hints, plus OA round completion (PR #22; found+fixed a real lock-out bug in OA completion semantics)
+- [ ] (P2) Browser pass: both themes × mobile width spot check; flash animations visibly fire on correct/wrong
 
 ## Phase 3 — Content curation + responsive/a11y
 
