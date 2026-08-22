@@ -152,7 +152,7 @@ Resolved in Phase 0 (kept for history):
 Still open:
 
 5. **Inert/junk styling config:** root `tailwind.config.js` never loaded; `src/index.css` line `themes: light --cymk, dark --dracula;` contains ignored flags and a misspelled comment ("cymk"). Emitted themes are literally light/dark only.
-13. **Dependency pin oddity:** framer-motion ^10 predates React 19 peer support; installs only because `.npmrc` sets `legacy-peer-deps=true`. Upgrade deliberately (Phase 4 gate), not casually.
+13. ~~**Dependency pin oddity:** framer-motion ^10 predates React 19 peer support; installs only because `.npmrc` sets `legacy-peer-deps=true`.~~ [RESOLVED — PRs #29/#30]: framer-motion upgraded to 13.1.1 (native React 19 peers) and the `legacy-peer-deps` flag deleted; fresh strict-peer install verified, CI `npm ci` runs flag-free.
 14. Minor duplication/drift: `.mc-spinner` defined in both `MultiChoice.css` and `DisplayCard.css`; two MotionDiv any-casts (`common/MotionDiv.tsx`, local in `Main.tsx`); daisyUI sits in devDependencies despite being runtime-critical. (Backlog sweep — the Navbar half of this item was resolved in PR #25.)
 
 Resolved in Phase 2 (kept for history):
@@ -234,7 +234,7 @@ Conventions for every phase below: **Objective / Current-state problem / Intende
 - **Tests/verification:** manual; optional a11y smoke via Testing Library focus assertions.
 - **Out of scope:** new animals/content expansion; design redesign.
 
-### Phase 4 — Optional gate (hygiene/future-proofing)
+### Phase 4 — Optional gate (hygiene/future-proofing)  [DONE — PRs #29/#30; PWA manifest + CSP headers deliberately NOT built, awaiting justification]
 
 - **Objective:** remove the dependency crutch; prep optional PWA shell.
 - **Contents:** framer-motion upgrade (10 → current/motion) dropping `legacy-peer-deps`; PWA manifest/service-worker **only if** the companion-app direction justifies it; CSP headers via Vercel if desired.
