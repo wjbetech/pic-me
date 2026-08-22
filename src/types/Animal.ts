@@ -1,16 +1,8 @@
-export interface Animal {
-  id: string;
-  commonName: string;
-  latinName: string;
-  animalClass: string;
-  species?: string;
-  description: string[];
-  tags?: string[];
-  habitat: string[];
-  difficulty: "Easy" | "Medium" | "Hard";
-  food: string[];
-  images: {
-    url: string;
-    thumb?: string;
-  }[];
-}
+/**
+ * Compatibility re-export.
+ *
+ * Canonical definition: src/game-core/animal.ts (game-core owns the data
+ * contract). Existing component imports may keep using this path; new code
+ * should import from game-core directly. Delete once no importers remain.
+ */
+export type { Animal } from "../game-core/animal";
