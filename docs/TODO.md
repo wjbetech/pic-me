@@ -42,6 +42,13 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 - [x] (P3) MC scroll-jump on new-load: investigated, no reproduction — image preloading + reserved Next-button space already mitigate the historical causes
 - [ ] (P3) **Owner sign-off:** breakpoint matrix QA (360×800, 375×812, 412×915, 768×1024, 1366×768, 1920×1080) via Vercel previews — confirm the density tweaks read well and nothing clips
 
+## Phase 4 — Hygiene gate
+
+- [x] (P4) framer-motion ^10.18 → 13.1.1 — native React 19 peers, all animation APIs unchanged (PR #29)
+- [x] (P4) Delete `.npmrc` legacy-peer-deps flag; fresh strict-peer install verified; CI installs flag-free (PR #30)
+- [ ] (P4) Animation-parity eyeball check rides along with the pending owner browser pass
+- [ ] (P4) PWA manifest + CSP headers: **deferred by design** until the companion-app direction (or a security requirement) justifies them
+
 ## Deferred (do not start without owner approval)
 
-See HANDOFF §11: monorepo split · highscores/API/auth · sounds feature · homepage redesign · framer-motion upgrade & PWA (Phase 4 gate only).
+See HANDOFF §11: monorepo split · highscores/API/auth · sounds feature · homepage redesign.
