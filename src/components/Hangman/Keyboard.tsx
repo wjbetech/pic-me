@@ -24,7 +24,7 @@ export default function Keyboard({
   const maxCols = Math.max(...rows.map((row) => row.length));
   const rowStyle = {
     "--key-cols": maxCols,
-    "--key-gap": "0.5rem",
+    "--key-gap": "0.375rem",
     gap: "var(--key-gap)",
   } as React.CSSProperties;
 
@@ -58,7 +58,7 @@ export default function Keyboard({
                   width:
                     "calc((100% - (var(--key-cols) - 1) * var(--key-gap)) / var(--key-cols))",
                 }}
-                className={`inline-flex h-10 sm:h-12 md:h-12 lg:h-10 cursor-pointer items-center justify-center rounded-md font-semibold leading-none border-2 text-sm sm:text-base lg:text-sm ${keyBorderClass} ${
+                className={`inline-flex h-9 sm:h-12 md:h-12 lg:h-10 cursor-pointer items-center justify-center rounded-md font-semibold leading-none border-2 text-sm sm:text-base lg:text-sm ${keyBorderClass} ${
                   showAsWrong
                     ? "bg-error text-error-content"
                     : showAsCorrect
