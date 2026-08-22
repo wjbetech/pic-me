@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Animal } from "../../types/Animal";
+import type { Animal } from "../../game-core/animal";
 import "./MultiChoice.css";
-import { createRotation } from "../../utils/rotation";
+import { MathRandom } from "../../game-core/random";
+import { createRotation } from "../../game-core/rotation";
+import { isExhausted } from "../../game-core/rounds";
 import { persistence } from "../../game-core/persistence";
+import { useAnimals } from "../../hooks/useAnimals";
 import AnswerGrid from "./AnswerGrid/AnswerGrid";
 import DisplayCard from "./DisplayCard/DisplayCard";
 import BackButton from "../BackButton/BackButton";
@@ -25,15 +28,20 @@ export default function MultiChoice({
   settings?: GameSettings;
 }) {
   const [currentAnimal, setCurrentAnimal] = useState<Animal | null>(null);
-  const [allAnimals, setAllAnimals] = useState<Animal[]>([]);
   const [currentImage, setCurrentImage] = useState<string>("");
   const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
-  const [animalQueue, setAnimalQueue] = useState<Animal[]>([]);
+  // Single source of truth: the session rotation queue (no repeats until exhausted).
+  const animalQueueRef = useRef<Animal[]>([]);
+  // Mirror of the full dataset, used for answer-option sampling.
+  const allAnimalsRef = useRef<Animal[]>([]);
   const queueIndexRef = useRef(0);
   // A numeric id that increments with each load request; used to ignore stale loads
   const loadRequestIdRef = useRef(0);
   // Store the timeout id so in-flight timeouts can be cancelled when a new load is requested
   const loadTimeoutRef = useRef<number | null>(null);
+
+  // Dataset arrives via the shared loader (cached app-wide).
+  const animals = useAnimals();
 
   const [answerOptions, setAnswerOptions] = useState<string[]>([]);
   const [correctAnswer, setCorrectAnswer] = useState<string>("");
@@ -51,10 +59,7 @@ export default function MultiChoice({
   );
   const [roundsPlayed, setRoundsPlayed] = useState<number>(0);
 
-  const allRoundsCompleted =
-    roundsTotal !== "all" && typeof roundsTotal === "number"
-      ? roundsPlayed >= roundsTotal
-      : false;
+  const allRoundsCompleted = isExhausted(roundsTotal, roundsPlayed);
 
   // Helper: build up to 4 answer options (including correct) for a given animal
   const buildOptionsForAnimal = (
@@ -88,15 +93,20 @@ export default function MultiChoice({
     return { correct: target.commonName, options: shuffled };
   };
 
-  const loadNewAnimal = (animalsParam?: Animal[]) => {
-    const animals = animalsParam ?? allAnimals;
-    if (!animals || animals.length === 0) {
-      if (animalsParam) {
-        console.warn("No animals available in provided dataset.");
-        return;
-      }
-      // Dataset not ready yet — retry shortly
-      setTimeout(() => loadNewAnimal(), 200);
+  // Build and apply answer options for a restored animal (best-effort).
+  const applyOptions = (target: Animal, pool: Animal[]) => {
+    try {
+      const built = buildOptionsForAnimal(target, pool);
+      setCorrectAnswer(built.correct);
+      setAnswerOptions(built.options);
+    } catch (e) {
+      console.warn("Failed to build options for restored animal:", e);
+    }
+  };
+
+  const loadNewAnimal = () => {
+    const dataset = allAnimalsRef.current;
+    if (!dataset || dataset.length === 0) {
       return;
     }
     // Reset animation state
@@ -105,11 +115,7 @@ export default function MultiChoice({
     setDisabledOptions([]);
 
     // If rounds is a number and we've already completed the requested rounds, stop here
-    if (
-      roundsTotal !== "all" &&
-      typeof roundsTotal === "number" &&
-      roundsPlayed >= roundsTotal
-    ) {
+    if (isExhausted(roundsTotal, roundsPlayed)) {
       return;
     }
     // Increment the load request id and schedule the actual pick after the swipe delay.
@@ -133,9 +139,7 @@ export default function MultiChoice({
       }
 
       // Pick next animal from the shuffled rotation queue (no repeats until exhausted)
-      // Use the state queue if available, otherwise fall back to the provided animals array
-      const sourceQueue =
-        animalQueue && animalQueue.length > 0 ? animalQueue : animals;
+      const sourceQueue = animalQueueRef.current;
       if (!sourceQueue || sourceQueue.length === 0) {
         console.warn("No animals available in queue or source to pick from");
         return;
@@ -189,11 +193,10 @@ export default function MultiChoice({
           persistence.progress.save("multichoice.current", randomAnimal.id);
           // If image fails, try next in queue (if any)
           // remove the failing animal from queue to avoid infinite loop
-          if (animalQueue && animalQueue.length > 0) {
-            const filtered = animalQueue.filter(
+          if (animalQueueRef.current.length > 0) {
+            animalQueueRef.current = animalQueueRef.current.filter(
               (a) => a.id !== randomAnimal.id,
             );
-            setAnimalQueue(filtered);
           }
           loadNewAnimal();
           return;
@@ -212,7 +215,7 @@ export default function MultiChoice({
       }
 
       // Generate up to 3 random different animal names (not the current one)
-      const otherAnimals = animals.filter((a) => a.id !== randomAnimal.id);
+      const otherAnimals = dataset.filter((a) => a.id !== randomAnimal.id);
 
       // Use a set to ensure uniqueness and to be robust when the dataset is small
       const optionSet = new Set<string>();
@@ -228,8 +231,8 @@ export default function MultiChoice({
         }
       }
 
-      // Fallback: if still not enough options, sample from ALL_ANIMALS (excluding current)
-      const fallback = animals.filter(
+      // Fallback: if still not enough options, sample from the full dataset (excluding current)
+      const fallback = dataset.filter(
         (a) => a.id !== randomAnimal.id && !optionSet.has(a.commonName),
       );
       while (optionSet.size < 4 && fallback.length > 0) {
@@ -254,11 +257,10 @@ export default function MultiChoice({
 
   // Build rotation queue: create a shuffled queue with no repeats.
   // The roundsSetting parameter determines how many rounds to play (or "all" for unlimited).
-  const buildQueue = (animals: Animal[], roundsSetting?: number | "all") => {
-    // Create a rotation according to the requested rounds (number or "all").
-    const q = createRotation(animals, roundsSetting ?? "all");
+  const buildQueue = (dataset: Animal[], roundsSetting?: number | "all") => {
+    const q = createRotation(dataset, roundsSetting ?? "all", MathRandom);
     queueIndexRef.current = 0;
-    setAnimalQueue(q);
+    animalQueueRef.current = q;
     setRoundsTotal(roundsSetting ?? "all");
     setRoundsPlayed(0);
   };
@@ -276,8 +278,8 @@ export default function MultiChoice({
     setIsAnswered(false);
     setScore(0);
     setRoundsPlayed(0);
-    setAnimalQueue([]);
-    setAllAnimals([]);
+    animalQueueRef.current = [];
+    allAnimalsRef.current = [];
     queueIndexRef.current = 0;
     loadRequestIdRef.current = 0;
     if (loadTimeoutRef.current) {
@@ -286,128 +288,80 @@ export default function MultiChoice({
     }
   };
 
+  // Bootstrap when the dataset arrives: build the session queue, then restore
+  // the persisted current animal or pick a fresh one. Stale-request guards
+  // inside loadNewAnimal are preserved verbatim from the pre-core version.
   useEffect(() => {
-    const loadAllData = async () => {
-      // Dynamically import all JSON files in src/data (Vite)
-      const modules = import.meta.glob("../../data/*.json", { as: "json" });
-      const loaders = Object.values(modules) as Array<() => Promise<Animal[]>>;
-      try {
-        const results = await Promise.all(loaders.map((fn) => fn()));
-        // Some bundlers return a module object with a `default` property.
-        const combined: Animal[] = results.flatMap((r) => {
-          const mod = r as unknown;
-          if (Array.isArray(mod)) return mod as Animal[];
-          if (
-            mod &&
-            typeof mod === "object" &&
-            Array.isArray((mod as { default?: unknown }).default)
-          )
-            return (mod as { default: Animal[] }).default;
-          console.warn("Unexpected data module format:", r);
-          return [] as Animal[];
-        });
-        // Shuffle the combined dataset once to avoid any file-order bias and use
-        // that as our authoritative list for sampling.
-        const shuffledCombined = createRotation(combined, "all");
-        setAllAnimals(shuffledCombined);
-        // Build queue using provided settings.rounds if available
-        // Cast settings to a minimal shape that may include `rounds` when provided
-        const roundsSetting = (
-          settings as unknown as {
-            rounds?: number | "all";
-          }
-        )?.rounds;
-        buildQueue(shuffledCombined, roundsSetting);
-        // Try to restore a persisted current animal so refresh/HMR don't load a new one
-        try {
-          const savedId =
-            persistence.progress.load<string>("multichoice.current");
-          if (savedId) {
-            const foundIndex = shuffledCombined.findIndex(
-              (a) => a.id === savedId,
-            );
-            if (foundIndex >= 0) {
-              // Ensure queue reflects shuffledCombined
-              setAllAnimals(shuffledCombined);
-              setAnimalQueue(shuffledCombined);
-              // Set queue index to the next item after the restored one
-              queueIndexRef.current =
-                (foundIndex + 1) % shuffledCombined.length;
+    if (!animals) return;
 
-              const found = shuffledCombined[foundIndex];
-              const imgUrl = found.images?.[0]?.url ?? "";
-              if (!imgUrl) {
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+
+      allAnimalsRef.current = animals;
+
+      // Full shuffled dataset is authoritative for sampling and restores.
+      const fullShuffled = createRotation(animals, "all", MathRandom);
+      allAnimalsRef.current = fullShuffled;
+
+      const roundsSetting = settings?.rounds;
+      buildQueue(fullShuffled, roundsSetting);
+
+      // Try to restore a persisted current animal so refresh/HMR don't load a new one.
+      try {
+        const savedId =
+          persistence.progress.load<string>("multichoice.current");
+        if (savedId) {
+          const foundIndex = fullShuffled.findIndex((a) => a.id === savedId);
+          if (foundIndex >= 0) {
+            // Historical quirk preserved: restoring swaps in the FULL shuffled
+            // queue regardless of the numeric-rounds setting.
+            animalQueueRef.current = fullShuffled;
+            queueIndexRef.current =
+              (foundIndex + 1) % fullShuffled.length;
+
+            const found = fullShuffled[foundIndex];
+            const imgUrl = found.images?.[0]?.url ?? "";
+            if (!imgUrl) {
+              setCurrentAnimal(found);
+              setCurrentImage("");
+              setIsImageLoading(false);
+              applyOptions(found, fullShuffled);
+            } else {
+              const img = new Image();
+              img.src = imgUrl;
+              img.onload = () => {
+                setCurrentAnimal(found);
+                setCurrentImage(imgUrl);
+                setIsImageLoading(false);
+                applyOptions(found, fullShuffled);
+              };
+              img.onerror = () => {
                 setCurrentAnimal(found);
                 setCurrentImage("");
                 setIsImageLoading(false);
-                try {
-                  const built = buildOptionsForAnimal(found, shuffledCombined);
-                  setCorrectAnswer(built.correct);
-                  setAnswerOptions(built.options);
-                } catch (e) {
-                  console.warn(
-                    "Failed to build options for restored animal:",
-                    e,
-                  );
-                }
-              } else {
-                const img = new Image();
-                img.src = imgUrl;
-                img.onload = () => {
-                  setCurrentAnimal(found);
-                  setCurrentImage(imgUrl);
-                  setIsImageLoading(false);
-                  try {
-                    const built = buildOptionsForAnimal(
-                      found,
-                      shuffledCombined,
-                    );
-                    setCorrectAnswer(built.correct);
-                    setAnswerOptions(built.options);
-                  } catch (e) {
-                    console.warn(
-                      "Failed to build options for restored animal:",
-                      e,
-                    );
-                  }
-                };
-                img.onerror = () => {
-                  setCurrentAnimal(found);
-                  setCurrentImage("");
-                  setIsImageLoading(false);
-                  try {
-                    const built = buildOptionsForAnimal(
-                      found,
-                      shuffledCombined,
-                    );
-                    setCorrectAnswer(built.correct);
-                    setAnswerOptions(built.options);
-                  } catch (e) {
-                    console.warn(
-                      "Failed to build options for restored animal:",
-                      e,
-                    );
-                  }
-                };
-              }
-              // restored, skip loading a new random one
-              return;
+                applyOptions(found, fullShuffled);
+              };
             }
+            // restored, skip loading a new random one
+            return;
           }
-        } catch (err) {
-          console.warn("Failed to restore MultiChoice currentId:", err);
         }
-
-        // Immediately load the first animal from the shuffled set
-        loadNewAnimal(shuffledCombined);
       } catch (err) {
-        console.error("Failed to load animal data:", err);
+        console.warn("Failed to restore MultiChoice currentId:", err);
       }
-    };
 
-    loadAllData();
+      // Immediately load the first animal from the shuffled set
+      loadNewAnimal();
+    });
+
+    return () => {
+      cancelled = true;
+    };
+    // Bootstrap intentionally runs once per dataset arrival; live settings
+    // changes are applied by buildQueue on next entry.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [animals]);
 
   const handleAnswerClick = (answer: string) => {
     // Prevent clicks on disabled options or when already answered correctly
