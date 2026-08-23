@@ -48,8 +48,10 @@ describe("App routing", () => {
     render(<App />);
 
     // Home renders, not the Hangman screen the stale envelope pointed at.
+    // (The homepage legitimately *mentions* Hangman as a mode tile, so
+    // assert on the game screen's unique "Lives" counter instead.)
     expect(screen.getByRole("button", { name: /start playing/i })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Hangman" })).toBeNull();
+    expect(screen.queryByText(/Lives:/i)).toBeNull();
 
     // Stale progress for games must not survive either (same TTL group).
     expect(persistence.progress.load("hangman")).toBeNull();
