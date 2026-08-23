@@ -50,6 +50,27 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 - [x] (P4) pnpm made canonical: pnpm-lock.yaml + pnpm-workspace.yaml committed, package-lock.json deleted, CI switched to `pnpm install --frozen-lockfile` with version pinned via package.json `packageManager` field
 - [ ] (P4) PWA manifest + CSP headers: **deferred by design** until the companion-app direction (or a security requirement) justifies them
 
+## Phase 5 — Homepage & Game Options polish (from 23/08 QA)
+
+> Full decision maps for the two large redesigns live in `.scratch/` — this section is the sequenced checklist that consumes their tickets.
+
+- [ ] (P5) Remove homepage eyebrow "Free · No sign-up · No ads" (single line in `src/components/home/Hero.tsx:59`)
+- [ ] (P5) Enlarge hero headline "Learning animal names is hard. We made it a game." + adopt a more distinctive display face (see HOMEPAGE-BRIEF §4 sticker-book direction; Fredoka already in use)
+- [ ] (P5) Restyle `Start Playing` button — new approachable/educational font, remove hard shadow `shadow-[0_6px_0_0_rgba(0,0,0,0.45)]` (Hero.tsx:72)
+- [ ] (P5) Hide scrollbar on the animal image carousel while preserving scroll (`src/index.css:32` `.scrollbar-hidden` already exists — apply to marquee)
+- [ ] (P5) Fix Next Animal glow clipping: `ring-glow` on the button is cut off by the `Back to Menu` chunk's overflow (Game page, `src/components/Hangman/GameMessages.tsx` / `src/components/MultiChoice/MultiChoice.tsx:578`) — see `.scratch/game-mobile/issues/02-next-animal-glow.md`
+- [ ] (P5) Game Options screen redesign → see `.scratch/game-mode-screen/map.md` (wayfinder; 4 tickets, grill-me + design skills per your brief)
+- [ ] (P5) Home navbar redesign → see `.scratch/home-navbar/map.md` (wayfinder; transparent + glass-on-scroll vs top-fixed)
+- [ ] (P5) Game modal redesign → see `.scratch/game-modal/issues/01-modal-redesign.md`
+
 ## Deferred (do not start without owner approval)
 
 See HANDOFF §11: monorepo split · highscores/API/auth · sounds feature. (Homepage redesign shipped 2026-08-23 — see docs/HOMEPAGE-BRIEF.md.)
+
+## Known Issues (from 23/08 QA — triaged as `bug`)
+
+Repairable now; each has a `.scratch/bugs/issues/` ticket with verification steps and a proposed agent brief. Fix or move to `wontfix` via triage:
+
+- [ ] Fix MC images not loading — see `.scratch/bugs/issues/01-mc-images.md` (`needs-triage`)
+- [ ] Fix Game Options mode preselect ignoring home card — see `.scratch/bugs/issues/02-mode-preselect.md` (`needs-triage`)
+- [ ] Draft per-mode settings taxonomy (rounds, difficulty, etc.) + user flow → see `.scratch/game-settings-v2/map.md` (wayfinder; needs grilling before tickets)

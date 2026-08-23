@@ -6,7 +6,7 @@ Capture raw notices (bugs, UX friction, “this doesn’t feel right”) in [`.s
 
 ## End-of-day inbox
 
-**When:** around **23:00 KST** (window 22:00–23:59 Asia/Seoul). Dump into the inbox at any hour. Do **not** promote Open lines into [`roadmap.md`](../development/roadmap.md) during a development slice or at other hours.
+**When:** around **23:00 KST** (window 22:00–23:59 Asia/Seoul). Dump into the inbox at any hour. Do **not** promote Open lines into [`roadmap.md`](../TODO.md) during a development slice or at other hours.
 
 If the user says **`refurbish the inbox`** or **`end of day`** outside that window, do not sort yet. Confirm it is not 23:00 KST and wait, unless they explicitly say **`refurbish now`**.
 

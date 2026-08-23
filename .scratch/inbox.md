@@ -8,41 +8,21 @@ Write in any shape. Dated bullets are enough. Do not tidy this file yourself.
 
 ## Open
 
-### 23/08/2026
+<!-- 23/08/2026 — all 13 bullets promoted on 23/08 refurbish (see docs/TODO.md Phase 5 + .scratch/{home-navbar,game-mode-screen,game-mobile,game-modal,bugs,game-settings-v2}). Leave new finds here. -->
 
-#### Home Page
+## Archive
 
-- Navbar should be redesigned and ideally made transparent.
-  - We need to find a way to ensure that elements inside the navbar continue to be visible regardless of what animal and environment is currently rendered on the home page.
-    - The default navbar could be re-styled to be significantly more stylish and modern.
-    - It could turn to a glass effect with scrolling so, or we can leave it at the top of the page and add actions to the content of the page to push user back towards the main CTAs.
-- The app doesn't need to tell the user that it is 'free, no sign up, no ads', remove this chunk.
-- Let's make the 'Learning animal names is hard. We made it a game' text bigger, and perhaps use a more unique font.
-- The 'Start Playing' button should use a new font as well, something approachable and educational but less flat and underwhelming.
-  - Also remove the dark shadow underneath it.
-- Hide the scrollbar on the animal image carousel.
+### 23/08/2026 — promoted
 
-#### 'Pick a game mode!' screen
-
-- Redesign this page to thematically match the home page more. The content should flow very organically.
-- Ensure very strong contrast in design for both light and dark themes.
-- Use design skills (either in the codebase, on my machine, or find online) along with Matt Pocock grill-me and wayfinder skills in order to decide on how best to implement this screen.
-- The options/current functionality are great, just redesign the page to match the app.
-
-#### Game page
-
-- Run a full and extremely thorough check on how this page stands up on mobile versions, and come up with any improvements we can make in order to improve the user experience.
-- There are some clipping graphics, for example the 'Next Animal' button that pops up when you win a round has its glow effect cut off below it, by the chunk with the 'Back to Menu' button
-- The modal for leaving the current game works just fine but it also needs further redesign to look like the rest of the app and feel a lot more professional and modern.
-
-#### Bugs
-
-- It seems like the images are not loading properly in the multiple choice game mode.
-- The game settings screen always defaults to the previous toggled game mode regardless of which of the three game mode cards you pick in the home page.
-
-#### Further
-
-- I would like to draft more settings for each of the game modes, and then consider the actual user flow for each of those if they are implemented.
-  - Number of rounds.
-  - Animal difficulty.
-  - etc.
+- Home: Navbar transparent redesign → `.scratch/home-navbar/map.md` (wayfinder, 2 tickets)
+- Home: Remove eyebrow "Free · No sign-up · No ads" → `docs/TODO.md` Phase 5 checkbox
+- Home: Hero headline bigger + unique font → `docs/TODO.md` Phase 5 checkbox
+- Home: Start Playing new font + remove shadow → `docs/TODO.md` Phase 5 checkbox
+- Home: Hide carousel scrollbar → `docs/TODO.md` Phase 5 checkbox
+- Game-mode screen full redesign → `.scratch/game-mode-screen/map.md` (wayfinder, 3 tickets; grill-me per your brief)
+- Game page: thorough mobile audit → `.scratch/game-mobile/issues/01-mobile-audit.md`
+- Game page: Next Animal glow clipping → `docs/TODO.md` Phase 5 checkbox + `.scratch/game-mobile/issues/02-next-animal-glow.md`
+- Game page: modal redesign → `.scratch/game-modal/issues/01-modal-redesign.md`
+- Bug: MC images not loading → `.scratch/bugs/issues/01-mc-images.md`
+- Bug: mode preselect ignoring home card → `.scratch/bugs/issues/02-mode-preselect.md`
+- Further: per-mode settings taxonomy → `.scratch/game-settings-v2/map.md` (wayfinder, needs grilling)
