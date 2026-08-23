@@ -35,6 +35,25 @@
   }
 }
 
+/* Photo marquee (homepage signature texture — the page's ONE perpetual
+   motion). Only animates when the user allows motion; otherwise the track is
+   a plain scrollable row. */
+@keyframes picme-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: picme-marquee 45s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
 a {
   font-weight: 500;
   text-decoration: inherit;
