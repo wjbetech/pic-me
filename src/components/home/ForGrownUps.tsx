@@ -1,4 +1,5 @@
 import { FaGift, FaUnlockAlt, FaShieldAlt, FaBrain } from "react-icons/fa";
+import Reveal from "./Reveal";
 
 const FACTS = [
   {
@@ -31,13 +32,15 @@ export default function ForGrownUps() {
   return (
     <section className="py-14 md:py-20 px-6 bg-base-200">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl mb-3">
-          For grown-ups
-        </h2>
-        <p className="font-body max-w-prose opacity-80 mb-10">
-          PicMe was built to be handed over without a second thought — here is
-          everything there is to know.
-        </p>
+        <Reveal>
+          <h2 className="font-display text-3xl md:text-4xl mb-3">
+            For grown-ups
+          </h2>
+          <p className="font-body max-w-prose opacity-80 mb-10">
+            PicMe was built to be handed over without a second thought — here
+            is everything there is to know.
+          </p>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {FACTS.map((fact) => (

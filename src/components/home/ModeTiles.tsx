@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { FaClone, FaPenAlt, FaSpellCheck } from "react-icons/fa";
+import Reveal from "./Reveal";
 import { OPTIONS } from "../../constants/gameModes";
 
 const ICONS = {
@@ -19,9 +20,11 @@ export default function ModeTiles({ onStart }: { onStart?: () => void }) {
   return (
     <section className="py-14 md:py-20 px-6">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl text-center mb-10 md:mb-14">
-          Three ways to play
-        </h2>
+        <Reveal>
+          <h2 className="font-display text-3xl md:text-4xl text-center mb-10 md:mb-14">
+            Three ways to play
+          </h2>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {OPTIONS.map((mode) => (
