@@ -1,5 +1,7 @@
 # PicMe Homepage Redesign — Design Brief
 
+**Status: IMPLEMENTED** (PRs #36–#38). Visual sign-off pending owner browser pass.
+
 ## Design Read
 Dual-audience landing page (kids play / parents approve) for a free, no-signup browser
 animal-naming game — sticker-book playful language, real wildlife photography as the

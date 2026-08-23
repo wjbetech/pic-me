@@ -52,4 +52,4 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 
 ## Deferred (do not start without owner approval)
 
-See HANDOFF §11: monorepo split · highscores/API/auth · sounds feature · homepage redesign.
+See HANDOFF §11: monorepo split · highscores/API/auth · sounds feature. (Homepage redesign shipped 2026-08-23 — see docs/HOMEPAGE-BRIEF.md.)
