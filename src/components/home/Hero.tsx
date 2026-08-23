@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+
+// Loose alias: framer-motion 13's strict Motion prop types reject plain HTML
+// props like className without a generic. Pre-existing workaround in Main.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MotionDiv: any = motion.div;
 import { useAnimals } from "../../hooks/useAnimals";
-import type { Animal } from "../../game-core/animal";
+import { HOME_PHOTOS, type HomePhoto } from "../../data/homePhotos";
 
 /**
  * Homepage hero — the photo showcase (docs/HOMEPAGE-BRIEF.md).
@@ -13,34 +18,30 @@ import type { Animal } from "../../game-core/animal";
 export default function Hero({ onStart }: { onStart?: () => void }) {
   const animals = useAnimals();
   const reduceMotion = useReducedMotion();
-  const [hero, setHero] = useState<Animal | undefined>(undefined);
+  const [hero, setHero] = useState<HomePhoto | undefined>(undefined);
 
-  // Pick once per dataset arrival. Randomness + setState both stay out of
-  // the render pass (react-compiler purity / set-state-in-effect rules).
+  // Curated, watermark-free hero — re-picked once per visit from the
+  // dedicated homepage set (not the in-game dataset, which still holds 20
+  // premium Unsplash+ previews). Deferred out of render for compiler purity.
   useEffect(() => {
-    if (!animals || animals.length === 0) return;
     let cancelled = false;
     void Promise.resolve().then(() => {
       if (cancelled) return;
-      const withImages = animals.filter((a) => a.images.length > 0);
-      const pool = withImages.length > 0 ? withImages : animals;
-      setHero(pool[Math.floor(Math.random() * pool.length)]);
+      setHero(
+        HOME_PHOTOS[Math.floor(Math.random() * HOME_PHOTOS.length)],
+      );
     });
     return () => {
       cancelled = true;
     };
-  }, [animals]);
+  }, []);
 
   return (
     <section className="relative min-h-[80dvh] flex items-center overflow-hidden">
       {/* Photo layer */}
       <div className="absolute inset-0">
         {hero ? (
-          <img
-            src={hero.images[0]?.url}
-            alt=""
-            className="h-full w-full object-cover"
-          />
+          <img src={hero.src} alt="" className="h-full w-full object-cover" />
         ) : (
           <div className="h-full w-full bg-base-200" aria-hidden />
         )}
@@ -49,7 +50,7 @@ export default function Hero({ onStart }: { onStart?: () => void }) {
       </div>
 
       {/* Copy layer */}
-      <motion.div
+      <MotionDiv
         className="relative z-10 w-full max-w-3xl mx-auto px-6 py-20 text-left"
         initial={reduceMotion ? false : { opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
@@ -73,7 +74,7 @@ export default function Hero({ onStart }: { onStart?: () => void }) {
         >
           Start Playing
         </button>
-      </motion.div>
+      </MotionDiv>
     </section>
   );
 }
