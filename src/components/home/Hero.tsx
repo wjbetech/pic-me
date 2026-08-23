@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useAnimals } from "../../hooks/useAnimals";
 import type { Animal } from "../../game-core/animal";
@@ -6,18 +6,29 @@ import type { Animal } from "../../game-core/animal";
 /**
  * Homepage hero — the photo showcase (docs/HOMEPAGE-BRIEF.md).
  * Full-bleed real animal photography, benefit-led headline, single CTA.
- * Photo is re-picked once per visit; scrim keeps text WCAG-readable in both
- * themes; everything degrades to static under prefers-reduced-motion.
+ * Photo is re-picked once per visit (selection deferred out of render);
+ * scrim keeps text WCAG-readable in both themes; everything degrades to
+ * static under prefers-reduced-motion.
  */
 export default function Hero({ onStart }: { onStart?: () => void }) {
   const animals = useAnimals();
   const reduceMotion = useReducedMotion();
+  const [hero, setHero] = useState<Animal | undefined>(undefined);
 
-  const hero: Animal | undefined = useMemo(() => {
-    if (!animals || animals.length === 0) return undefined;
-    const withImages = animals.filter((a) => a.images.length > 0);
-    const pool = withImages.length > 0 ? withImages : animals;
-    return pool[Math.floor(Math.random() * pool.length)];
+  // Pick once per dataset arrival. Randomness + setState both stay out of
+  // the render pass (react-compiler purity / set-state-in-effect rules).
+  useEffect(() => {
+    if (!animals || animals.length === 0) return;
+    let cancelled = false;
+    void Promise.resolve().then(() => {
+      if (cancelled) return;
+      const withImages = animals.filter((a) => a.images.length > 0);
+      const pool = withImages.length > 0 ? withImages : animals;
+      setHero(pool[Math.floor(Math.random() * pool.length)]);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [animals]);
 
   return (
