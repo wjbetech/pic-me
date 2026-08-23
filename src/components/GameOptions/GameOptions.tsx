@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
+// See Hero.tsx — framer-motion 13's strict types reject plain HTML props.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MotionDiv: any = motion.div;
 import ModeTabs from "./ModeTabs";
 import OptionHeader from "./OptionHeader";
 import MultipleChoiceSettings from "./MultipleChoiceSettings";
@@ -63,7 +67,7 @@ export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
 
         {/* Content Area */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <MotionDiv
             key={selected}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,7 +89,7 @@ export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
             )}
 
             {selected === "open-answer" && <OpenAnswerSettings />}
-          </motion.div>
+          </MotionDiv>
         </AnimatePresence>
         {/* Action Buttons */}
         <ActionRow onBack={onBack} onConfirm={handleConfirm} />

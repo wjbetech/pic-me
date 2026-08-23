@@ -13,6 +13,10 @@ export default function HomeFooter() {
           wjbetech/pic-me
         </a>
       </p>
+      <p className="font-body text-xs opacity-50 mt-2">
+        Hero &amp; marquee photos: Wikimedia Commons contributors — freely
+        licensed, watermark-free.
+      </p>
     </footer>
   );
 }
