@@ -7,8 +7,15 @@
     dark --dracula;
 }
 
+/* Homepage type system (docs/HOMEPAGE-BRIEF.md — sticker-book playful).
+   Self-hosted variable fonts via @fontsource; no Google Fonts <link>. */
+@theme {
+  --font-display: "Fredoka Variable", "Trebuchet MS", ui-rounded, sans-serif;
+  --font-body: "Nunito Variable", ui-rounded, system-ui, sans-serif;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.5;
   font-weight: 400;
 
@@ -16,6 +23,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 a {
