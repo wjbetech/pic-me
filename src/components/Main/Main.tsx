@@ -9,10 +9,19 @@ import HomeFooter from "../home/HomeFooter";
  * Scrolls within App's route viewport (App wraps this in an overflow-y-auto
  * container — games keep their own fixed-viewport layouts).
  */
-export default function Main({ onStart }: { onStart?: () => void }) {
+/**
+ * Homepage composition root (docs/HOMEPAGE-BRIEF.md — five sections).
+ * Scrolls within App's route viewport (App wraps this in an overflow-y-auto
+ * container — games keep their own fixed-viewport layouts).
+ */
+export default function Main({
+  onStart,
+}: {
+  onStart?: (modeId: string) => void;
+}) {
   return (
     <div className="min-h-full bg-base-100 text-base-content">
-      <Hero onStart={onStart} />
+      <Hero onStart={() => onStart?.("multiple-choice")} />
       <PhotoMarquee />
       <ModeTiles onStart={onStart} />
       <ForGrownUps />
