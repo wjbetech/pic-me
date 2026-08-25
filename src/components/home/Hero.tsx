@@ -56,9 +56,6 @@ export default function Hero({ onStart }: { onStart?: () => void }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
-        <p className="font-body text-sm font-bold uppercase tracking-[0.14em] text-white/85 mb-3">
-          Free · No sign-up · No ads
-        </p>
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white max-w-xl">
           Learning animal names is hard. We made it a game.
         </h1>
