@@ -55,7 +55,7 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 > Full decision maps for the two large redesigns live in `.scratch/` — this section is the sequenced checklist that consumes their tickets.
 
 - [x] (P5) Remove homepage eyebrow "Free · No sign-up · No ads" (single line in `src/components/home/Hero.tsx:59`)
-- [ ] (P5) Enlarge hero headline "Learning animal names is hard. We made it a game." + adopt a more distinctive display face (see HOMEPAGE-BRIEF §4 sticker-book direction; Fredoka already in use)
+- [x] (P5) Enlarge hero headline "Learning animal names is hard. We made it a game." + adopt a more distinctive display face (see HOMEPAGE-BRIEF §4 sticker-book direction; Fredoka already in use) — headline now text-5xl/6xl/7xl; display face switched Fredoka → Baloo 2 (@fontsource-variable/baloo-2, brief §4 sanctioned alternative)
 - [ ] (P5) Restyle `Start Playing` button — new approachable/educational font, remove hard shadow `shadow-[0_6px_0_0_rgba(0,0,0,0.45)]` (Hero.tsx:72)
 - [ ] (P5) Hide scrollbar on the animal image carousel while preserving scroll (`src/index.css:32` `.scrollbar-hidden` already exists — apply to marquee)
 - [ ] (P5) Fix Next Animal glow clipping: `ring-glow` on the button is cut off by the `Back to Menu` chunk's overflow (Game page, `src/components/Hangman/GameMessages.tsx` / `src/components/MultiChoice/MultiChoice.tsx:578`) — see `.scratch/game-mobile/issues/02-next-animal-glow.md`

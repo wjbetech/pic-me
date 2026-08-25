@@ -56,7 +56,7 @@ export default function Hero({ onStart }: { onStart?: () => void }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.05] text-white max-w-xl">
+        <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.02] text-white max-w-2xl">
           Learning animal names is hard. We made it a game.
         </h1>
         <p className="font-body mt-5 text-lg md:text-xl text-white/90 max-w-prose">

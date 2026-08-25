@@ -10,7 +10,7 @@
 /* Homepage type system (docs/HOMEPAGE-BRIEF.md — sticker-book playful).
    Self-hosted variable fonts via @fontsource; no Google Fonts <link>. */
 @theme {
-  --font-display: "Fredoka Variable", "Trebuchet MS", ui-rounded, sans-serif;
+  --font-display: "Baloo 2 Variable", "Fredoka Variable", "Trebuchet MS", ui-rounded, sans-serif;
   --font-body: "Nunito Variable", ui-rounded, system-ui, sans-serif;
 }
 
