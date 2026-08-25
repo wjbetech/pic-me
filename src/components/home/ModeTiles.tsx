@@ -14,7 +14,11 @@ const ICONS = {
  * kid-sized language while the descriptions tell parents what each one
  * practices. Tapping a tile heads to that mode's settings.
  */
-export default function ModeTiles({ onStart }: { onStart?: () => void }) {
+export default function ModeTiles({
+  onStart,
+}: {
+  onStart?: (modeId: string) => void;
+}) {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -30,7 +34,7 @@ export default function ModeTiles({ onStart }: { onStart?: () => void }) {
           {OPTIONS.map((mode) => (
             <motion.button
               key={mode.id}
-              onClick={() => onStart?.()}
+              onClick={() => onStart?.(mode.id)}
               whileHover={reduceMotion ? undefined : { y: -6 }}
               whileTap={reduceMotion ? undefined : { y: 1 }}
               transition={{ type: "spring", stiffness: 320, damping: 22 }}

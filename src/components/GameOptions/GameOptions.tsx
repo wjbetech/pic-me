@@ -23,10 +23,16 @@ const DEFAULT_SETTINGS: Settings = {
   hangmanHints: { enabled: false, type: "habitat" },
 };
 
-export default function GameOptions({ onBack, onConfirm }: GameOptionsProps) {
-  // Same 'mode' progress key App reads — one encoding everywhere (mode-key bug fixed).
+export default function GameOptions({
+  onBack,
+  onConfirm,
+  initialMode,
+}: GameOptionsProps) {
+  // Preselect precedence: home card tap (initialMode) > persisted 'mode'
+  // > first option. The tap must win on this mount; persistence still
+  // covers refresh-without-card-context.
   const [selected, setSelected] = useState<string>(
-    () => persistence.progress.load<string>("mode") ?? OPTIONS[0].id,
+    () => initialMode ?? persistence.progress.load<string>("mode") ?? OPTIONS[0].id,
   );
 
   const [settings, setSettings] = useState<Settings>(

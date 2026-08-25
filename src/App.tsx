@@ -55,11 +55,19 @@ function App() {
       <div className="flex-1 min-h-0 overflow-hidden relative">
         {route === "home" && (
           <div className="h-full overflow-y-auto">
-            <Main onStart={() => setRoute("options")} />
+            <Main
+              onStart={(modeId) => {
+                // Home card carries mode intent forward so GameOptions
+                // preselects the tapped tile (fixes 02-mode-preselect).
+                setMode(modeId);
+                setRoute("options");
+              }}
+            />
           </div>
         )}
         {route === "options" && (
           <GameOptions
+            initialMode={mode ?? undefined}
             onBack={() => setRoute("home")}
             onConfirm={(selected, next) => {
               // GameOptions owns the canonical settings object (persisted
