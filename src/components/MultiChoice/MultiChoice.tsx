@@ -161,11 +161,35 @@ export default function MultiChoice({
       }
 
       if (imageUrl) {
-        // Preload the image to avoid rendering lag and show a spinner
+        // Preload the image to avoid rendering lag and show a spinner.
+        // Root cause (see .scratch/bugs/issues/01-mc-images.md): 20
+        // `plus.unsplash.com/premium_photo` entries in the in-game dataset can
+        // hang indefinitely (neither onload nor onerror fires), leaving the
+        // spinner stuck. Homepage was decoupled to `homePhotos` in #40 but
+        // games still draw from the full dataset — so every round must
+        // guarantee termination to image or fallback within a bounded time.
         setIsImageLoading(true);
         const img = new Image();
+        let settled = false;
+        const imageTimeout = window.setTimeout(() => {
+          if (settled) return;
+          settled = true;
+          console.warn("Image load timed out, picking another.", imageUrl);
+          if (requestId !== loadRequestIdRef.current) return;
+          setIsImageLoading(false);
+          persistence.progress.save("multichoice.current", randomAnimal.id);
+          if (animalQueueRef.current.length > 0) {
+            animalQueueRef.current = animalQueueRef.current.filter(
+              (a) => a.id !== randomAnimal.id,
+            );
+          }
+          loadNewAnimal();
+        }, 5000);
         img.src = imageUrl;
         img.onload = () => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(imageTimeout);
           // Ensure the request is still current before applying
           if (requestId !== loadRequestIdRef.current) {
             return;
@@ -179,6 +203,9 @@ export default function MultiChoice({
           setRoundsPlayed((p) => p + 1);
         };
         img.onerror = () => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(imageTimeout);
           // Ensure the request is still current before reacting
           if (requestId !== loadRequestIdRef.current) {
             return;
