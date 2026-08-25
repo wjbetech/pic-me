@@ -14,7 +14,7 @@ export default function PhotoMarquee() {
 
   return (
     <section aria-label="Meet the animals" className="py-10 md:py-14 overflow-hidden">
-      <div className="marquee overflow-x-auto">
+      <div className="marquee overflow-x-auto scrollbar-hidden">
         <ul className="marquee-track flex w-max items-center gap-5 px-5">
           {track.map((a, i) => (
             <li key={`${a.id}-${i}`} className="shrink-0" aria-hidden={i >= photos.length}>
