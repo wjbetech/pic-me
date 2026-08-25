@@ -485,7 +485,7 @@ export default function MultiChoice({
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   >
-                    <div className="inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+                    <div className="relative z-10 inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
                       <button
                         ref={nextButtonRef}
                         onClick={() => loadNewAnimal()}

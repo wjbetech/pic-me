@@ -12,6 +12,7 @@ The three game modes (Multiple Choice, Hangman, Open Answer) feel equally polish
 ## Decisions so far
 
 - [01-mobile-audit](../game-mobile/issues/01-mobile-audit.md) — static code audit across 360/375/412/768/ desktop: keyboard 36px <44px, Header gap-6 tight at 360, LetterBoxes overflow on 10-letter names, Open Answer input h-8 undersized; all flagged for live device verification before graduating new tickets. Glow clipping confirmed as already-ticketed.
+- [02-next-animal-glow](../game-mobile/issues/02-next-animal-glow.md) — two mechanisms: Hangman win-wrapper `overflow-hidden` clipped the glow (fixed with `pb-16` + `max-h-64` when won); MultiChoice/Hangman-lost glow painted under the opaque BackButton sibling (fixed with `relative z-10` on all ring-glow wrappers)
 
 ## Not yet specified
 
