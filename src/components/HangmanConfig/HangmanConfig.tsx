@@ -24,7 +24,7 @@ export default function HangmanConfig({
   onPlay,
 }: Props) {
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
+    <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto scrollbar-hidden">
       <div className="w-full max-w-md py-8">
         <h1 className="font-display text-3xl md:text-4xl text-center mb-8">
           Hangman setup

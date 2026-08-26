@@ -444,7 +444,7 @@ export default function MultiChoice({
         </div>
 
         {/* Content Container */}
-        <div className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto flex flex-col min-h-0 gap-4 pb-4">
+        <div className="flex-1 min-w-0 overflow-x-hidden overflow-y-auto scrollbar-hidden flex flex-col min-h-0 gap-4 pb-4">
           <DisplayCard
             currentAnimal={currentAnimal}
             currentImage={currentImage}

@@ -25,7 +25,7 @@ export default function DisplayCard({
         className={`swipe-container ${isImageLoading ? "swipe-out" : "swipe-in"}`}
       >
         {showDescription ? (
-          <div className="w-full h-64 md:h-80 bg-base-200 rounded-lg shadow-lg p-6 overflow-y-auto flex flex-col justify-center">
+          <div className="w-full h-64 md:h-80 bg-base-200 rounded-lg shadow-lg p-6 overflow-y-auto scrollbar-hidden flex flex-col justify-center">
             {currentAnimal && (
               <div className="space-y-3">
                 <h3 className="font-bold text-lg">
