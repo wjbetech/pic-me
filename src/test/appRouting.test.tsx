@@ -82,4 +82,40 @@ describe("App routing", () => {
 
     expect(screen.getByText(/pick a game mode/i)).toBeInTheDocument();
   });
+
+  it("Hangman config page drills in, returns, and Play starts Hangman", async () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: /start playing/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^Hangman/ }));
+    // mode="wait": the hangman panel mounts after MC's exit finishes.
+    fireEvent.click(
+      await screen.findByTestId("hangman-more-options"),
+    );
+    expect(
+      screen.getByRole("heading", { name: /hangman setup/i }),
+    ).toBeInTheDocument();
+
+    // Back returns to the configure page.
+    fireEvent.click(screen.getByRole("button", { name: /go back/i }));
+    expect(screen.getByText(/pick a game mode/i)).toBeInTheDocument();
+
+    // Drill in again; Play starts the Hangman game directly.
+    fireEvent.click(screen.getByRole("button", { name: /^Hangman/ }));
+    fireEvent.click(await screen.findByTestId("hangman-more-options"));
+    fireEvent.click(screen.getByTestId("hangman-config-play"));
+    expect(
+      screen.getByRole("heading", { name: /^Hangman/ }),
+    ).toBeInTheDocument();
+  });
+
+  it("hangman-config is a valid persisted route (refresh restores it)", () => {
+    seedNavigation({ route: "hangman-config", mode: "hangman" });
+
+    render(<App />);
+
+    expect(
+      screen.getByRole("heading", { name: /hangman setup/i }),
+    ).toBeInTheDocument();
+  });
 });
