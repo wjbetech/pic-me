@@ -106,7 +106,7 @@ export default function ConfirmBackModal({
         aria-modal="true"
         aria-labelledby="confirm-back-title"
         tabIndex={-1}
-        className="bg-base-100 text-base-content rounded-lg p-8 z-10 w-11/12 max-w-lg shadow-lg relative outline-none"
+        className="bg-base-100 text-base-content rounded-2xl border-4 border-base-content p-6 sm:p-8 z-10 w-11/12 max-w-lg relative outline-none"
       >
         <button
           aria-label="Close"
@@ -116,14 +116,17 @@ export default function ConfirmBackModal({
           ×
         </button>
 
-        <h3 id="confirm-back-title" className="text-lg font-bold mb-4">
+        <h3
+          id="confirm-back-title"
+          className="font-display text-2xl font-semibold mb-3 pr-8"
+        >
           {title}
         </h3>
         <p className="mb-6 text-sm opacity-80">{description}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             data-testid="modal-home"
-            className="btn bg-accent text-accent-content"
+            className="btn bg-accent text-accent-content font-semibold border-2 border-base-content rounded-xl"
             onClick={() => {
               onClose();
               if (onHome) onHome();
@@ -133,7 +136,7 @@ export default function ConfirmBackModal({
           </button>
           <button
             data-testid="modal-settings"
-            className="btn bg-accent text-accent-content"
+            className="btn bg-base-100 text-base-content font-semibold border-2 border-base-content rounded-xl"
             onClick={() => {
               onClose();
               if (onSettings) onSettings();
