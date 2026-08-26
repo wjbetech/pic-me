@@ -68,6 +68,79 @@ a {
   padding-inline: max(clamp(1.25rem, 4vw, 2.5rem), env(safe-area-inset-left))
     max(clamp(1.25rem, 4vw, 2.5rem), env(safe-area-inset-right));
 }
+
+/* ---- btn-pop: modern-playful button scheme -------------------------
+   Replaces the thick-outline "sticker" buttons (read as 2015 edu-site).
+   Same friendly tokens, modern depth: pill shape, inner top sheen, tonal
+   squish edge, colored halo instead of hard borders. Unlayered so it
+   wins over daisyUI component styles; token-driven so both themes work.
+   Variants: .btn-pop-accent (accent fill), .btn-pop-ghost (tonal). */
+.btn-pop {
+  --pop-bg: var(--color-primary);
+  --pop-fg: var(--color-primary-content);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 9999px;
+  min-height: 3rem;
+  padding-inline: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--pop-bg);
+  color: var(--pop-fg);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 30%, transparent),
+    inset 0 -3px 0 color-mix(in oklab, black 16%, transparent),
+    0 10px 24px -8px color-mix(in oklab, var(--pop-bg) 70%, transparent);
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+.btn-pop:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05) saturate(1.06);
+}
+.btn-pop:active {
+  transform: translateY(1px) scale(0.97);
+  filter: brightness(0.96);
+}
+.btn-pop:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 30%, transparent),
+    inset 0 -3px 0 color-mix(in oklab, black 16%, transparent),
+    0 10px 24px -8px color-mix(in oklab, var(--pop-bg) 70%, transparent),
+    0 0 0 3px var(--color-base-100),
+    0 0 0 6px color-mix(in oklab, var(--pop-bg) 60%, transparent);
+}
+.btn-pop-accent {
+  --pop-bg: var(--color-accent);
+  --pop-fg: var(--color-accent-content);
+}
+.btn-pop-ghost {
+  background-color: color-mix(in oklab, var(--color-base-content) 6%, transparent);
+  color: var(--color-base-content);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--color-base-content) 14%, transparent),
+    0 6px 16px -8px color-mix(in oklab, var(--color-base-content) 25%, transparent);
+}
+.btn-pop-ghost:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+  filter: none;
+}
+.btn-pop-ghost:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--color-base-content) 14%, transparent),
+    0 6px 16px -8px color-mix(in oklab, var(--color-base-content) 25%, transparent),
+    0 0 0 3px var(--color-base-100),
+    0 0 0 6px color-mix(in oklab, var(--color-base-content) 35%, transparent);
+}
 body {
   margin: 0;
   min-height: 100vh;

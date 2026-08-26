@@ -49,7 +49,7 @@ export default function HangmanSettings({ settings, onChange, onMore }: Props) {
           type="button"
           onClick={onMore}
           data-testid="hangman-more-options"
-          className="mt-1 w-full inline-flex items-center justify-center gap-2 rounded-xl border-2 border-base-content bg-base-200 px-4 py-2.5 text-sm font-semibold cursor-pointer transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
+          className="btn-pop btn-pop-ghost mt-1 w-full min-h-11 px-5 text-sm"
         >
           Lives &amp; hints
           <FaArrowRight aria-hidden />
