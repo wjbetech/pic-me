@@ -59,7 +59,7 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 - [x] (P5) Restyle `Start Playing` button — new approachable/educational font, remove hard shadow `shadow-[0_6px_0_0_rgba(0,0,0,0.45)]` (Hero.tsx:72) — inherits Baloo 2 via font-display; hard shadow + active compensation removed, press softened to scale
 - [x] (P5) Hide scrollbar on the animal image carousel while preserving scroll (`src/index.css:32` `.scrollbar-hidden` already exists — apply to marquee)
 - [ ] (P5) Fix Next Animal glow clipping: `ring-glow` on the button is cut off by the `Back to Menu` chunk's overflow (Game page, `src/components/Hangman/GameMessages.tsx` / `src/components/MultiChoice/MultiChoice.tsx:578`) — see `.scratch/game-mobile/issues/02-next-animal-glow.md`
-- [ ] (P5) Game Options screen redesign → see `.scratch/game-mode-screen/map.md` (wayfinder; 4 tickets, grill-me + design skills per your brief)
+- [x] (P5) Game Options screen redesign → see `.scratch/game-mode-screen/map.md` (wayfinder; 4 tickets, grill-me + design skills per your brief) — ModeStickers replace tabs (stuck-pressed selected tile + Picked! badge), settings as expanded sticker, OptionHeader dissolved into tiles
 - [ ] (P5) Home navbar redesign → see `.scratch/home-navbar/map.md` (wayfinder; transparent + glass-on-scroll vs top-fixed)
 - [ ] (P5) Game modal redesign → see `.scratch/game-modal/issues/01-modal-redesign.md`
 

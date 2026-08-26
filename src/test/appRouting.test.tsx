@@ -62,7 +62,7 @@ describe("App routing", () => {
 
     render(<App />);
 
-    expect(screen.getByRole("heading", { name: "Hangman" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /^Hangman/ })).toBeInTheDocument();
   });
 
   it("options route restores the previously selected mode tab", () => {
@@ -71,7 +71,7 @@ describe("App routing", () => {
 
     render(<App />);
 
-    const tab = screen.getByRole("button", { name: "Open Answer" });
+    const tab = screen.getByRole("button", { name: /^Open Answer/ });
     expect(tab.getAttribute("aria-pressed")).toBe("true");
   });
 

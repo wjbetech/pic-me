@@ -44,7 +44,7 @@ describe("mode card preselect (02-mode-preselect)", () => {
     fireEvent.click(screen.getByRole("button", { name: new RegExp(title, "i") }));
 
     // Game Options screen: the tapped tile must be preselected.
-    const tab = screen.getByRole("button", { name: title });
+    const tab = screen.getByRole("button", { name: new RegExp(`^${title}`) });
     expect(tab.getAttribute("aria-pressed")).toBe("true");
 
     // Persistence respected: refresh keeps the preselected value.
@@ -57,7 +57,7 @@ describe("mode card preselect (02-mode-preselect)", () => {
 
     render(<App />);
 
-    const tab = screen.getByRole("button", { name: "Open Answer" });
+    const tab = screen.getByRole("button", { name: /^Open Answer/ });
     expect(tab.getAttribute("aria-pressed")).toBe("true");
   });
 
@@ -66,7 +66,7 @@ describe("mode card preselect (02-mode-preselect)", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /start playing/i }));
 
-    const tab = screen.getByRole("button", { name: "Multiple Choice" });
+    const tab = screen.getByRole("button", { name: /^Multiple Choice/ });
     expect(tab.getAttribute("aria-pressed")).toBe("true");
   });
 });

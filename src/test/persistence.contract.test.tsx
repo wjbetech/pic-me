@@ -50,7 +50,7 @@ describe("persistence contract", () => {
     render(<GameOptions />);
 
     // Writer side: user picks the Hangman tab.
-    fireEvent.click(screen.getByRole("button", { name: "Hangman" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Hangman/ }));
     await Promise.resolve();
 
     // Reader side (what App does): same module API, same key, same encoding.
@@ -93,7 +93,7 @@ describe("persistence contract", () => {
 
   it("no raw pic-me:* legacy keys are ever written", async () => {
     render(<GameOptions />);
-    fireEvent.click(screen.getByRole("button", { name: "Hangman" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Hangman/ }));
     await Promise.resolve();
 
     const allKeys = [
