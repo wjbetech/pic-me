@@ -1,4 +1,4 @@
-# PicMe — Engineering Handoff
+# pic-me — Engineering Handoff
 
 **Status:** authoritative engineering brief. A coding agent should be able to start **Phase 0** from this document alone.
 **Baseline:** HEAD `3054317` ("fixing the bunk Jerboa url", 2026-01-29) · `master == origin/master` · docs redrafted 2026-08-21.
@@ -20,7 +20,7 @@ Companion documents: [`TODO.md`](./TODO.md) (concise actionable checklist), [`MI
 
 ## 1. Project purpose
 
-PicMe is a client-only web game for learning animal names: the player sees an animal photo and identifies it via one of three modes — **Multiple Choice**, **Hangman**, **Open Answer** — over a static dataset of **122 animals** in 26 per-letter JSON files (`src/data/animalsA.json` … `animalsZ.json`), photos hotlinked from Unsplash/Wikimedia. Audience is casual/kids; desktop web and mobile browser parity are both first-class. [CURRENT]
+pic-me is a client-only web game for learning animal names: the player sees an animal photo and identifies it via one of three modes — **Multiple Choice**, **Hangman**, **Open Answer** — over a static dataset of **122 animals** in 26 per-letter JSON files (`src/data/animalsA.json` … `animalsZ.json`), photos hotlinked from Unsplash/Wikimedia. Audience is casual/kids; desktop web and mobile browser parity are both first-class. [CURRENT]
 
 Long-term product direction: web app remains primary; a **companion mobile app is a plausible future addition**, which is why game logic is being centralized into a dependency-free core that could later be shared. [DECIDED]
 

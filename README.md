@@ -1,4 +1,4 @@
-# PicMe
+# pic-me
 
 A client-only web game for learning animal names: see a photo, name the animal. Three modes — **Multiple Choice**, **Hangman**, and **Open Answer** — over a static dataset of 122 animals (A–Z). Built for equal use on desktop and mobile browsers.
 
