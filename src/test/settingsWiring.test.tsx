@@ -60,7 +60,7 @@ describe("hint toggles reach durable settings", () => {
     // Switch to the Hangman panel. AnimatePresence keeps the outgoing MC
     // panel mounted briefly, so query by the unique element ids instead of
     // shared labels to avoid hitting the exiting panel.
-    fireEvent.click(screen.getByRole("button", { name: "Hangman" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Hangman/ }));
 
     const hangmanToggle = await screen.findByTestId(
       "hangman-hints-enabled",
