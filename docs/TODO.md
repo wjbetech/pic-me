@@ -73,4 +73,4 @@ Repairable now; each has a `.scratch/bugs/issues/` ticket with verification step
 
 - [x] Fix MC images not loading — see `.scratch/bugs/issues/01-mc-images.md` (fixed in #41)
 - [x] Fix Game Options mode preselect ignoring home card — see `.scratch/bugs/issues/02-mode-preselect.md` (fixed in #42)
-- [ ] Draft per-mode settings taxonomy (rounds, difficulty, etc.) + user flow → see `.scratch/game-settings-v2/map.md` (wayfinder; needs grilling before tickets)
+- [x] Draft per-mode settings taxonomy (rounds, difficulty, etc.) + user flow → see `.scratch/game-settings-v2/map.md` — drafted (ticket 01), then implemented: difficulty pool filter live on all modes (#48)

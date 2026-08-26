@@ -16,7 +16,8 @@ Ubiquitous language for pic-me.
 | Session Persistence | The `src/game-core/persistence` + `useAnimals` layer that restores current animal/progress across reloads and HMR without a backend. Progress namespaces carry a 10-min TTL; config namespaces are durable. |
 | Theme | Light/dark via daisyUI (`src/store/themeStore` + `src/context/ThemeContext`). Must keep contrast parity between themes; accent buttons use paired `text-*-content` tokens + `border-base-content` edge for very strong contrast. |
 | Navbar (Home) | Sticky, transparent at scroll 0 with scrim strip + white-with-shadow text; becomes `bg-base-100/80 backdrop-blur-md` glass after hero. See `.scratch/home-navbar/map.md`. |
-| Modal (Game Exit) | Confirmation dialog for leaving a game (`src/components/ConfirmBackModal/`). Focus trap + return, dialog semantics. Slated for visual reskin to match homepage sticker language. |
+| Modal (Game Exit) | Confirmation dialog for leaving a game (`src/components/ConfirmBackModal/`). Focus trap + return, dialog semantics. Reskinned to sticker language (border-4 flat card, Baloo title, split accent/bordered actions). |
+| Difficulty filter | Pre-game pool setting (`Settings.difficulty`: easy\|medium\|hard\|all, default all) filtering `Animal.difficulty` before rotation; applied identically in every mode via game-core `filterByDifficulty`. Shared across modes (mirrors rounds); no mid-game ramping. |
 
 ## Open questions
 

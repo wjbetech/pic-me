@@ -15,11 +15,11 @@ Inbox seeded this as: "Number of rounds. Animal difficulty. etc." — the etc. i
 ## Decisions so far
 
 - [01-settings-taxonomy](../game-settings-v2/issues/01-settings-taxonomy.md) — taxonomy = rounds + difficulty (pool filter Easy/Medium/Hard/All via `Animal.difficulty`); time pressure / hint budgets deferred until playtesting
+- [02-implement-taxonomy](../game-settings-v2/issues/02-implement-taxonomy.md) — shipped: pure `filterByDifficulty` in game-core (order-preserving, rotation still the only shuffler), shared `Settings.difficulty` (default "all", mirroring rounds' pattern), `DifficultyControl` on all three panels, pools filtered read-on-entry in MC/Hangman/OA
 
 ## Not yet specified
 
-- Full settings list per mode (what "difficulty" actually filters).
-- Whether difficulty is a pre-game filter or a mid-game progression.
+(nothing — both fog items resolved: full per-mode list = rounds + difficulty + mode-specific extras (blur/description on MC, lives on Hangman, hints per-mode); difficulty is a pre-game pool filter, not mid-game progression)
 
 ## Out of scope
 

@@ -1,6 +1,6 @@
 # Implement rounds + difficulty taxonomy (v2)
 
-Status: claimed
+Status: resolved
 Type: task
 
 > Consumes decision [01-settings-taxonomy](./01-settings-taxonomy.md): minimal taxonomy = rounds (exists) + difficulty pool filter, pre-game only, every mode.
