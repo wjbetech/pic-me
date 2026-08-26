@@ -141,7 +141,7 @@ export default function OpenAnswer({
     return () => {
       cancelled = true;
     };
-  }, [animals, loadNewAnimal, restoreAnimal]);
+  }, [animals, settings?.difficulty, loadNewAnimal, restoreAnimal]);
 
   useEffect(() => {
     if (isCorrect && nextButtonRef.current) {
