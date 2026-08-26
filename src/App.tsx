@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./components/Main/Main";
 import GameOptions from "./components/GameOptions/GameOptions";
@@ -49,12 +49,18 @@ function App() {
     persistence.config.save("settings", gameSettings);
   }, [gameSettings]);
 
+  // Home scroll container — the overlay navbar watches it to switch from
+  // transparent-over-photo to glass past the hero (.scratch/home-navbar).
+  const homeScrollRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="w-full h-screen flex flex-col overflow-hidden bg-base-300 text-base-content">
-      <Navbar onHome={() => setRoute("home")} />
-      <div className="flex-1 min-h-0 overflow-hidden relative">
-        {route === "home" && (
-          <div className="h-full overflow-y-auto">
+      {route === "home" ? (
+        // Home: navbar floats over the hero photo (transparent → glass on
+        // scroll); the scroll container owns the full height.
+        <div className="flex-1 min-h-0 relative">
+          <Navbar onHome={() => setRoute("home")} overlay scrollTarget={homeScrollRef} />
+          <div ref={homeScrollRef} className="h-full overflow-y-auto">
             <Main
               onStart={(modeId) => {
                 // Home card carries mode intent forward so GameOptions
@@ -64,7 +70,11 @@ function App() {
               }}
             />
           </div>
-        )}
+        </div>
+      ) : (
+        <>
+          <Navbar onHome={() => setRoute("home")} />
+          <div className="flex-1 min-h-0 overflow-hidden relative">
         {route === "options" && (
           <GameOptions
             initialMode={mode ?? undefined}
@@ -120,7 +130,9 @@ function App() {
               </div>
             </div>
           )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
