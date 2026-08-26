@@ -9,6 +9,7 @@ import normalizeAnswer from "../../utils/normalizeAnswer";
 import preloadImage from "../../utils/openAnswer";
 import { persistence } from "../../game-core/persistence";
 import { isExhausted } from "../../game-core/rounds";
+import { filterByDifficulty } from "../../game-core/difficulty";
 import { useAnimals } from "../../hooks/useAnimals";
 import useFlash from "../../hooks/useFlash";
 import type { Settings } from "../../types/GameOptions";
@@ -106,7 +107,10 @@ export default function OpenAnswer({
   // StrictMode's double-invoked effects.
   useEffect(() => {
     if (!animals) return;
-    allAnimalsRef.current = animals;
+    // Difficulty-filtered pool (settings-v2, read on entry) drives both
+    // fresh picks and restore lookups; out-of-pool saved ids fall through
+    // to a fresh load via the existing not-found path.
+    allAnimalsRef.current = filterByDifficulty(animals, settings?.difficulty);
 
     let cancelled = false;
     void Promise.resolve().then(() => {

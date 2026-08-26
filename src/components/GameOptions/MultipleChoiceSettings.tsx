@@ -1,5 +1,6 @@
 import type { Settings } from "../../types/GameOptions";
 import HintControls from "./HintControls";
+import DifficultyControl from "./DifficultyControl";
 
 interface Props {
   settings: Settings;
@@ -38,6 +39,11 @@ export default function MultipleChoiceSettings({ settings, onChange }: Props) {
           <option value="all">All</option>
         </select>
       </div>
+
+      <DifficultyControl
+        value={settings.difficulty}
+        onChange={(difficulty) => onChange({ ...settings, difficulty })}
+      />
 
       <div className="mb-5">
         <div className="flex justify-between items-center mb-2">

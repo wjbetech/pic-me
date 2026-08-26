@@ -1,5 +1,6 @@
 import type { Settings } from "../../types/GameOptions";
 import HintControls from "./HintControls";
+import DifficultyControl from "./DifficultyControl";
 
 interface Props {
   settings: Settings;
@@ -82,6 +83,13 @@ export default function HangmanSettings({ settings, onChange }: Props) {
           <option value="20">20</option>
           <option value="all">All</option>
         </select>
+      </div>
+
+      <div className="mt-4">
+        <DifficultyControl
+          value={settings.difficulty}
+          onChange={(difficulty) => onChange({ ...settings, difficulty })}
+        />
       </div>
     </div>
   );

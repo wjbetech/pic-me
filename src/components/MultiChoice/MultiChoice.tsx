@@ -4,6 +4,7 @@ import type { Animal } from "../../game-core/animal";
 import "./MultiChoice.css";
 import { MathRandom } from "../../game-core/random";
 import { createRotation } from "../../game-core/rotation";
+import { filterByDifficulty } from "../../game-core/difficulty";
 import { isExhausted } from "../../game-core/rounds";
 import { persistence } from "../../game-core/persistence";
 import { useAnimals } from "../../hooks/useAnimals";
@@ -323,7 +324,10 @@ export default function MultiChoice({
       allAnimalsRef.current = animals;
 
       // Full shuffled dataset is authoritative for sampling and restores.
-      const fullShuffled = createRotation(animals, "all", MathRandom);
+      // Pool is difficulty-filtered first (settings-v2): everything about a
+      // round — target animal and distractors alike — stays in-pool.
+      const pool = filterByDifficulty(animals, settings?.difficulty);
+      const fullShuffled = createRotation(pool, "all", MathRandom);
       allAnimalsRef.current = fullShuffled;
 
       const roundsSetting = settings?.rounds;
