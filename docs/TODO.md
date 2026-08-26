@@ -1,4 +1,4 @@
-# PicMe — Active Work
+# pic-me — Active Work
 
 Concise actionable checklist. Architectural context, phase details, and acceptance criteria live in [`HANDOFF.md`](./HANDOFF.md) (§9 roadmap). Completed work is logged in [`MILESTONES.md`](./MILESTONES.md), not here.
 

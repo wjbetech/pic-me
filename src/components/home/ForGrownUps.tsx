@@ -26,7 +26,7 @@ const FACTS = [
 
 /**
  * Parent-facing track (equal weight per brief): plain, honest facts only —
- * no stats or awards PicMe can't back.
+ * no stats or awards pic-me can't back.
  */
 export default function ForGrownUps() {
   return (
@@ -37,7 +37,7 @@ export default function ForGrownUps() {
             For grown-ups
           </h2>
           <p className="font-body max-w-prose opacity-80 mb-10">
-            PicMe was built to be handed over without a second thought — here
+            pic-me was built to be handed over without a second thought — here
             is everything there is to know.
           </p>
         </Reveal>

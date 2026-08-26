@@ -1,5 +1,5 @@
 /**
- * Central persistence for PicMe.
+ * Central persistence for pic-me.
  *
  * Two explicit groups with different lifetimes:
  * - `progress` — session-scoped game state (route, mode, per-game progress).

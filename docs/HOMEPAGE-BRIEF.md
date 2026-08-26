@@ -1,4 +1,4 @@
-# PicMe Homepage Redesign — Design Brief
+# pic-me Homepage Redesign — Design Brief
 
 **Status: IMPLEMENTED** (PRs #36–#38). Visual sign-off pending owner browser pass.
 

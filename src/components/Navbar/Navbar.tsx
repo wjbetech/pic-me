@@ -59,14 +59,14 @@ export default function Navbar({ onHome, overlay, scrollTarget }: Props) {
 
   if (!overlay) {
     return (
-      <div className="navbar navbar-edge bg-base-100 shadow-md w-full items-center align-middle z-10">
+      <div className="navbar-edge bg-base-100 shadow-md flex w-full items-center min-h-16 z-10">
         <div className="flex-1">
           <button
             onClick={() => onHome && onHome()}
             className="btn btn-ghost text-warning p-0"
-            aria-label="PicMe Home"
+            aria-label="pic-me Home"
           >
-            <h3 className="text-2xl">PicMe</h3>
+            <h3 className="text-2xl">pic-me</h3>
           </button>
         </div>
         <div className="flex gap-4 items-center">
@@ -92,14 +92,14 @@ export default function Navbar({ onHome, overlay, scrollTarget }: Props) {
           glass ? "opacity-0" : "opacity-100"
         }`}
       />
-      <div className="navbar navbar-edge w-full items-center">
+      <div className="navbar-edge flex w-full items-center min-h-16">
         <div className="flex-1">
           <button
             onClick={() => onHome && onHome()}
             className={`btn btn-ghost p-0 ${toneClass || "text-warning"}`}
-            aria-label="PicMe Home"
+            aria-label="pic-me Home"
           >
-            <h3 className="text-2xl">PicMe</h3>
+            <h3 className="text-2xl">pic-me</h3>
           </button>
         </div>
         <div className="flex gap-4 items-center">
