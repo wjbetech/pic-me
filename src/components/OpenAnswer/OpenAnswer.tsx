@@ -220,7 +220,7 @@ export default function OpenAnswer({
   // input classes moved into OpenAnswerForm to keep styling colocated with the input element
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto">
+    <div className="h-full w-full flex items-center justify-center p-4 overflow-y-auto scrollbar-hidden">
       <div className="max-w-3xl w-full flex flex-col gap-6">
         <div className="text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-2">Open Answer</h2>

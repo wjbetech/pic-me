@@ -86,7 +86,7 @@ function App() {
         // scroll); the scroll container owns the full height.
         <div className="flex-1 min-h-0 relative">
           <Navbar onHome={() => setRoute("home")} overlay scrollTarget={homeScrollRef} />
-          <div ref={homeScrollRef} className="h-full overflow-y-auto">
+          <div ref={homeScrollRef} className="h-full overflow-y-auto scrollbar-hidden">
             <Main
               onStart={(modeId) => {
                 // Home card carries mode intent forward so GameOptions

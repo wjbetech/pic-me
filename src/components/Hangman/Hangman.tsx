@@ -359,7 +359,7 @@ export default function Hangman({
   // render helpers moved to separate components in ./
 
   return (
-    <div className="h-full w-full flex items-start md:items-center justify-center p-4 overflow-y-auto">
+    <div className="h-full w-full flex items-start md:items-center justify-center p-4 overflow-y-auto scrollbar-hidden">
       <div className="max-w-4xl w-full flex flex-col gap-6">
         <Header lives={livesRemaining} score={score} round={roundsPlayed} />
 

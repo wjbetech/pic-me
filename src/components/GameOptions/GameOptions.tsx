@@ -71,7 +71,7 @@ export default function GameOptions({
   };
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto">
+    <div className="h-full w-full flex flex-col items-center justify-center p-4 overflow-y-auto scrollbar-hidden">
       <div className="w-full max-w-5xl py-8 md:py-12">
         <h1 className="font-display text-4xl md:text-5xl text-center mb-8 md:mb-10">
           Pick a game mode!
