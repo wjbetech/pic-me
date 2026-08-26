@@ -17,6 +17,7 @@ const DEFAULT_SETTINGS: Settings = {
   blur: 0,
   showDescription: false,
   rounds: 10,
+  difficulty: "all",
   lives: 5,
   mcHints: { enabled: false, type: "habitat" },
   hangmanHints: { enabled: false, type: "habitat" },
@@ -89,7 +90,9 @@ export default function GameOptions({
                 <HangmanSettings settings={settings} onChange={setSettings} />
               )}
 
-              {selected === "open-answer" && <OpenAnswerSettings />}
+              {selected === "open-answer" && (
+                <OpenAnswerSettings settings={settings} onChange={setSettings} />
+              )}
             </MotionDiv>
           </AnimatePresence>
           {/* Action buttons — outside AnimatePresence so they never

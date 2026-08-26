@@ -1,4 +1,5 @@
 import type { HintPreference } from "../game-core/hints";
+import type { DifficultyFilter } from "../game-core/difficulty";
 
 /**
  * Durable per-mode game configuration.
@@ -11,6 +12,9 @@ export type Settings = {
   blur?: number;
   showDescription?: boolean;
   rounds?: number | "all";
+  /** Pool filter applied before rotation (settings-v2). Shared across modes,
+   * mirroring rounds' existing shared-edit pattern. */
+  difficulty?: DifficultyFilter;
   lives?: number;
   mcHints?: HintPreference;
   hangmanHints?: HintPreference;
