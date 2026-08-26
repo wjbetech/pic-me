@@ -59,6 +59,14 @@ a {
   text-decoration: inherit;
 }
 
+/* Navbar edge spacing. In this build daisyUI's component layers are
+   declared after Tailwind's utilities layer, so padding utilities on
+   .navbar silently lose to `.navbar { padding: .5rem }`. This unlayered
+   author rule wins the cascade outright and also honors iPhone notches. */
+.navbar-edge {
+  padding-inline: max(1rem, env(safe-area-inset-left))
+    max(1rem, env(safe-area-inset-right));
+}
 body {
   margin: 0;
   min-height: 100vh;

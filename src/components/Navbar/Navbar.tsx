@@ -59,7 +59,7 @@ export default function Navbar({ onHome, overlay, scrollTarget }: Props) {
 
   if (!overlay) {
     return (
-      <div className="navbar bg-base-100 shadow-md w-full items-center align-middle p-4 z-10">
+      <div className="navbar navbar-edge bg-base-100 shadow-md w-full items-center align-middle z-10">
         <div className="flex-1">
           <button
             onClick={() => onHome && onHome()}
@@ -92,7 +92,7 @@ export default function Navbar({ onHome, overlay, scrollTarget }: Props) {
           glass ? "opacity-0" : "opacity-100"
         }`}
       />
-      <div className="navbar w-full items-center p-4">
+      <div className="navbar navbar-edge w-full items-center">
         <div className="flex-1">
           <button
             onClick={() => onHome && onHome()}
