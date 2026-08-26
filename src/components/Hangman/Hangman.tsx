@@ -5,6 +5,7 @@ import { persistence } from "../../game-core/persistence";
 import type { Animal } from "../../game-core/animal";
 import { MathRandom } from "../../game-core/random";
 import { createRotation } from "../../game-core/rotation";
+import { filterByDifficulty } from "../../game-core/difficulty";
 import { isExhausted } from "../../game-core/rounds";
 import { useAnimals } from "../../hooks/useAnimals";
 import HintLine from "../common/HintLine";
@@ -72,7 +73,12 @@ export default function Hangman({
       }
 
       // Session rotation queue: shuffled once, no repeats until exhausted.
-      const queue = createRotation(animals, "all", MathRandom);
+      // Difficulty-filtered pool first (settings-v2, read on entry).
+      const queue = createRotation(
+        filterByDifficulty(animals, settings.difficulty),
+        "all",
+        MathRandom,
+      );
 
       // Attempt to restore saved state so reloads preserve progress
       let didRestore = false;
