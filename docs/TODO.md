@@ -63,6 +63,7 @@ Legend: `[ ]` open · `[x]` done · `(P0)`…`(P4)` = roadmap phase.
 - [x] (P5) Home navbar redesign → see `.scratch/home-navbar/map.md` (wayfinder; transparent + glass-on-scroll vs top-fixed)
 - [x] (P5) Game modal redesign → see `.scratch/game-modal/issues/01-modal-redesign.md` — sticker card (rounded-2xl, border-4), Baloo title, split actions: Home = accent sticker button, Settings = bordered base-100; a11y contract untouched
 - [x] Hangman config sub-page: /configure keeps shared controls only (height-stable); lives + hints live on centered hangman-config with slideshow push transition and direct Play (#52)
+- [x] Modern button scheme: `.btn-pop` family replaces thick-outline sticker buttons (Start Playing, Continue, Play, modal actions, drill-in) — pill, inner sheen, tonal squish edge, colored halo; token-driven both themes (#55)
 
 ## Deferred (do not start without owner approval)
 

@@ -67,7 +67,7 @@ export default function Hero({ onStart }: { onStart?: () => void }) {
 
         <button
           onClick={() => onStart?.()}
-          className="mt-8 inline-flex items-center justify-center rounded-2xl border-4 border-base-content bg-primary px-10 h-16 font-display text-2xl font-semibold text-primary-content transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer select-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/90 focus-visible:ring-offset-4 focus-visible:ring-offset-black/40"
+          className="btn-pop mt-8 h-14 px-9 text-xl"
         >
           Start Playing
         </button>

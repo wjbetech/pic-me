@@ -49,7 +49,7 @@ export default function HangmanConfig({
           <button
             data-testid="hangman-config-play"
             onClick={onPlay}
-            className="btn btn-primary font-semibold border-base-content rounded-xl px-10 h-14 font-display text-xl text-primary-content"
+            className="btn-pop min-h-14 px-10 text-xl"
           >
             Play
           </button>

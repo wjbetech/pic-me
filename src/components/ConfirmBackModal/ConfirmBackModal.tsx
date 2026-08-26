@@ -126,7 +126,7 @@ export default function ConfirmBackModal({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             data-testid="modal-home"
-            className="btn bg-accent text-accent-content font-semibold border-2 border-base-content rounded-xl"
+            className="btn-pop btn-pop-accent min-h-12 px-6 text-base"
             onClick={() => {
               onClose();
               if (onHome) onHome();
@@ -136,7 +136,7 @@ export default function ConfirmBackModal({
           </button>
           <button
             data-testid="modal-settings"
-            className="btn bg-base-100 text-base-content font-semibold border-2 border-base-content rounded-xl"
+            className="btn-pop btn-pop-ghost min-h-12 px-6 text-base"
             onClick={() => {
               onClose();
               if (onSettings) onSettings();
