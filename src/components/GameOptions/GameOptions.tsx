@@ -10,23 +10,15 @@ import HangmanSettings from "./HangmanSettings";
 import OpenAnswerSettings from "./OpenAnswerSettings";
 import ActionRow from "./ActionRow";
 import OPTIONS from "../../constants/gameModes";
+import { DEFAULT_SETTINGS } from "../../constants/defaultSettings";
 import type { GameOptionsProps, Settings } from "../../types/GameOptions";
 import { persistence } from "../../game-core/persistence";
-
-const DEFAULT_SETTINGS: Settings = {
-  blur: 0,
-  showDescription: false,
-  rounds: 10,
-  difficulty: "all",
-  lives: 5,
-  mcHints: { enabled: false, type: "habitat" },
-  hangmanHints: { enabled: false, type: "habitat" },
-};
 
 export default function GameOptions({
   onBack,
   onConfirm,
   initialMode,
+  onOpenHangmanConfig,
 }: GameOptionsProps) {
   // Preselect precedence: home card tap (initialMode) > persisted 'mode'
   // > first option. The tap must win on this mount; persistence still
@@ -104,7 +96,7 @@ export default function GameOptions({
                 ? { duration: 0 }
                 : { duration: 0.25, ease: "easeInOut" }
             }
-            className="min-h-[22rem] overflow-hidden"
+            className="min-h-[16rem] overflow-hidden"
           >
             <AnimatePresence mode="wait">
               <MotionDiv
@@ -124,7 +116,11 @@ export default function GameOptions({
               )}
 
               {selected === "hangman" && (
-                <HangmanSettings settings={settings} onChange={setSettings} />
+                <HangmanSettings
+                  settings={settings}
+                  onChange={setSettings}
+                  onMore={onOpenHangmanConfig}
+                />
               )}
 
               {selected === "open-answer" && (

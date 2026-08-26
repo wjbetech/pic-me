@@ -25,4 +25,6 @@ export interface GameOptionsProps {
   onConfirm?: (mode: string, settings?: Settings) => void;
   /** Mode preselected by the home card tap; falls back to persisted value. */
   initialMode?: string;
+  /** Drill in to the dedicated hangman setup page. */
+  onOpenHangmanConfig?: () => void;
 }

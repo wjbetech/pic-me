@@ -2,6 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FakeImage } from "./fakeImage";
+import App from "../App";
 import GameOptions from "../components/GameOptions/GameOptions";
 import Hangman from "../components/Hangman/Hangman";
 import OpenAnswer from "../components/OpenAnswer/OpenAnswer";
@@ -28,6 +29,22 @@ function seedProgress(key: string, value: unknown) {
 beforeEach(() => {
   window.sessionStorage.clear();
   window.localStorage.clear();
+  // afterEach calls vi.unstubAllGlobals(), which removes setup.ts's global
+  // IntersectionObserver stub; restore it for tests rendering <App />.
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+      takeRecords() {
+        return [];
+      }
+      root = null;
+      rootMargin = "";
+      thresholds = [];
+    },
+  );
 });
 
 afterEach(() => {
@@ -54,13 +71,17 @@ describe("hint toggles reach durable settings", () => {
     });
   });
 
-  it("Hangman panel persists an independent hint preference", async () => {
-    render(<GameOptions />);
+  it("Hangman hints persist via the hangman-config page", async () => {
+    // Lives + hint preference moved off the configure panel to their own
+    // page (keeps /configure height-stable). Travel there through App so
+    // App-level settings persistence is exercised too.
+    render(<App />);
 
-    // Switch to the Hangman panel. AnimatePresence keeps the outgoing MC
-    // panel mounted briefly, so query by the unique element ids instead of
-    // shared labels to avoid hitting the exiting panel.
+    fireEvent.click(screen.getByRole("button", { name: /start playing/i }));
     fireEvent.click(screen.getByRole("button", { name: /^Hangman/ }));
+    fireEvent.click(
+      await screen.findByTestId("hangman-more-options"),
+    );
 
     const hangmanToggle = await screen.findByTestId(
       "hangman-hints-enabled",
