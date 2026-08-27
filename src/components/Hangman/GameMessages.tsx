@@ -26,9 +26,9 @@ export default function GameMessages({
   return (
     <>
       <div
-        className={`text-center overflow-hidden transition-[opacity,transform,max-height] duration-300 ease-out p-0 ${
+        className={`text-center overflow-visible transition-[opacity,transform,max-height] duration-300 ease-out p-0 ${
           gameState === "won"
-            ? "opacity-100 translate-y-0 max-h-64 p-3 sm:p-4 pb-16"
+            ? "opacity-100 translate-y-0 max-h-64 p-3 sm:p-4 pb-16 overflow-visible"
             : "opacity-0 -translate-y-2 max-h-0 pointer-events-none"
         }`}
         aria-hidden={gameState !== "won"}
@@ -36,11 +36,11 @@ export default function GameMessages({
         <p className="text-2xl font-bold text-success mb-4">
           🎉 Correct! It's {wonAnimalName ?? ""}!
         </p>
-        <div className="relative z-10 inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
+        <div className="relative z-10 inline-block rounded-full p-2 overflow-visible">
           <button
             ref={nextButtonRef}
             onClick={onNext}
-            className={`btn btn-success`}
+            className="btn-pop min-h-12 px-7 text-base ring-2 ring-primary ring-offset-2 ring-glow rounded-full"
           >
             Next Animal
           </button>
@@ -52,8 +52,8 @@ export default function GameMessages({
           <p className="text-2xl font-bold text-error mb-4">
             💀 Game Over! The answer was {currentAnimal?.commonName}
           </p>
-          <div className="relative z-10 inline-block rounded-lg bg-transparent ring-2 ring-primary ring-offset-2 ring-glow">
-            <button onClick={onNext} className="btn btn-error">
+          <div className="relative z-10 inline-block rounded-full p-2 overflow-visible">
+            <button onClick={onNext} className="btn-pop min-h-12 px-7 text-base ring-2 ring-primary ring-offset-2 ring-glow rounded-full">
               Try Again
             </button>
           </div>
