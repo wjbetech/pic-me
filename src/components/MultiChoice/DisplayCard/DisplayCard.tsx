@@ -10,12 +10,16 @@ export default function DisplayCard({
   isImageLoading,
   showDescription = false,
   settings = {},
+  onImageLoad,
+  onImageError,
 }: {
   currentAnimal: Animal | null;
   currentImage: string;
   isImageLoading: boolean;
   showDescription?: boolean;
   settings?: { blur?: number; mcHints?: HintPreference };
+  onImageLoad?: () => void;
+  onImageError?: () => void;
 }) {
   const blur = settings.blur ?? 0;
   const [isPortrait, setIsPortrait] = useState<boolean | null>(null);
@@ -61,6 +65,10 @@ export default function DisplayCard({
                   } catch {
                     setIsPortrait(null);
                   }
+                  onImageLoad?.();
+                }}
+                onError={() => {
+                  onImageError?.();
                 }}
                 className={`w-full h-44 md:h-56 rounded-lg shadow-lg ${
                   isImageLoading ? "opacity-0" : "opacity-100"

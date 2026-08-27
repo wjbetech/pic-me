@@ -3,29 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import MultiChoice from "../components/MultiChoice/MultiChoice";
 
-// Hanging mock: never fires onload/onerror (premium hang)
-class HangingImage {
-  onload: (() => void) | null = null;
-  onerror: (() => void) | null = null;
-  _src = "";
-  set src(v: string) { this._src = v; }
-  get src() { return this._src; }
-}
-
-// Sync mock: fires onload synchronously if handler already assigned (cached image race)
-// If handler not yet assigned, it does nothing (simulates the bug: src before handler loses event)
-class SyncImage {
-  onload: (() => void) | null = null;
-  onerror: (() => void) | null = null;
-  _src = "";
-  set src(v: string) {
-    this._src = v;
-    // Simulate cached image: if onload already assigned, fire immediately (sync)
-    // Otherwise, never fires (racy case: handler assigned after src)
-    if (this.onload) this.onload();
-  }
-  get src() { return this._src; }
-}
+// No Image mock needed for direct-render path — jsdom's <img> never fires
+// onLoad/onError by default (hang), which is exactly the premium hang we test.
 
 beforeEach(() => {
   window.sessionStorage.clear();
@@ -38,27 +17,29 @@ afterEach(() => {
   window.sessionStorage.clear();
 });
 
-describe("MC image regression: restore timeout + handler-before-src", () => {
-  it("hanging restore recovers via timeout (hypothesis 1)", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    vi.stubGlobal("Image", HangingImage as any);
+describe("MC image regression: direct-render timeout + onLoad wiring", () => {
+  it("hanging restore recovers via rendered-img timeout (was infinite hang)", async () => {
     const premiumId = "b-1";
     window.sessionStorage.setItem("picme.progress.multichoice.current", JSON.stringify({ savedAt: Date.now(), value: premiumId }));
     render(<MultiChoice settings={{ blur: 0, showDescription: false, difficulty: "all" }} />);
-    // Restore timeout is 5s real - wait it out (testTimeout 10s)
+    // jsdom <img> never fires onLoad, so the 5s hang guard must fire and fall back
     await new Promise(r => setTimeout(r, 5600));
     const hasBison = screen.getByText("American Bison");
     expect(hasBison).toBeInTheDocument();
   }, 10000);
 
-  it("cached image with handlers-before-src shows image (hypothesis 2 - the console heisenbug)", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    vi.stubGlobal("Image", SyncImage as any);
-    render(<MultiChoice settings={{ blur: 0, showDescription: false }} />);
-    // With fixed order (handlers before src), SyncImage will fire onload immediately after src set (since handler already assigned)
-    // So image should appear within 1s (300ms delay + onload)
-    const img = await screen.findByAltText(/.+/, {}, { timeout: 3000 });
+  it("successful load clears spinner via onLoad (was src-before-handler race)", async () => {
+    const { container } = render(<MultiChoice settings={{ blur: 0, showDescription: false }} />);
+    const img = await screen.findByAltText(/.+/, {}, { timeout: 3000 }) as HTMLImageElement;
     expect(img).toBeInTheDocument();
-    expect((img as HTMLImageElement).src).toBeTruthy();
+    // Spinner should be present while loading
+    expect(container.querySelector(".mc-spinner")).toBeInTheDocument();
+    // Simulate browser firing load
+    const loadEvent = new Event("load");
+    Object.defineProperty(loadEvent, "currentTarget", { value: img });
+    img.dispatchEvent(loadEvent);
+    // After onLoad, spinner should be gone
+    await new Promise(r => setTimeout(r, 50));
+    expect(container.querySelector(".mc-spinner")).not.toBeInTheDocument();
   });
 });

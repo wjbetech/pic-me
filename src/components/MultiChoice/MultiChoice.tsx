@@ -162,71 +162,17 @@ export default function MultiChoice({
       }
 
       if (imageUrl) {
-        // Preload the image to avoid rendering lag and show a spinner.
-        // Root cause (see .scratch/bugs/issues/01-mc-images.md): 20
-        // `plus.unsplash.com/premium_photo` entries in the in-game dataset can
-        // hang indefinitely (neither onload nor onerror fires), leaving the
-        // spinner stuck. Homepage was decoupled to `homePhotos` in #40 but
-        // games still draw from the full dataset — so every round must
-        // guarantee termination to image or fallback within a bounded time.
+        // Direct render: the <img> element handles load/error. isImageLoading
+        // stays true until DisplayCard's onLoad/onError clears it. A separate
+        // effect below times out hanging renders (premium hang) and retries.
+        if (requestId !== loadRequestIdRef.current) return;
+        setCurrentAnimal(randomAnimal);
+        setCurrentImage(imageUrl);
+        setCorrectAnswer(randomAnimal.commonName);
         setIsImageLoading(true);
-        const img = new Image();
-        let settled = false;
-        const imageTimeout = window.setTimeout(() => {
-          if (settled) return;
-          settled = true;
-          console.warn("Image load timed out, picking another.", imageUrl);
-          if (requestId !== loadRequestIdRef.current) return;
-          setIsImageLoading(false);
-          persistence.progress.save("multichoice.current", randomAnimal.id);
-          if (animalQueueRef.current.length > 0) {
-            animalQueueRef.current = animalQueueRef.current.filter(
-              (a) => a.id !== randomAnimal.id,
-            );
-          }
-          loadNewAnimal();
-        }, 5000);
-        img.onload = () => {
-          if (settled) return;
-          settled = true;
-          window.clearTimeout(imageTimeout);
-          // Ensure the request is still current before applying
-          if (requestId !== loadRequestIdRef.current) {
-            return;
-          }
-          setCurrentAnimal(randomAnimal);
-          setCurrentImage(imageUrl);
-          setCorrectAnswer(randomAnimal.commonName);
-          setIsImageLoading(false);
-          persistence.progress.save("multichoice.current", randomAnimal.id);
-          // Count this loaded round (for numeric rounds)
-          setRoundsPlayed((p) => p + 1);
-        };
-        img.onerror = () => {
-          if (settled) return;
-          settled = true;
-          window.clearTimeout(imageTimeout);
-          // Ensure the request is still current before reacting
-          if (requestId !== loadRequestIdRef.current) {
-            return;
-          }
-          console.warn("Failed to load image, picking another.", imageUrl);
-          setIsImageLoading(false);
-          persistence.progress.save("multichoice.current", randomAnimal.id);
-          // If image fails, try next in queue (if any)
-          // remove the failing animal from queue to avoid infinite loop
-          if (animalQueueRef.current.length > 0) {
-            animalQueueRef.current = animalQueueRef.current.filter(
-              (a) => a.id !== randomAnimal.id,
-            );
-          }
-          loadNewAnimal();
-          return;
-        };
-        img.src = imageUrl;
+        persistence.progress.save("multichoice.current", randomAnimal.id);
+        setRoundsPlayed((p) => p + 1);
       } else {
-        // No image available for this animal: still select it so sampling covers all animals
-        // Ensure request is still current
         if (requestId !== loadRequestIdRef.current) {
           return;
         }
@@ -354,37 +300,10 @@ export default function MultiChoice({
               setIsImageLoading(false);
               applyOptions(found, fullShuffled);
             } else {
+              setCurrentAnimal(found);
+              setCurrentImage(imgUrl);
               setIsImageLoading(true);
-              const img = new Image();
-              let settledRestore = false;
-              const restoreTimeout = window.setTimeout(() => {
-                if (settledRestore) return;
-                settledRestore = true;
-                console.warn("Restore image load timed out, showing fallback.", imgUrl);
-                setCurrentAnimal(found);
-                setCurrentImage("");
-                setIsImageLoading(false);
-                applyOptions(found, fullShuffled);
-              }, 5000);
-              img.onload = () => {
-                if (settledRestore) return;
-                settledRestore = true;
-                window.clearTimeout(restoreTimeout);
-                setCurrentAnimal(found);
-                setCurrentImage(imgUrl);
-                setIsImageLoading(false);
-                applyOptions(found, fullShuffled);
-              };
-              img.onerror = () => {
-                if (settledRestore) return;
-                settledRestore = true;
-                window.clearTimeout(restoreTimeout);
-                setCurrentAnimal(found);
-                setCurrentImage("");
-                setIsImageLoading(false);
-                applyOptions(found, fullShuffled);
-              };
-              img.src = imgUrl;
+              applyOptions(found, fullShuffled);
             }
             // restored, skip loading a new random one
             return;
@@ -423,6 +342,20 @@ export default function MultiChoice({
     setIsAnswered(true);
     setScore((s) => s + 1);
   };
+
+  // Hang guard for the rendered <img>: if neither onLoad nor onError fires
+  // within 5s (e.g. premium hang), show fallback for the same animal.
+  // This keeps the current question answerable instead of skipping it,
+  // and is layout-independent (no new Image() race).
+  useEffect(() => {
+    if (!isImageLoading || !currentImage) return;
+    const t = window.setTimeout(() => {
+      console.warn("Rendered image load timed out, showing fallback.", currentImage);
+      setIsImageLoading(false);
+      setCurrentImage("");
+    }, 5000);
+    return () => window.clearTimeout(t);
+  }, [isImageLoading, currentImage]);
 
   // When the answer has been marked and the Next button is rendered, allow
   // pressing Enter to advance to the next animal. Guard against firing when
@@ -468,6 +401,12 @@ export default function MultiChoice({
             isImageLoading={isImageLoading}
             showDescription={settings.showDescription}
             settings={settings}
+            onImageLoad={() => setIsImageLoading(false)}
+            onImageError={() => {
+              console.warn("Rendered image failed to load, showing fallback.", currentImage);
+              setIsImageLoading(false);
+              setCurrentImage("");
+            }}
           />
 
           {allRoundsCompleted && (
