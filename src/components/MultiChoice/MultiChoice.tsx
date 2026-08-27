@@ -186,7 +186,6 @@ export default function MultiChoice({
           }
           loadNewAnimal();
         }, 5000);
-        img.src = imageUrl;
         img.onload = () => {
           if (settled) return;
           settled = true;
@@ -224,6 +223,7 @@ export default function MultiChoice({
           loadNewAnimal();
           return;
         };
+        img.src = imageUrl;
       } else {
         // No image available for this animal: still select it so sampling covers all animals
         // Ensure request is still current
@@ -354,20 +354,37 @@ export default function MultiChoice({
               setIsImageLoading(false);
               applyOptions(found, fullShuffled);
             } else {
+              setIsImageLoading(true);
               const img = new Image();
-              img.src = imgUrl;
+              let settledRestore = false;
+              const restoreTimeout = window.setTimeout(() => {
+                if (settledRestore) return;
+                settledRestore = true;
+                console.warn("Restore image load timed out, showing fallback.", imgUrl);
+                setCurrentAnimal(found);
+                setCurrentImage("");
+                setIsImageLoading(false);
+                applyOptions(found, fullShuffled);
+              }, 5000);
               img.onload = () => {
+                if (settledRestore) return;
+                settledRestore = true;
+                window.clearTimeout(restoreTimeout);
                 setCurrentAnimal(found);
                 setCurrentImage(imgUrl);
                 setIsImageLoading(false);
                 applyOptions(found, fullShuffled);
               };
               img.onerror = () => {
+                if (settledRestore) return;
+                settledRestore = true;
+                window.clearTimeout(restoreTimeout);
                 setCurrentAnimal(found);
                 setCurrentImage("");
                 setIsImageLoading(false);
                 applyOptions(found, fullShuffled);
               };
+              img.src = imgUrl;
             }
             // restored, skip loading a new random one
             return;
