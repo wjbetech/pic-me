@@ -87,14 +87,16 @@ export default function OpenAnswerForm({
         )}
 
         {isCorrect && !completed && (
-          <button
-            ref={nextButtonRef}
-            type="button"
-            onClick={onNext}
-            className="btn btn-success"
-          >
-            Next Animal
-          </button>
+          <div className="relative z-10 inline-block rounded-full p-2 overflow-visible">
+            <button
+              ref={nextButtonRef}
+              type="button"
+              onClick={onNext}
+              className="btn-pop min-h-12 px-7 text-base ring-2 ring-primary ring-offset-2 ring-glow rounded-full"
+            >
+              Next Animal
+            </button>
+          </div>
         )}
       </form>
     </div>
