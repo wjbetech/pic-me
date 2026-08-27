@@ -45,7 +45,7 @@ export default function HangmanConfig({
         </div>
 
         <div className="mt-8 flex items-center justify-center gap-3">
-          <BackButton onBack={onBack} className="btn-ghost" />
+          <BackButton onBack={onBack} />
           <button
             data-testid="hangman-config-play"
             onClick={onPlay}
