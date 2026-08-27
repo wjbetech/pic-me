@@ -8,7 +8,7 @@ interface Props {
 export default function ActionRow({ onBack, onConfirm }: Props) {
   return (
     <div className="flex gap-3">
-      <BackButton className="btn-ghost" onBack={onBack} />
+      <BackButton onBack={onBack} />
       <button className="btn-pop ml-auto min-h-12 px-7 text-base" onClick={onConfirm}>
         Continue
       </button>
